@@ -71,7 +71,7 @@ These items are good candidates for a local model or cloud agent.
 - [X] Implement API health and database readiness endpoints. Completed - /health and /ready endpoints.
 - [X] Add SQLAlchemy database setup and session lifecycle. Completed - scoped_session with create_engine in __init__.py.
 - [ ] Add Alembic migration baseline for PostgreSQL 18.
-- [ ] Add migration command runnable through Docker Compose.
+- [W] Add migration command runnable through Docker Compose.
 - [X] Implement `status_record` model and migration. Completed - StatusRecord model in models.py (auto-create via init_db).
 - [X] Implement create status record endpoint. Completed - POST /api/v1/status-records (migrate to POST /api).
 - [X] Implement list status records endpoint with pagination, sorting, and filters. Completed - GET /api/v1/status-records (migrate to GET /api).

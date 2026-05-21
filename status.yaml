@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "active"
+status: "working"
 phase: "implementation (migration-test-setup)"
-reason: "Alembic migration baseline completed. Next available task: Add migration command runnable through Docker Compose."
-worker: "opencode (alembic-baseline)"
-updated: "2026-05-21 02:15 MDT"
+reason: "Working on: Add migration command runnable through Docker Compose."
+worker: "opencode"
+updated: "2026-05-21 02:20 MDT"
