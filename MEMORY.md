@@ -65,14 +65,16 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
-### 2026-05-21 02:25 - opencode
+### 2026-05-21 02:35 - opencode
 
-- Task: Add migration command runnable through Docker Compose.
-- Files changed: `docker-compose.yml` (added migrations service).
-- Validation: Docker Compose YAML syntax valid.
-- Result: Added `migrations` service that runs `alembic upgrade head` after database is healthy. Users can run `docker compose up migrations` to apply all pending migrations.
+- Task: Add example environment files for local, test, stage, and production without secrets.
+- Files changed: `.gitignore`, `api/.env.example.local`, `api/.env.example.test`, `api/.env.example.stage`, `api/.env.example.production`, `TODO.md`, `status.yaml`.
+- Validation: Files are not ignored by git, contain placeholder values only (no secrets).
+- Result: Added four example environment files with placeholder DATABASE_URL values for each environment (local, test, stage, production). Updated .gitignore to track example files while ignoring actual .env files with secrets.
 - Commit: pending.
 - Blockers or follow-up: none.
+
+### 2026-05-21 02:25 - opencode
 
 ### 2026-05-21 02:15 - opencode
 
