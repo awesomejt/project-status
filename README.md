@@ -1,8 +1,10 @@
-# Project Agent Starter Kit
+# Project Status
 
-Agentic starter template for AI-assisted coding projects: frontend apps, backend services, CLIs, automation tools, libraries, websites, and mixed-stack software projects.
+This project is a full-stack project containing three parts:
 
-This template is designed for agents that can pick a task, update status, make focused code changes, run validation, document results, and commit coherent work when asked.
+* api : A simple API to handle all CRUD operations
+* cli : Provide a CLI client that calls the API
+* web : A web client for easy visualization
 
 ## Root Contract
 

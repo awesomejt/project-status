@@ -4,11 +4,11 @@ Fill this in before asking an agent to plan or implement the project.
 
 ## Project Identity
 
-- Project name: `{{PROJECT_NAME}}`
-- Short name: `{{SHORT_NAME}}`
-- Repository:
-- Project type: `{{frontend / backend / full-stack / CLI / library / automation / other}}`
-- Primary users:
+- Project name: `Project Status`
+- Short name: `status`
+- Repository: "https://github.com/awesomejt/project-status"
+- Project type: `full-stack`
+- Primary users: agents
 
 ## Purpose
 
@@ -26,29 +26,26 @@ The project is successful when:
 
 ## Users And Workflows
 
-- Primary user:
-- Secondary users:
-- Most important workflow:
-- Repeated or high-frequency workflow:
-- Admin or maintenance workflow:
+- Primary user: agents
+- Secondary users: humans
+- Most important workflow: api/add
+- Repeated or high-frequency workflow: cli/add 
+- Admin or maintenance workflow: cli/add
 
 ## Must Include
 
--
--
--
-
-## Nice To Include
-
--
--
--
+- api crud operations
+- api listing
+- cli operations (calls api)
+- web client (calls api)
+- unit tests
+- integration tests
 
 ## Out Of Scope
 
--
--
--
+- authentication
+- authorization
+- advanced logging
 
 ## Technical Preferences
 

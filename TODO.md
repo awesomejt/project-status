@@ -1,12 +1,12 @@
 # Project TODO
 
-Task list for `{{PROJECT_NAME}}`, organized by ownership and project phase.
+Task list for `Project Status`, organized by ownership and project phase.
 
 ## Needs Attention
 
 Items here require Jason's input, a decision, credentials, external access, or manual validation before agent work can continue.
 
-- [ ] Replace all `{{PLACEHOLDER}}` values in project files before starting agent work.
+- [X] Replace all `{{PLACEHOLDER}}` values in project files before starting agent work.
 
 ## Manual Validation
 
