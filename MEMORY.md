@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 03:25 - opencode
+
+- Task: Implement web API client and environment-based API base URL configuration.
+- Files changed: `web/src/types/statusRecord.ts` (new), `web/src/api/client.ts` (new).
+- Validation: TypeScript typecheck passed.
+- Result: Created TypeScript types for StatusRecord, StatusRecordCreate, StatusRecordUpdate, StatusRecordListResponse, and ApiError. Implemented apiClient with getRecords, getRecord, createRecord, updateRecord, and deleteRecord methods. Uses VITE_API_BASE_URL from environment (defaults to http://localhost:5000).
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 03:15 - opencode
 
 - Task: Add CI-ready validation commands for API and web.
