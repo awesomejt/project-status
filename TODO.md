@@ -133,7 +133,7 @@ These items are good candidates for a local model or cloud agent.
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [ ]
+- [W] Add Alembic migration baseline for PostgreSQL 18.
 
 ## Blocked
 
