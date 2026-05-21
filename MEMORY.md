@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 02:15 - opencode
+
+- Task: Add Alembic migration baseline for PostgreSQL 18.
+- Files changed: `api/alembic/env.py` (configured), `api/alembic/versions/001_initial_status_records.py` (new migration).
+- Validation: Python syntax checks passed, Alembic history shows migration correctly.
+- Result: Configured Alembic to use project models and DATABASE_URL. Added initial migration creating `status_records` table with indexes for `short_name`, `status`, `phase`, and `created_at`.
+- Commit: `bad3526` - feat(api): add Alembic migration baseline for PostgreSQL 18.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 02:00 - opencode
 
 - Task: Implement JSON validation and consistent API error responses.

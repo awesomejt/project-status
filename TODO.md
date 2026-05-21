@@ -64,7 +64,7 @@ These items are good candidates for a local model or cloud agent.
 
 ### Implementation
 
-- [X] Scaffold the Flask API with Python 3.14 dependency management. Completed - pyproject.toml with Flask, SQLAlchemy, Alembic.
+- [X] Add Alembic migration baseline for PostgreSQL 18. Completed - alembic/env.py configured, 001_initial_status_records.py migration added.
 - [X] Implement API configuration loading from environment variables with `DATABASE_URL` support for local, test, stage, and production. Completed - config.py with multi-environment support.
 - [X] Add configuration validation that fails fast when `DATABASE_URL` is missing in API runtime contexts. Completed - Config class raises ValueError if DATABASE_URL missing.
 - [X] Implement Flask application factory and versioned blueprint structure. Completed - create_app() with api_v1 blueprint.
@@ -133,7 +133,7 @@ These items are good candidates for a local model or cloud agent.
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [W] Add Alembic migration baseline for PostgreSQL 18.
+- [ ]
 
 ## Blocked
 
