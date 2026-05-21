@@ -2,10 +2,9 @@ import os
 
 from flask import Flask, jsonify
 from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker, scoped_session
-from .config import config
-from .models import StatusRecord
+from sqlalchemy.orm import scoped_session, sessionmaker
 
+from .config import config
 
 engine = None
 DBSession = None
@@ -34,6 +33,7 @@ db = get_db_session_maker()
 def init_db():
     """Initialize database tables."""
     from .models import Base
+
     engine = get_engine()
     Base.metadata.create_all(bind=engine)
 
@@ -42,22 +42,23 @@ def create_app(config_name=None):
     """Application factory."""
     if config_name is None:
         config_name = os.environ.get("FLASK_CONFIG", "development")
-    
+
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-    
+
     # Initialize database
     init_db()
-    
+
     # Register blueprints
     from . import api_v1
+
     app.register_blueprint(api_v1.bp, url_prefix="/api")
-    
+
     # Health endpoints
     @app.route("/health")
     def health():
         return jsonify({"status": "healthy", "service": "project-status-api"})
-    
+
     @app.route("/ready")
     def ready():
         try:
@@ -66,10 +67,9 @@ def create_app(config_name=None):
             return jsonify({"status": "ready", "database": "connected"})
         except Exception as e:
             return jsonify({"status": "not-ready", "database": "disconnected", "error": str(e)}), 503
-    
+
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db.remove()
-    
-    return app
 
+    return app

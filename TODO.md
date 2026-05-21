@@ -60,7 +60,7 @@ These items are good candidates for a local model or cloud agent.
 - [X] Add Compose services or profiles for `db`, `api`, `web`, migrations, and API tests. Completed - db, api, web services configured.
 - [X] Add example environment files for local, test, stage, and production without secrets. Completed - .env.example.local, .env.example.test, .env.example.stage, .env.example.production added to api/ directory.
 - [X] Add root development notes for running all three parts locally with Docker Compose. Completed - docs/Development.md created with PostgreSQL 18, API, web service documentation and troubleshooting guide.
-- [ ] Add CI-ready validation commands once project manifests exist.
+- [X] Add CI-ready validation commands once project manifests exist. Completed - API: ruff lint/format, pytest; Web: ESLint, TypeScript typecheck, Vite build.
 
 ### Implementation
 

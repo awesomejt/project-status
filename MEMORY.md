@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 03:15 - opencode
+
+- Task: Add CI-ready validation commands for API and web.
+- Files changed: `api/pyproject.toml`, `api/Makefile`, `web/package.json`.
+- Validation: API lint (ruff check), format (ruff format), web lint (eslint), typecheck (tsc --noEmit), build (vite build) all pass.
+- Result: Added ruff for linting/formatting, pytest configuration, Makefile with targets. Web already had ESLint; added typecheck script. All validation commands verified working.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 03:05 - opencode
 
 - Task: Scaffold React web application with TypeScript and Vite.

@@ -1,14 +1,14 @@
-from flask import Blueprint, request, jsonify
-from uuid import UUID
-from ..models import StatusRecord
+from flask import Blueprint, jsonify, request
+
 from .. import db
+from ..models import StatusRecord
 from ..utils import (
+    make_error_response,
     validate_json,
+    validate_optional_string,
     validate_status,
     validate_string,
-    validate_optional_string,
     validate_tags,
-    make_error_response,
 )
 
 bp = Blueprint("api_v1", __name__)
@@ -32,15 +32,15 @@ def create_status_record():
             "source": lambda v: validate_optional_string(v, max_length=50),
         },
     )
-    
+
     if not is_valid:
         response, code = make_error_response(result, status_code)
         return jsonify(response), code
-    
+
     data = result
-    
+
     tags_value = data.get("tags") if "tags" in data else []
-    
+
     record = StatusRecord(
         project_name=data["project_name"],
         short_name=data["short_name"],
@@ -52,36 +52,35 @@ def create_status_record():
         tags=tags_value,
         source=data.get("source"),
     )
-    
+
     db.add(record)
     db.commit()
-    
+
     return jsonify(record.to_dict()), 201
 
 
 @bp.route("/", methods=["GET"])
 def list_status_records():
     """List status records with pagination and filters."""
-    from sqlalchemy import func
     page = request.args.get("page", 1, type=int)
     per_page = request.args.get("per_page", 20, type=int)
     status_filter = request.args.get("status")
-    
+
     # Build query
     query = db.query(StatusRecord)
-    
+
     if status_filter:
         query = query.filter(StatusRecord.status == status_filter)
-    
+
     # Get total count
     total = query.count()
     pages = (total + per_page - 1) // per_page if total > 0 else 1
-    
+
     # Apply pagination
     offset = (page - 1) * per_page
     query = query.order_by(StatusRecord.created_at.desc()).offset(offset).limit(per_page)
     records_list = query.all()
-    
+
     records = [
         {
             "id": str(r.id),
@@ -95,24 +94,26 @@ def list_status_records():
         }
         for r in records_list
     ]
-    
-    return jsonify({
-        "records": records,
-        "page": page,
-        "per_page": per_page,
-        "total": total,
-        "pages": pages,
-    })
+
+    return jsonify(
+        {
+            "records": records,
+            "page": page,
+            "per_page": per_page,
+            "total": total,
+            "pages": pages,
+        }
+    )
 
 
 @bp.route("/<uuid:record_id>", methods=["GET"])
 def get_status_record(record_id):
     """Get a specific status record."""
     record = db.get(StatusRecord, record_id)
-    
+
     if not record:
         return jsonify({"error": "Record not found"}), 404
-    
+
     response = {
         "id": str(record.id),
         "project_name": record.project_name,
@@ -134,11 +135,11 @@ def get_status_record(record_id):
 def update_status_record(record_id):
     """Update a status record (partial update)."""
     record = db.get(StatusRecord, record_id)
-    
+
     if not record:
         response, code = make_error_response("Record not found", 404)
         return jsonify(response), code
-    
+
     is_valid, result, status_code = validate_json(
         request,
         custom_validators={
@@ -152,20 +153,20 @@ def update_status_record(record_id):
             "tags": validate_tags,
         },
     )
-    
+
     if not is_valid:
         response, code = make_error_response(result, status_code)
         return jsonify(response), code
-    
+
     data = result
     updatable_fields = ["project_name", "short_name", "status", "phase", "summary", "reason", "details", "tags"]
-    
+
     for field in updatable_fields:
         if field in data:
             setattr(record, field, data[field])
-    
+
     db.commit()
-    
+
     return jsonify(record.to_dict())
 
 
@@ -173,12 +174,11 @@ def update_status_record(record_id):
 def delete_status_record(record_id):
     """Delete a status record."""
     record = db.get(StatusRecord, record_id)
-    
+
     if not record:
         return jsonify({"error": "Record not found"}), 404
-    
+
     db.delete(record)
     db.commit()
-    
-    return jsonify({"message": "Record deleted"})
 
+    return jsonify({"message": "Record deleted"})
