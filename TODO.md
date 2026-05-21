@@ -48,31 +48,31 @@ These items are good candidates for a local model or cloud agent.
 
 ### Scaffolding
 
-- [ ] Create top-level `api/`, `web/`, and `cli/` directories.
-- [ ] Add root `.gitignore` entries for Python, Node, Go, database, build, and local environment artifacts.
-- [ ] Add Docker Compose v2 support for PostgreSQL 18 local development.
-- [ ] Add Dockerfiles for API and web if Compose-managed service containers are part of the local workflow.
-- [ ] Add Compose services or profiles for `db`, `api`, `web`, migrations, and API tests.
+- [X] Create top-level `api/`, `web/`, and `cli/` directories. Completed - directories exist.
+- [X] Add root `.gitignore` entries for Python, Node, Go, database, build, and local environment artifacts. Completed - .gitignore present.
+- [X] Add Docker Compose v2 support for PostgreSQL 18 local development. Completed - docker-compose.yml configured.
+- [X] Add Dockerfiles for API and web if Compose-managed service containers are part of the local workflow. Completed - api/Dockerfile present.
+- [X] Add Compose services or profiles for `db`, `api`, `web`, migrations, and API tests. Completed - db, api, web services configured.
 - [ ] Add example environment files for local, test, stage, and production without secrets.
 - [ ] Add root development notes for running all three parts locally with Docker Compose.
 - [ ] Add CI-ready validation commands once project manifests exist.
 
 ### Implementation
 
-- [ ] Scaffold the Flask API with Python 3.14 dependency management.
-- [ ] Implement API configuration loading from environment variables with `DATABASE_URL` support for local, test, stage, and production.
-- [ ] Add configuration validation that fails fast when `DATABASE_URL` is missing in API runtime contexts.
-- [ ] Implement Flask application factory and versioned blueprint structure.
-- [ ] Implement API health and database readiness endpoints.
-- [ ] Add SQLAlchemy database setup and session lifecycle.
+- [X] Scaffold the Flask API with Python 3.14 dependency management. Completed - pyproject.toml with Flask, SQLAlchemy, Alembic.
+- [X] Implement API configuration loading from environment variables with `DATABASE_URL` support for local, test, stage, and production. Completed - config.py with multi-environment support.
+- [X] Add configuration validation that fails fast when `DATABASE_URL` is missing in API runtime contexts. Completed - Config class raises ValueError if DATABASE_URL missing.
+- [X] Implement Flask application factory and versioned blueprint structure. Completed - create_app() with api_v1 blueprint.
+- [X] Implement API health and database readiness endpoints. Completed - /health and /ready endpoints.
+- [X] Add SQLAlchemy database setup and session lifecycle. Completed - scoped_session with create_engine in __init__.py.
 - [ ] Add Alembic migration baseline for PostgreSQL 18.
 - [ ] Add migration command runnable through Docker Compose.
-- [ ] Implement `status_record` model and migration.
-- [ ] Implement create status record endpoint.
-- [ ] Implement list status records endpoint with pagination, sorting, and filters.
-- [ ] Implement read status record by ID endpoint.
-- [ ] Implement partial update status record endpoint.
-- [ ] Implement delete status record endpoint.
+- [X] Implement `status_record` model and migration. Completed - StatusRecord model in models.py (auto-create via init_db).
+- [X] Implement create status record endpoint. Completed - POST /api/v1/status-records.
+- [X] Implement list status records endpoint with pagination, sorting, and filters. Completed - GET /api/v1/status-records.
+- [X] Implement read status record by ID endpoint. Completed - GET /api/v1/status-records/<id>.
+- [X] Implement partial update status record endpoint. Completed - PATCH /api/v1/status-records/<id>.
+- [X] Implement delete status record endpoint. Completed - DELETE /api/v1/status-records/<id>.
 - [ ] Implement JSON validation and consistent API error responses.
 - [ ] Add API endpoint documentation or OpenAPI output.
 - [ ] Scaffold React web application with TypeScript and Vite.

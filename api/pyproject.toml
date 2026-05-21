@@ -1,0 +1,29 @@
+[project]
+name = "project-status-api"
+version = "0.1.0"
+description = "Flask API for Project Status tracking"
+requires-python = ">=3.14"
+authors = [
+    {name = "Project Status Team"}
+]
+dependencies = [
+    "flask>=3.1.0,<4.0.0",
+    "sqlalchemy>=2.0.0,<3.0.0",
+    "alembic>=1.13.0,<2.0.0",
+    "psycopg[binary]>=3.1.0,<4.0.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0,<9.0.0",
+    "pytest-flask>=1.3.0,<2.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
