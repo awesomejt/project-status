@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 03:05 - opencode
+
+- Task: Scaffold React web application with TypeScript and Vite.
+- Files changed: `web/` directory (new), `.gitignore`, `.env.example`, `TODO.md`, `status.yaml`.
+- Validation: Build verified successful - TypeScript compiles, Vite builds production bundle.
+- Result: Scaffolded web/ directory with React 19.2.6, Vite 8.0.12, TypeScript. Configured environment variable support for VITE_API_BASE_URL. Added example environment file with API placeholder.
+- Commit: `e5f17d2` - feat(web): scaffold React web application with TypeScript and Vite.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 02:50 - opencode
 
 - Task: Add root development notes for running all three parts locally with Docker Compose.
