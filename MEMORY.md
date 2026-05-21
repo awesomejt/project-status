@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 02:25 - opencode
+
+- Task: Add migration command runnable through Docker Compose.
+- Files changed: `docker-compose.yml` (added migrations service).
+- Validation: Docker Compose YAML syntax valid.
+- Result: Added `migrations` service that runs `alembic upgrade head` after database is healthy. Users can run `docker compose up migrations` to apply all pending migrations.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 02:15 - opencode
 
 - Task: Add Alembic migration baseline for PostgreSQL 18.

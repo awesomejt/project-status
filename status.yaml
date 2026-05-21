@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "working"
+status: "active"
 phase: "implementation (migration-test-setup)"
-reason: "Working on: Add migration command runnable through Docker Compose."
+reason: "Migration command added. Next available task: Add example environment files."
 worker: "opencode"
-updated: "2026-05-21 02:20 MDT"
+updated: "2026-05-21 02:25 MDT"
