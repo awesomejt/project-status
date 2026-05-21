@@ -60,12 +60,17 @@ pnpm-debug.log*
 
 # Python
 __pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+*.pyc
+*.pyo
+*.pyd
+.env
 .venv/
 venv/
+
+# Node/Web
+web/node_modules/
+web/dist/
+web/.env
 env/
 *.egg-info/
 

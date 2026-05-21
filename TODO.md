@@ -80,7 +80,7 @@ These items are good candidates for a local model or cloud agent.
 - [X] Implement delete status record endpoint. Completed - DELETE /api/v1/status-records/<id> (migrate to DELETE /api/<id>).
 - [X] Implement JSON validation and consistent API error responses. Completed 2026-05-21 - utils.py with validate_json, field validators, make_error_response; updated create and update endpoints.
 - [ ] Add API endpoint documentation or OpenAPI output.
-- [W] Scaffold React web application with TypeScript and Vite.
+- [X] Scaffold React web application with TypeScript and Vite. Completed - web/ directory scaffolded with React 19.2.6, Vite 8.0.12, TypeScript, environment variable support.
 - [ ] Implement web API client and environment-based API base URL configuration.
 - [ ] Implement web status record list view.
 - [ ] Implement web create/edit status record form.
