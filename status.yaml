@@ -12,6 +12,6 @@
 
 status: "active"
 phase: "implementation"
-reason: "Web status record list view implemented with filtering and pagination"
+reason: "API path migration complete - api_v1 module renamed to api"
 worker: "opencode"
-updated: "2026-05-21 03:35 MDT"
+updated: "2026-05-21 17:35 MDT"

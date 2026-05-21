@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 17:35 - opencode
+
+- Task: Migrate API paths from `/api/v1/status-records/*` to `/api/*`: Rename `api_v1` module to `api`.
+- Files changed: `api/project_status_api/__init__.py`, `api/project_status_api/api_v1/` → `api/project_status_api/api/`.
+- Validation: Code review confirmed correct module rename and blueprint naming. Routes already at `/api/*` (no migration needed for paths).
+- Result: Renamed `api_v1` module to `api`. Updated import in `__init__.py` from `from . import api_v1` to `from . import api`. Updated blueprint name from `api_v1` to `api`.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 03:35 - opencode
 
 - Task: Implement web status record list view.

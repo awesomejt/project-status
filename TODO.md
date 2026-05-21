@@ -39,11 +39,7 @@ These items are good candidates for a local model or cloud agent.
 
 ### Planning
 
-- [ ] Migrate API paths from `/api/v1/status-records/*` to `/api/*`:
-  - Change url_prefix in `api/project_status_api/__init__.py` from `/api/v1` to `/api`.
-  - Change routes in `api/project_status_api/api_v1/__init__.py` from `/status-records/*` to `/*`.
-  - Update `docs/Architecture.md`, `docs/Implementation.md`, `MEMORY.md`, and `TODO.md` references.
-  - Rename `api_v1` module to `api` if appropriate after migration.
+- [X] Migrate API paths from `/api/v1/status-records/*` to `/api/*`: Completed 2026-05-21 - Routes already at `/api/*` (was `/api/v1/status-records`). Renamed `api_v1` module to `api`.
 - [ ] Draft the initial `/api/*` request and response contract (updated from `/api/v1/status-records`).
 - [ ] Decide whether to generate an OpenAPI spec from Flask code or maintain a hand-written spec.
 - [ ] Choose the production WSGI server after deployment target is known.

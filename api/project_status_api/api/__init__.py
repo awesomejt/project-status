@@ -11,7 +11,7 @@ from ..utils import (
     validate_tags,
 )
 
-bp = Blueprint("api_v1", __name__)
+bp = Blueprint("api", __name__)
 
 
 @bp.route("/", methods=["POST"])
