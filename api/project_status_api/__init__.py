@@ -51,7 +51,7 @@ def create_app(config_name=None):
     
     # Register blueprints
     from . import api_v1
-    app.register_blueprint(api_v1.bp, url_prefix="/api/v1")
+    app.register_blueprint(api_v1.bp, url_prefix="/api")
     
     # Health endpoints
     @app.route("/health")

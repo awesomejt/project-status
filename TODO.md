@@ -39,7 +39,12 @@ These items are good candidates for a local model or cloud agent.
 
 ### Planning
 
-- [ ] Draft the initial `/api/v1/status-records` request and response contract.
+- [ ] Migrate API paths from `/api/v1/status-records/*` to `/api/*`:
+  - Change url_prefix in `api/project_status_api/__init__.py` from `/api/v1` to `/api`.
+  - Change routes in `api/project_status_api/api_v1/__init__.py` from `/status-records/*` to `/*`.
+  - Update `docs/Architecture.md`, `docs/Implementation.md`, `MEMORY.md`, and `TODO.md` references.
+  - Rename `api_v1` module to `api` if appropriate after migration.
+- [ ] Draft the initial `/api/*` request and response contract (updated from `/api/v1/status-records`).
 - [ ] Decide whether to generate an OpenAPI spec from Flask code or maintain a hand-written spec.
 - [ ] Choose the production WSGI server after deployment target is known.
 - [ ] Define the status record database indexes for list filters and sort order.
@@ -68,11 +73,11 @@ These items are good candidates for a local model or cloud agent.
 - [ ] Add Alembic migration baseline for PostgreSQL 18.
 - [ ] Add migration command runnable through Docker Compose.
 - [X] Implement `status_record` model and migration. Completed - StatusRecord model in models.py (auto-create via init_db).
-- [X] Implement create status record endpoint. Completed - POST /api/v1/status-records.
-- [X] Implement list status records endpoint with pagination, sorting, and filters. Completed - GET /api/v1/status-records.
-- [X] Implement read status record by ID endpoint. Completed - GET /api/v1/status-records/<id>.
-- [X] Implement partial update status record endpoint. Completed - PATCH /api/v1/status-records/<id>.
-- [X] Implement delete status record endpoint. Completed - DELETE /api/v1/status-records/<id>.
+- [X] Implement create status record endpoint. Completed - POST /api/v1/status-records (migrate to POST /api).
+- [X] Implement list status records endpoint with pagination, sorting, and filters. Completed - GET /api/v1/status-records (migrate to GET /api).
+- [X] Implement read status record by ID endpoint. Completed - GET /api/v1/status-records/<id> (migrate to GET /api/<id>).
+- [X] Implement partial update status record endpoint. Completed - PATCH /api/v1/status-records/<id> (migrate to PATCH /api/<id>).
+- [X] Implement delete status record endpoint. Completed - DELETE /api/v1/status-records/<id> (migrate to DELETE /api/<id>).
 - [X] Implement JSON validation and consistent API error responses. Completed 2026-05-21 - utils.py with validate_json, field validators, make_error_response; updated create and update endpoints.
 - [ ] Add API endpoint documentation or OpenAPI output.
 - [ ] Scaffold React web application with TypeScript and Vite.

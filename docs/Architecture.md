@@ -76,7 +76,7 @@ Record architecture decisions here or summarize them in `MEMORY.md`.
 - Use an API-first architecture. The Flask API is the system of record and the only database writer.
 - Use a monorepo with `api/`, `web/`, and `cli/` top-level directories.
 - Keep authentication out of MVP per project scope, but keep request validation and secret handling strict.
-- Prefer explicit REST endpoints under `/api/v1` so web, CLI, and future agents can share one stable contract.
+- Prefer explicit REST endpoints under `/api` so web, CLI, and future agents can share one stable contract.
 - Prefer migrations from the first database commit to avoid ad hoc local schemas.
 - Use Docker and Docker Compose v2 as the default local development entry point.
 - Keep database connectivity environment-driven so stage and production can point at dedicated PostgreSQL VMs without code changes.

@@ -14,7 +14,7 @@ from ..utils import (
 bp = Blueprint("api_v1", __name__)
 
 
-@bp.route("/status-records", methods=["POST"])
+@bp.route("/", methods=["POST"])
 def create_status_record():
     """Create a new status record."""
     is_valid, result, status_code = validate_json(
@@ -59,7 +59,7 @@ def create_status_record():
     return jsonify(record.to_dict()), 201
 
 
-@bp.route("/status-records", methods=["GET"])
+@bp.route("/", methods=["GET"])
 def list_status_records():
     """List status records with pagination and filters."""
     from sqlalchemy import func
@@ -105,7 +105,7 @@ def list_status_records():
     })
 
 
-@bp.route("/status-records/<uuid:record_id>", methods=["GET"])
+@bp.route("/<uuid:record_id>", methods=["GET"])
 def get_status_record(record_id):
     """Get a specific status record."""
     record = db.get(StatusRecord, record_id)
@@ -130,7 +130,7 @@ def get_status_record(record_id):
     return jsonify(response)
 
 
-@bp.route("/status-records/<uuid:record_id>", methods=["PATCH"])
+@bp.route("/<uuid:record_id>", methods=["PATCH"])
 def update_status_record(record_id):
     """Update a status record (partial update)."""
     record = db.get(StatusRecord, record_id)
@@ -169,7 +169,7 @@ def update_status_record(record_id):
     return jsonify(record.to_dict())
 
 
-@bp.route("/status-records/<uuid:record_id>", methods=["DELETE"])
+@bp.route("/<uuid:record_id>", methods=["DELETE"])
 def delete_status_record(record_id):
     """Delete a status record."""
     record = db.get(StatusRecord, record_id)

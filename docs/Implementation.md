@@ -17,23 +17,17 @@ High-level order of implementation. Keep this aligned with `TODO.md`.
   - `web/` for React application and browser tests.
   - `cli/` for Cobra/Viper client and Go tests.
   - `docker-compose.yml` for PostgreSQL 18 and Compose-managed local development support.
-- Draft initial REST API contract under `/api/v1`.
-- Define environment configuration for `local`, `test`, `stage`, and `production`, with `DATABASE_URL` injected per environment.
-- Convert open questions into TODO tasks or blockers.
+- Draft initial REST API contract under `/api` (migrated from `/api/v1`).
 
-## MVP
+#### Phase 2: Persistence And Client Implementation
 
-- Scaffold `api/`, `web/`, and `cli/` projects with pinned dependency manifests.
-- Add Docker Compose v2 local development support with a PostgreSQL 18 `db` service.
-- Add Compose support for API and web services when useful for repeatable development startup.
-- Implement API application factory, environment-based config loading, health/readiness endpoints, SQLAlchemy setup, and Alembic migration baseline.
-- Ensure API config accepts `DATABASE_URL` for local, test, stage, and production without code changes.
-- Implement `status_record` database model and REST CRUD endpoints:
-  - `GET /api/v1/status-records`
-  - `POST /api/v1/status-records`
-  - `GET /api/v1/status-records/{id}`
-  - `PATCH /api/v1/status-records/{id}`
-  - `DELETE /api/v1/status-records/{id}`
+- Define migration strategy and baseline migration for `status_record` table.
+- Implement API endpoints for CRUD operations:
+  - `GET /api`
+  - `POST /api`
+  - `GET /api/{id}`
+  - `PATCH /api/{id}`
+  - `DELETE /api/{id}`
 - Add API validation, JSON error responses, filtering, sorting, and pagination.
 - Implement web list, detail, create/edit form, delete confirmation, and API error states.
 - Implement CLI commands:

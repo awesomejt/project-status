@@ -31,7 +31,7 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 
 ## Architecture Notes
 
-- Use REST endpoints under `/api/v1`.
+- Use REST endpoints under `/api` (migrated from `/api/v1`).
 - First resource is `status_record`, supporting create, list, read, update, and delete.
 - List endpoints should support pagination and common filters from the first API release.
 - Database migrations should be introduced with the first schema commit.
