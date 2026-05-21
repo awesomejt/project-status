@@ -22,6 +22,11 @@ class Config:
         raise ValueError("DATABASE_URL environment variable is required")
 
 
+class LocalConfig(Config):
+    """Local development configuration."""
+    DEBUG = True
+
+
 class DevelopmentConfig(Config):
     """Development configuration."""
     DEBUG = True
@@ -39,6 +44,7 @@ class TestingConfig(Config):
 
 
 config = {
+    "local": LocalConfig,
     "development": DevelopmentConfig,
     "production": ProductionConfig,
     "testing": TestingConfig,

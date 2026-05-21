@@ -6,8 +6,8 @@ WORKDIR /app
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 # Install dependencies
-COPY uv.lock pyproject.toml /app/
-RUN uv sync --frozen --no-dev
+COPY pyproject.toml /app/
+RUN uv pip install --system -e .
 
 # Set Python path
 ENV PYTHONPATH=/app

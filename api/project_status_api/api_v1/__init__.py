@@ -2,6 +2,14 @@ from flask import Blueprint, request, jsonify
 from uuid import UUID
 from ..models import StatusRecord
 from .. import db
+from ..utils import (
+    validate_json,
+    validate_status,
+    validate_string,
+    validate_optional_string,
+    validate_tags,
+    make_error_response,
+)
 
 bp = Blueprint("api_v1", __name__)
 
@@ -9,19 +17,29 @@ bp = Blueprint("api_v1", __name__)
 @bp.route("/status-records", methods=["POST"])
 def create_status_record():
     """Create a new status record."""
-    data = request.get_json()
+    is_valid, result, status_code = validate_json(
+        request,
+        required_fields=["project_name", "short_name", "status"],
+        custom_validators={
+            "status": validate_status,
+            "project_name": lambda v: validate_string(v, "project_name", max_length=255),
+            "short_name": lambda v: validate_string(v, "short_name", max_length=50),
+            "phase": validate_optional_string,
+            "summary": lambda v: validate_optional_string(v, max_length=500),
+            "reason": validate_optional_string,
+            "details": validate_optional_string,
+            "tags": validate_tags,
+            "source": lambda v: validate_optional_string(v, max_length=50),
+        },
+    )
     
-    if not data:
-        return jsonify({"error": "Request body required"}), 400
+    if not is_valid:
+        response, code = make_error_response(result, status_code)
+        return jsonify(response), code
     
-    required_fields = ["project_name", "short_name", "status"]
-    for field in required_fields:
-        if field not in data:
-            return jsonify({"error": f"Missing required field: {field}"}), 400
+    data = result
     
-    valid_statuses = ["active", "paused", "blocked", "working", "error", "stopped", "completed"]
-    if data["status"] not in valid_statuses:
-        return jsonify({"error": f"Invalid status. Must be one of: {valid_statuses}"}), 400
+    tags_value = data.get("tags") if "tags" in data else []
     
     record = StatusRecord(
         project_name=data["project_name"],
@@ -31,44 +49,38 @@ def create_status_record():
         summary=data.get("summary"),
         reason=data.get("reason"),
         details=data.get("details"),
-        tags=data.get("tags", []),
-        source=data.get("source", "api"),
+        tags=tags_value,
+        source=data.get("source"),
     )
     
     db.add(record)
     db.commit()
     
-    response = {
-        "id": str(record.id),
-        "project_name": record.project_name,
-        "short_name": record.short_name,
-        "status": record.status,
-        "phase": record.phase,
-        "summary": record.summary,
-        "reason": record.reason,
-        "details": record.details,
-        "tags": record.tags,
-        "source": record.source,
-        "created_at": record.created_at.isoformat(),
-        "updated_at": record.updated_at.isoformat(),
-    }
-    return jsonify(response), 201
+    return jsonify(record.to_dict()), 201
 
 
 @bp.route("/status-records", methods=["GET"])
 def list_status_records():
     """List status records with pagination and filters."""
+    from sqlalchemy import func
     page = request.args.get("page", 1, type=int)
     per_page = request.args.get("per_page", 20, type=int)
     status_filter = request.args.get("status")
     
+    # Build query
     query = db.query(StatusRecord)
     
     if status_filter:
         query = query.filter(StatusRecord.status == status_filter)
     
-    query = query.order_by(StatusRecord.created_at.desc())
-    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    # Get total count
+    total = query.count()
+    pages = (total + per_page - 1) // per_page if total > 0 else 1
+    
+    # Apply pagination
+    offset = (page - 1) * per_page
+    query = query.order_by(StatusRecord.created_at.desc()).offset(offset).limit(per_page)
+    records_list = query.all()
     
     records = [
         {
@@ -81,15 +93,15 @@ def list_status_records():
             "created_at": r.created_at.isoformat(),
             "updated_at": r.updated_at.isoformat(),
         }
-        for r in pagination.items
+        for r in records_list
     ]
     
     return jsonify({
         "records": records,
         "page": page,
         "per_page": per_page,
-        "total": pagination.total,
-        "pages": pagination.pages,
+        "total": total,
+        "pages": pages,
     })
 
 
@@ -124,38 +136,37 @@ def update_status_record(record_id):
     record = db.get(StatusRecord, record_id)
     
     if not record:
-        return jsonify({"error": "Record not found"}), 404
+        response, code = make_error_response("Record not found", 404)
+        return jsonify(response), code
     
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "Request body required"}), 400
+    is_valid, result, status_code = validate_json(
+        request,
+        custom_validators={
+            "status": validate_status,
+            "project_name": lambda v: validate_string(v, "project_name", max_length=255),
+            "short_name": lambda v: validate_string(v, "short_name", max_length=50),
+            "phase": validate_optional_string,
+            "summary": lambda v: validate_optional_string(v, max_length=500),
+            "reason": validate_optional_string,
+            "details": validate_optional_string,
+            "tags": validate_tags,
+        },
+    )
     
+    if not is_valid:
+        response, code = make_error_response(result, status_code)
+        return jsonify(response), code
+    
+    data = result
     updatable_fields = ["project_name", "short_name", "status", "phase", "summary", "reason", "details", "tags"]
-    valid_statuses = ["active", "paused", "blocked", "working", "error", "stopped", "completed"]
     
     for field in updatable_fields:
         if field in data:
-            if field == "status" and data[field] not in valid_statuses:
-                return jsonify({"error": f"Invalid status. Must be one of: {valid_statuses}"}), 400
             setattr(record, field, data[field])
     
     db.commit()
     
-    response = {
-        "id": str(record.id),
-        "project_name": record.project_name,
-        "short_name": record.short_name,
-        "status": record.status,
-        "phase": record.phase,
-        "summary": record.summary,
-        "reason": record.reason,
-        "details": record.details,
-        "tags": record.tags,
-        "source": record.source,
-        "created_at": record.created_at.isoformat(),
-        "updated_at": record.updated_at.isoformat(),
-    }
-    return jsonify(response)
+    return jsonify(record.to_dict())
 
 
 @bp.route("/status-records/<uuid:record_id>", methods=["DELETE"])
