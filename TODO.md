@@ -79,7 +79,7 @@ These items are good candidates for a local model or cloud agent.
 - [X] Scaffold React web application with TypeScript and Vite. Completed - web/ directory scaffolded with React 19.2.6, Vite 8.0.12, TypeScript, environment variable support.
 - [X] Implement web API client and environment-based API base URL configuration. Completed - Created types/statusRecord.ts and api/client.ts with CRUD operations and environment-based VITE_API_BASE_URL configuration.
 - [X] Implement web status record list view. Completed - Created StatusListView component with table display, status filtering, pagination, loading/error/empty states.
-- [ ] Implement web create/edit status record form.
+- [W] Implement web create/edit status record form.
 - [ ] Implement web status record detail view.
 - [ ] Implement web delete confirmation flow.
 - [ ] Implement web loading, empty, validation, and API error states.

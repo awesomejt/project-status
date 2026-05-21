@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "active"
+status: "working"
 phase: "implementation"
-reason: "API path migration complete - api_v1 module renamed to api"
+reason: "Implementing web create/edit status record form"
 worker: "opencode"
-updated: "2026-05-21 17:35 MDT"
+updated: "2026-05-21 18:00 MDT"
