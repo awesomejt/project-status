@@ -58,7 +58,7 @@ These items are good candidates for a local model or cloud agent.
 - [X] Add Docker Compose v2 support for PostgreSQL 18 local development. Completed - docker-compose.yml configured.
 - [X] Add Dockerfiles for API and web if Compose-managed service containers are part of the local workflow. Completed - api/Dockerfile present.
 - [X] Add Compose services or profiles for `db`, `api`, `web`, migrations, and API tests. Completed - db, api, web services configured.
-- [ ] Add example environment files for local, test, stage, and production without secrets.
+- [W] Add example environment files for local, test, stage, and production without secrets.
 - [ ] Add root development notes for running all three parts locally with Docker Compose.
 - [ ] Add CI-ready validation commands once project manifests exist.
 
