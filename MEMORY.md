@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 03:35 - opencode
+
+- Task: Implement web status record list view.
+- Files changed: `web/src/components/StatusListView.tsx` (new), `web/src/App.tsx`.
+- Validation: TypeScript typecheck passed.
+- Result: Created StatusListView component with table display, status filtering (all 7 status values), pagination controls, loading spinner, error state display, empty state message, and status badges with color coding. Replaced default Vite/React welcome page with the status list view.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 03:25 - opencode
 
 - Task: Implement web API client and environment-based API base URL configuration.
