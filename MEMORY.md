@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 02:50 - opencode
+
+- Task: Add root development notes for running all three parts locally with Docker Compose.
+- Files changed: `docs/Development.md` (new), `TODO.md`, `status.yaml`.
+- Validation: File created with comprehensive documentation covering prerequisites, quick start, service details, environment variables, port allocation, development workflows, and troubleshooting.
+- Result: Added `docs/Development.md` with local development guide for PostgreSQL 18, Flask API, and React web services via Docker Compose v2. Includes commands for starting services, running tests, migrations, and common development workflows.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 02:35 - opencode
 
 - Task: Add example environment files for local, test, stage, and production without secrets.
