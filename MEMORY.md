@@ -15,6 +15,8 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 
 ## Key Decisions
 
+- JSON validation framework uses a centralized `validate_json` function with pluggable field validators.
+- Error responses follow a consistent format: `{"error": {"code": <http_code>, "message": "<human_readable>", "details": <optional>}}`.
 - Project has three top-level parts: `api/`, `web/`, and `cli/`.
 - API is the system of record and the only component that talks to PostgreSQL.
 - Web and CLI clients call the API for all behavior.
@@ -62,6 +64,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 ## Agent Run Log
 
 Newest entries first.
+
+### 2026-05-21 02:00 - opencode
+
+- Task: Implement JSON validation and consistent API error responses.
+- Files changed: `api/project_status_api/utils.py` (new), `api/project_status_api/api_v1/__init__.py`.
+- Validation: Python syntax check passed for both files.
+- Result: Added centralized validation utilities (`validate_json`, `validate_status`, `validate_string`, `validate_optional_string`, `validate_tags`, `make_error_response`). Updated `create_status_record` and `update_status_record` endpoints to use the new validation framework with consistent error responses.
+- Commit: `b5472a2` - feat(api): add JSON validation and consistent error responses.
+- Blockers or follow-up: none.
 
 ### 2026-05-20 23:57 - Codex
 
