@@ -56,7 +56,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Pull latest changes before the review session. Completed 2026-05-21 by Codex; repo was already up to date.
 - [X] Review source, tests, configs, and docs for code quality, structure, and test coverage. Completed 2026-05-21 by Codex; open items are listed below.
 - [X] Confirm local tool availability for required project tools. Completed 2026-05-21 by Codex: Python 3.14.4, uv 0.11.15, Node.js 24.15.0, npm 11.12.1, Go 1.26.3, Docker 29.5.1, Docker Compose 5.1.3, psql 18.4, GNU Make 4.4.1.
-- [ ] Align local Python patch level with `docs/Tech-Stack.md` target of Python 3.14.5, or update the docs if Python 3.14.4 is acceptable.
+- [W] Align local Python patch level with `docs/Tech-Stack.md` target of Python 3.14.5, or update the docs if Python 3.14.4 is acceptable.
 - [ ] Use `uv run ruff` or install project dev dependencies before API lint/format validation; `ruff` is not currently available as a global command.
 - [ ] Re-check current dependency versions before implementation if more than a week has passed since the last version verification.
 
