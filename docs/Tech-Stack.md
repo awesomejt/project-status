@@ -29,6 +29,8 @@ Document the approved tools, languages, frameworks, libraries, and versions for 
   - API: pytest, Flask test client, database-backed integration tests using the PostgreSQL 18 container.
   - Web: Vitest, React Testing Library, and Playwright when browser workflow coverage is needed.
   - CLI: Go `testing`, command tests, HTTP client tests with `httptest`.
+  - Curl smoke checks: host-run Bash script using `curl` and optionally `jq` against a running local Docker stack.
+  - Containerized integration: dedicated Docker/Compose Python test runner for black-box API checks.
   - End-to-end: API plus PostgreSQL integration tests, then optional web/CLI smoke tests.
 
 ## Commands
@@ -52,6 +54,12 @@ docker compose up -d db
 cd api && DATABASE_URL="${DATABASE_URL}" uv run pytest
 cd web && npm test
 cd cli && go test ./...
+
+# Run quick host smoke checks against the Docker stack after the script exists
+./scripts/smoke-curl.sh
+
+# Run containerized Python integration tests after the service exists
+docker compose run --rm integration-test
 
 # Build after scaffolding
 cd web && npm run build

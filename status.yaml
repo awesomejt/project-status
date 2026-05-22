@@ -11,7 +11,7 @@
 #   working - agent is actively working on a task; other agents should skip
 
 status: "active"
-phase: "tests-and-quality"
-reason: "Validation complete - web/CLI passed, API needs ruff install"
-worker: "opencode"
-updated: "2026-05-21 20:30 MDT"
+phase: "review-and-planning"
+reason: "Workflow update complete; agent guardrails and cloud AI review/refactor tasks are documented"
+worker: "codex"
+updated: "2026-05-21 21:16 MDT"

@@ -14,6 +14,8 @@ Use this before asking for final review, opening a pull request, or releasing.
 - [ ] Code follows the selected stack and local conventions.
 - [ ] Changes are focused and reviewable.
 - [ ] Public interfaces, schemas, routes, commands, or configs are documented.
+- [ ] API, web, CLI, tests, and docs agree on route paths, request/response fields, IDs, and error shapes.
+- [ ] Generated or migrated code does not leave stale names, old endpoint paths, or imagined response fields behind.
 - [ ] Error states and empty states are handled where relevant.
 - [ ] Secrets and credentials are not committed.
 
@@ -22,6 +24,8 @@ Use this before asking for final review, opening a pull request, or releasing.
 - [ ] Unit tests cover important logic.
 - [ ] Integration or end-to-end tests cover critical workflows when appropriate.
 - [ ] Lint, format check, type check, build, and test commands pass when available.
+- [ ] Smoke or integration checks validate cross-module behavior when API, web, CLI, or Docker contracts change.
+- [ ] Test fixtures match the real application factory, database backend, route paths, and response shapes.
 - [ ] Manual validation tasks are listed in `TODO.md`.
 
 ## Frontend Or UX
@@ -45,3 +49,10 @@ Use this before asking for final review, opening a pull request, or releasing.
 - [ ] Done items are moved to Done.
 - [ ] Manual validation tasks are not hidden inside AI task lists.
 - [ ] Any commits are small, logical, and clearly named.
+
+## Cloud Review
+
+- [ ] A cloud-based AI review has checked contract alignment across API, web, CLI, Docker, docs, and tests before real use.
+- [ ] Review findings are captured in `TODO.md` with severity or risk ordering.
+- [ ] Refactors from review are split into focused tasks with validation.
+- [ ] Production-readiness risks, test gaps, and deployment assumptions are documented.

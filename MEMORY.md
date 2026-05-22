@@ -8,10 +8,10 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 
 ## Current Status
 
-- Current phase: planning complete for API, web, and CLI MVP.
-- Last major milestone: documented requirements, architecture, tech stack, implementation phases, Docker Compose local development, pytest API testing, and TODO for three-part system.
-- Next recommended task: scaffold the monorepo structure and local PostgreSQL 18 development environment.
-- Current blocker: none blocking agent work, but Jason should confirm status fields, deployment target, stage/production database secrets, and OpenAPI timing.
+- Current phase: review and planning for API namespace migration and quality cleanup.
+- Last major milestone: reviewed project structure, source, tests, configs, and local tool availability; reorganized TODO into module-specific implementation phases.
+- Next recommended task: run the cloud review lane or update requirements/docs, then implement the API namespace migration from `/api/*` to `/api/project/status/*` across API, web, CLI, tests, and API docs.
+- Current blocker: none blocking agent planning work, but Jason should confirm whether health/readiness/docs endpoints move and whether temporary `/api/*` compatibility routes are needed.
 
 ## Key Decisions
 
@@ -25,13 +25,15 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 - CLI implementation stack: Go 1.26, Cobra, Viper.
 - Docker and Docker Compose v2 are the default local development orchestration tools.
 - API testing uses pytest.
+- Add two integration feedback layers: a host-run Bash/curl smoke script for immediate human feedback, and a dedicated Python Docker/Compose integration-test container for repeatable local and agentic black-box API workflow validation.
+- Before real use, run a cloud-based AI review/refactor lane focused on contract alignment, test reliability, integration behavior, maintainability, and production-readiness risks.
 - Local development uses a PostgreSQL 18 container.
 - Stage and production may use dedicated PostgreSQL VMs, selected by environment-specific `DATABASE_URL` values.
 - Authentication, authorization, and advanced logging remain out of scope for MVP.
 
 ## Architecture Notes
 
-- Use REST endpoints under `/api` (migrated from `/api/v1`).
+- Planned status-record REST namespace is `/api/project/status` (to migrate from current `/api` routes).
 - First resource is `status_record`, supporting create, list, read, update, and delete.
 - List endpoints should support pagination and common filters from the first API release.
 - Database migrations should be introduced with the first schema commit.
@@ -43,6 +45,7 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 - Verified on 2026-05-20 MDT: Go 1.26.3, Python 3.14.5, PostgreSQL 18.4, Cobra v1.10.2, and Viper v1.21.0 from official release/package sources.
 - React 19.2 is the latest documented stable React feature release; pin latest safe React 19.x patch during scaffolding and avoid canary/experimental builds.
 - Keep local, test, stage, and production configuration environment-driven. Do not commit actual stage or production database URLs.
+- Local tool check on 2026-05-21 MDT: Python 3.14.4, uv 0.11.15, Node.js 24.15.0, npm 11.12.1, Go 1.26.3, Docker 29.5.1, Docker Compose 5.1.3, psql 18.4, GNU Make 4.4.1. `ruff` is not globally installed; use `uv run ruff` after syncing API dev dependencies.
 
 ## Manual Validation Findings
 
@@ -53,6 +56,8 @@ Record findings from real systems, live services, browser/device testing, deploy
 ## Open Questions
 
 - Does Jason approve the initial `status_record` fields and status value set in `docs/Requirements.md`?
+- Should health/readiness/docs endpoints stay at `/health`, `/ready`, and `/api/docs`, or move under `/api/project/status` as part of the namespace migration?
+- Are temporary compatibility routes or redirects from `/api/*` required?
 - What is the deployment target and production PostgreSQL hosting approach?
 - How will stage and production `DATABASE_URL` secrets be provided to the deployed API?
 - Should OpenAPI documentation be required for MVP?
@@ -64,6 +69,14 @@ Record findings from real systems, live services, browser/device testing, deploy
 ## Agent Run Log
 
 Newest entries first.
+
+### 2026-05-21 21:10 - Codex
+
+- Task: Review project for API path migration, code quality, structure, tests, local tools, and TODO planning only.
+- Files changed: `AGENTS.md`, `AGENT_WORKFLOW.md`, `QUALITY_CHECKLIST.md`, `TODO.md`, `docs/Implementation.md`, `docs/Requirements.md`, `docs/Tech-Stack.md`, `MEMORY.md`, `status.yaml`.
+- Validation: Documentation-only update. Ran `git pull --ff-only` (already up to date), inspected API/web/CLI/docs/configs/tests, and checked local tool availability. No code behavior was changed.
+- Result: Added TODOs for migrating `/api/*` to `/api/project/status/*`, split implementation work into API/web/CLI module phases, captured quality/test/structure findings, added CLI build and root Makefile TODOs, recorded local tool gaps, added planning notes for both a host-run curl smoke script and a dedicated Python integration-test Docker container, and added workflow guardrails plus a cloud review/refactor lane before real use.
+- Blockers or follow-up: Jason should confirm endpoint compatibility policy and whether health/readiness/docs move.
 
 ### 2026-05-21 20:45 - opencode
 

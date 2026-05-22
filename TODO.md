@@ -6,8 +6,8 @@ Task list for `Project Status`, organized by ownership and project phase.
 
 Items here require Jason's input, a decision, credentials, external access, or manual validation before agent work can continue.
 
-- [X] Replace all template placeholder values in project files before starting agent work.
 - [ ] Confirm the exact `status_record` field set and allowed status values in `docs/Requirements.md`.
+- [ ] Decide whether health/readiness/docs endpoints stay at `/health`, `/ready`, and `/api/docs`, or also move under the project status API namespace.
 - [ ] Confirm deployment target and stage/production PostgreSQL VM hosting approach.
 - [ ] Confirm secret management approach for stage and production `DATABASE_URL` values.
 - [ ] Decide whether OpenAPI documentation is required for MVP or can follow initial CRUD implementation.
@@ -19,97 +19,125 @@ These items need Jason to validate on real systems, live services, devices, acco
 - [ ] Confirm requirements and success criteria in `PROJECT_BRIEF.md`.
 - [ ] Confirm chosen stack and deployment target.
 - [ ] Confirm credentials, API keys, and production access are not committed.
-- [ ] Validate API CRUD behavior against a real PostgreSQL 18 database.
+- [ ] Validate API CRUD behavior against a real PostgreSQL 18 database after the path migration.
 - [ ] Validate Docker Compose v2 local development startup for PostgreSQL 18, API, and web workflows.
 - [ ] Validate stage `DATABASE_URL` against the stage PostgreSQL VM when available.
 - [ ] Validate production `DATABASE_URL` against the production PostgreSQL VM during release readiness.
-- [ ] Validate web workflows in a browser at desktop and mobile widths.
-- [ ] Validate CLI workflows against a running local API.
+- [ ] Validate web workflows in a browser at desktop and mobile widths after the API path migration.
+- [ ] Validate CLI workflows against a running local API after the API path migration.
 - [ ] Validate deployment or release workflow on the target environment.
 
 ## AI Agent Work
 
 These items are good candidates for a local model or cloud agent.
 
-### Discovery
+### Review
 
-- [ ] Re-check current dependency versions before scaffolding if more than a week has passed since 2026-05-20.
-- [ ] Confirm local tool availability for Python 3.14, Go 1.26, Node.js 24 LTS, Docker, and Docker Compose v2.
-- [ ] Confirm the official PostgreSQL 18 container tag to use for local development.
+Use this section for a cloud-based AI agent or larger-context reviewer before real use, release, or deployment.
 
-### Planning
+- [ ] Cloud review: build a current contract map for API routes, request/response JSON, error shapes, CLI commands, web API calls, database schema, Docker services, environment variables, and build outputs.
+- [ ] Cloud review: compare `docs/Requirements.md`, `docs/Architecture.md`, `docs/Implementation.md`, API docs, source, tests, and README for stale or conflicting contracts.
+- [ ] Cloud review: inspect API implementation for correctness, transaction/session lifecycle, validation gaps, error consistency, migration usage, pagination/filter behavior, and PostgreSQL assumptions.
+- [ ] Cloud review: inspect web implementation for API contract alignment, state/error handling, accessibility, route behavior, stale scaffold artifacts, and missing tests.
+- [ ] Cloud review: inspect CLI implementation for UUID handling, list response parsing, command UX, config persistence, API error parsing, and build output conventions.
+- [ ] Cloud review: inspect Docker/Compose and local development workflows for missing Dockerfiles, service readiness, environment variable consistency, migration/test services, and repeatability.
+- [ ] Cloud review: inspect test code for fixtures that match the real app, useful coverage, reliable isolation, and compatibility with PostgreSQL-specific model fields.
+- [ ] Cloud review: run or specify the closest available validation commands and record exact failures, skipped checks, and missing tooling.
+- [ ] Cloud review: convert findings into prioritized TODO items before broad refactoring begins.
+- [ ] Cloud refactor: align API path migration across docs, API, web, CLI, tests, smoke checks, and integration tests.
+- [ ] Cloud refactor: repair API tests and test fixtures so they run against the real app and database strategy.
+- [ ] Cloud refactor: repair CLI/API contract mismatches, including UUID IDs and list response field names.
+- [ ] Cloud refactor: add the curl smoke script and Python integration-test container, then use them as validation gates.
+- [ ] Cloud refactor: add the root `Makefile` and standardized `make validate`, `make smoke`, `make integration-test`, `make build-cli`, and cleanup targets.
+- [ ] Cloud review signoff: confirm all high-risk review findings are resolved or explicitly deferred before real use.
 
-- [X] Migrate API paths from `/api/v1/status-records/*` to `/api/*`: Completed 2026-05-21 - Routes already at `/api/*` (was `/api/v1/status-records`). Renamed `api_v1` module to `api`.
-- [ ] Draft the initial `/api/*` request and response contract (updated from `/api/v1/status-records`).
+### Discovery And Environment
+
+- [X] Pull latest changes before the review session. Completed 2026-05-21 by Codex; repo was already up to date.
+- [X] Review source, tests, configs, and docs for code quality, structure, and test coverage. Completed 2026-05-21 by Codex; open items are listed below.
+- [X] Confirm local tool availability for required project tools. Completed 2026-05-21 by Codex: Python 3.14.4, uv 0.11.15, Node.js 24.15.0, npm 11.12.1, Go 1.26.3, Docker 29.5.1, Docker Compose 5.1.3, psql 18.4, GNU Make 4.4.1.
+- [ ] Align local Python patch level with `docs/Tech-Stack.md` target of Python 3.14.5, or update the docs if Python 3.14.4 is acceptable.
+- [ ] Use `uv run ruff` or install project dev dependencies before API lint/format validation; `ruff` is not currently available as a global command.
+- [ ] Re-check current dependency versions before implementation if more than a week has passed since the last version verification.
+
+### Planning And Documentation
+
+- [ ] Update `docs/Requirements.md` to replace `/api/*` status endpoints with `/api/project/status/*`.
+- [ ] Update `docs/Architecture.md` to describe `/api/project/status` as the stable status-record API namespace.
+- [ ] Update `docs/Implementation.md` whenever the migration plan changes; implementation phases are now split by API, web, and CLI module.
+- [ ] Update `docs/Tech-Stack.md` command examples so CLI builds write the binary to `build/project-status`.
+- [ ] Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow.
+- [ ] Update `api/docs/api-docs.md` and the served API docs endpoint content for `/api/project/status/*`.
+- [ ] Draft the final request/response contract for `/api/project/status`, `/api/project/status/{id}`, and supported query parameters.
+- [ ] Define the lightweight curl smoke-check script contract: target API URL, required commands, expected output, and pass/fail exit codes.
+- [ ] Define the Python integration-test container contract: inputs, target API URL, database reset expectations, output format, and pass/fail exit codes.
+- [ ] Decide whether to support temporary redirects or compatibility routes from `/api/*` to `/api/project/status/*`.
 - [ ] Decide whether to generate an OpenAPI spec from Flask code or maintain a hand-written spec.
 - [ ] Choose the production WSGI server after deployment target is known.
-- [ ] Define the status record database indexes for list filters and sort order.
 - [ ] Define local, test, stage, and production configuration precedence for API settings.
 - [ ] Decide Compose profiles or service layout for `db`, `api`, `web`, migration, and test workflows.
 
-### Scaffolding
+### Implementation Phase: API Module
 
-- [X] Create top-level `api/`, `web/`, and `cli/` directories. Completed - directories exist.
-- [X] Add root `.gitignore` entries for Python, Node, Go, database, build, and local environment artifacts. Completed - .gitignore present.
-- [X] Add Docker Compose v2 support for PostgreSQL 18 local development. Completed - docker-compose.yml configured.
-- [X] Add Dockerfiles for API and web if Compose-managed service containers are part of the local workflow. Completed - api/Dockerfile present.
-- [X] Add Compose services or profiles for `db`, `api`, `web`, migrations, and API tests. Completed - db, api, web services configured.
-- [X] Add example environment files for local, test, stage, and production without secrets. Completed - .env.example.local, .env.example.test, .env.example.stage, .env.example.production added to api/ directory.
-- [X] Add root development notes for running all three parts locally with Docker Compose. Completed - docs/Development.md created with PostgreSQL 18, API, web service documentation and troubleshooting guide.
-- [X] Add CI-ready validation commands once project manifests exist. Completed - API: ruff lint/format, pytest; Web: ESLint, TypeScript typecheck, Vite build.
+- [ ] Change the Flask status-record blueprint prefix from `/api` to `/api/project/status`.
+- [ ] Update API route tests and fixtures to use `/api/project/status` and UUID record IDs.
+- [ ] Fix the API pytest fixtures so they match the current application factory and database/session structure.
+- [ ] Decide whether tests should use PostgreSQL-only fixtures because the model uses PostgreSQL `ARRAY`, or refactor tags storage for SQLite-compatible unit tests.
+- [ ] Remove or implement the stale `/api/ping` test expectation.
+- [ ] Normalize not-found and delete responses to the documented error/response format.
+- [ ] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`.
+- [ ] Implement or remove the documented `phase` list filter so API, web, and CLI behavior match.
+- [ ] Decide whether runtime `Base.metadata.create_all()` should remain or migrations should be the only schema creation path outside tests.
+- [ ] Review database session lifecycle and app configuration so test, local, stage, and production environments cannot leak state across app instances.
 
-### Implementation
+### Implementation Phase: Web Module
 
-- [X] Add Alembic migration baseline for PostgreSQL 18. Completed - alembic/env.py configured, 001_initial_status_records.py migration added.
-- [X] Implement API configuration loading from environment variables with `DATABASE_URL` support for local, test, stage, and production. Completed - config.py with multi-environment support.
-- [X] Add configuration validation that fails fast when `DATABASE_URL` is missing in API runtime contexts. Completed - Config class raises ValueError if DATABASE_URL missing.
-- [X] Implement Flask application factory and versioned blueprint structure. Completed - create_app() with api_v1 blueprint.
-- [X] Implement API health and database readiness endpoints. Completed - /health and /ready endpoints.
-- [X] Add SQLAlchemy database setup and session lifecycle. Completed - scoped_session with create_engine in __init__.py.
-- [ ] Add Alembic migration baseline for PostgreSQL 18.
-- [X] Add migration command runnable through Docker Compose. Completed - migrations service added to docker-compose.yml with automatic upgrade on startup.
-- [X] Implement `status_record` model and migration. Completed - StatusRecord model in models.py (auto-create via init_db).
-- [X] Implement create status record endpoint. Completed - POST /api/v1/status-records (migrate to POST /api).
-- [X] Implement list status records endpoint with pagination, sorting, and filters. Completed - GET /api/v1/status-records (migrate to GET /api).
-- [X] Implement read status record by ID endpoint. Completed - GET /api/v1/status-records/<id> (migrate to GET /api/<id>).
-- [X] Implement partial update status record endpoint. Completed - PATCH /api/v1/status-records/<id> (migrate to PATCH /api/<id>).
-- [X] Implement delete status record endpoint. Completed - DELETE /api/v1/status-records/<id> (migrate to DELETE /api/<id>).
-- [X] Implement JSON validation and consistent API error responses. Completed 2026-05-21 - utils.py with validate_json, field validators, make_error_response; updated create and update endpoints.
-- [X] Add API endpoint documentation or OpenAPI output. Completed - Created api/docs/api-docs.md with comprehensive endpoint documentation and /api/docs endpoint to serve it.
-- [X] Scaffold React web application with TypeScript and Vite. Completed - web/ directory scaffolded with React 19.2.6, Vite 8.0.12, TypeScript, environment variable support.
-- [X] Implement web API client and environment-based API base URL configuration. Completed - Created types/statusRecord.ts and api/client.ts with CRUD operations and environment-based VITE_API_BASE_URL configuration.
-- [X] Implement web status record list view. Completed - Created StatusListView component with table display, status filtering, pagination, loading/error/empty states.
-- [X] Implement web create/edit status record form. Completed - StatusForm component with create and edit modes, validation, tags management, peek mode, loading/error states, and routing.
-- [X] Implement web status record detail view. Completed - StatusDetailView component with read-only display, edit button, delete confirmation flow, loading/error states, clickable rows in list view. Updated routes: /detail/:id for view, /edit/:id for form.
-- [X] Implement web delete confirmation flow. Completed - StatusDetailView has modal-style delete confirmation dialog with role=alertdialog, aria-labelledby, aria-describedby, Escape key handler, and 'Deleting...' state.
-- [X] Implement web loading, empty, validation, and API error states. Completed - All components (StatusListView, StatusForm, StatusDetailView) have loading spinners, error states, empty states, and validation error display for form fields.
-- [X] Check web accessibility basics for the primary workflows. Completed - Added aria-labels to buttons, proper label/input associations, keyboard navigation to table rows, dialog role for delete confirmation, form accessibility improvements, accessible tag management.
-- [X] Scaffold Go CLI module with Cobra and Viper. Completed - CLI scaffolded with Cobra v1.10.2 and Viper v1.21.0, including all commands (config, add, list, show, update, delete) and API client with config resolution.
-- [X] Implement CLI API client and config resolution. Completed - Client in internal/client/client.go with HTTP methods, StatusRecord types, pagination support, error handling. Config uses Viper with env var support (PROJECT_STATUS_API_URL, PROJECT_STATUS_OUTPUT).
-- [X] Implement `status config` command. Completed - Shows current config (api_url, output) and allows setting values via `status config set <key> <value>`.
-- [X] Implement `status add` command. Completed - Supports --project-name, --short-name, --status, --phase, --summary, --reason, --details, --tags flags with validation.
-- [X] Implement `status list` command with filter flags. Completed - Supports --page, --per-page, --status, --phase filters with pagination info.
-- [X] Implement `status show` command. Completed - Shows full status record details for given ID with proper error handling for not found.
-- [X] Implement `status update` command. Completed - Supports all updatable fields with partial update support.
-- [X] Implement `status delete` command with confirmation or force flag. Completed - Supports --force flag to skip confirmation prompt.
-- [X] Add CLI output formats such as table and JSON. Completed - All commands support --output flag (table/json), with table as default.
+- [ ] Change the web API client path constant from `/api` to `/api/project/status`.
+- [ ] Update web UI/API assumptions after the API response contract is finalized.
+- [ ] Fix TypeScript client return types so create/read/update methods return `StatusRecord`, not `StatusRecordCreate`.
+- [ ] Add web unit/component tests for list, form, detail, delete, loading, empty, and error states.
+- [ ] Add a browser smoke test for create, list, view, update, and delete workflows when the dev server is available.
+- [ ] Remove unused scaffold assets if they are not part of the final UI.
+
+### Implementation Phase: CLI Module
+
+- [ ] Change CLI HTTP client paths from `/api` to `/api/project/status`.
+- [ ] Change CLI record IDs from `int` to `string` UUIDs across client structs, commands, prompts, and output formatting.
+- [ ] Align CLI list response parsing with the API response field `records` instead of `items`, unless the API contract changes.
+- [ ] Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling.
+- [ ] Add CLI integration smoke tests against a running local API.
+- [ ] Build the CLI binary into a Git-ignored `build/` folder with the binary name `project-status`.
+- [ ] Ensure `.gitignore` continues to exclude the chosen build output path, including `build/project-status` and any `cli/build/` variant if selected.
+- [ ] Add a root `Makefile` to standardize build, lint, test, clean, migration, and Compose workflows.
+- [ ] Add a `make build-cli` target that runs the Go build with output `build/project-status`.
+
+### Scaffolding And Infrastructure
+
+- [ ] Add `web/Dockerfile` or update `docker-compose.yml` so the `web` service no longer points at a missing Dockerfile.
+- [ ] Add a Compose command or profile for running API pytest against PostgreSQL 18.
+- [ ] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack.
+- [ ] Make the curl smoke script dependency-light and require only common shell tools such as `bash`, `curl`, and optionally `jq`.
+- [ ] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks.
+- [ ] Add Python integration-test runner files under a clear path such as `tests/integration/` or `integration/`.
+- [ ] Make both integration runners configurable through environment variables such as `API_BASE_URL`, `TEST_PROJECT_NAME`, and optional cleanup/reset settings.
+- [ ] Add root-level validation commands through the planned `Makefile`.
+- [ ] Add `make smoke` for the host-run curl script and `make integration-test` for the Python containerized test runner.
+- [ ] Confirm `build/`, web build output, Go binaries, local env files, virtualenvs, and generated caches remain excluded from Git.
 
 ### Tests And Quality
 
-- [ ] Add or update unit tests.
-- [ ] Add or update integration/e2e tests where risk justifies it.
-- [ ] Run lint, format check, type check, build, and test commands when available.
+- [ ] Run API lint, format check, and pytest through `uv` after fixing the test harness.
+- [ ] Run web lint, typecheck, build, and tests when web tests exist.
+- [ ] Run CLI `go test ./...` and build to `build/project-status`.
 - [ ] Review with `QUALITY_CHECKLIST.md`.
 - [ ] Add API unit tests for validation, serialization, and service behavior.
-- [ ] Add API pytest configuration, fixtures, and markers.
 - [ ] Add API integration tests against the Docker Compose PostgreSQL 18 container.
 - [ ] Add API migration upgrade test.
-- [ ] Add a Compose command or profile for running API pytest against PostgreSQL 18.
-- [ ] Add web unit/component tests for list, form, detail, delete, loading, empty, and error states.
-- [ ] Add web browser smoke tests for critical workflows when the dev server is available.
-- [ ] Add CLI command tests with mocked HTTP responses.
-- [ ] Add CLI integration smoke tests against a running API.
-- [ ] Add formatting and linting configuration for API, web, and CLI.
+- [ ] Add web tests for API error rendering and form validation.
+- [ ] Add CLI tests for UUID handling and API error parsing.
+- [ ] Add curl smoke coverage for health/readiness plus one minimal create/list/read/delete workflow against the running stack.
+- [ ] Add Python containerized integration coverage for create, list, read, update, delete, validation errors, not-found errors, pagination, and filtering.
+- [ ] Ensure both integration runners print concise diagnostics that are useful in human terminals and agent logs.
 - [ ] Run full validation before the first implementation milestone is marked complete.
 
 ### Documentation And Deployment
@@ -117,19 +145,33 @@ These items are good candidates for a local model or cloud agent.
 - [ ] Update `README.md` setup and usage instructions.
 - [ ] Document deployment, environment variables, and operational notes.
 - [ ] Record decisions and milestones in `MEMORY.md`.
-- [ ] Document API endpoint examples.
-- [ ] Document CLI install, configuration, and command examples.
+- [ ] Document API endpoint examples for `/api/project/status/*`.
+- [ ] Document CLI install, configuration, command examples, and `build/project-status` artifact.
 - [ ] Document web local development and build workflow.
 - [ ] Document database migration workflow.
 - [ ] Document Docker Compose local development workflow.
+- [ ] Document the host-run curl smoke script, including local commands and expected output.
+- [ ] Document the dedicated Python integration-test container, including local commands and expected output.
 - [ ] Document stage and production `DATABASE_URL` configuration for dedicated PostgreSQL VMs.
 - [ ] Document deployment target, release steps, and rollback notes after Jason chooses the target.
+
+## Review Findings From 2026-05-21
+
+- [ ] Current docs and clients still reference `/api`; plan and implement migration to `/api/project/status`.
+- [ ] API tests are not runnable as written: they expect `/api/ping`, pass unsupported kwargs to `create_app`, reference `app.db`, use integer IDs for 404 checks, and use SQLite against a PostgreSQL-specific `ARRAY` column.
+- [ ] CLI does not match the API contract: API IDs are UUID strings but CLI expects ints; API list response uses `records` but CLI expects `items`.
+- [ ] `docker-compose.yml` references `web/Dockerfile`, but that file is missing.
+- [ ] API error responses are inconsistent for not-found paths; some return `{"error": "Record not found"}` instead of the documented structured error object.
+- [ ] API list endpoint accepts `phase` from the CLI but does not currently filter by phase.
+- [ ] API pagination lacks input validation and maximum page-size enforcement.
+- [ ] Root `Makefile` is missing; API has a module-local Makefile only.
+- [ ] CLI build output is not standardized to `build/project-status` yet.
 
 ## In Progress
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [X] Run lint, format check, type check, build, and test commands when available. Completed - Web: 1 warning (useEffect dep), typecheck passed, build successful (260kb). CLI: build and test passed. API: ruff not installed but configured in pyproject.toml.
+- [ ]
 
 ## Blocked
 
@@ -141,8 +183,31 @@ Move blocked tasks here with the blocker and the next required human action.
 
 Move completed items here with a brief note.
 
+- [X] Replace all template placeholder values in project files before starting agent work.
 - [X] Read required project files and relevant planning docs before making changes. Completed 2026-05-20 by Codex.
 - [X] Pulled latest changes before planning update. Completed 2026-05-20 by Codex.
 - [X] Inventory existing repository files. Completed 2026-05-20 by Codex.
 - [X] Update requirements, architecture, tech stack, implementation plan, project brief, memory, and TODO for API/web/CLI direction. Completed 2026-05-20 by Codex.
 - [X] Add Docker Compose, pytest, PostgreSQL 18 container, and stage/production database URL requirements to planning docs and TODO. Completed 2026-05-20 by Codex.
+- [X] Create top-level `api/`, `web/`, and `cli/` directories.
+- [X] Add root `.gitignore` entries for Python, Node, Go, database, build, and local environment artifacts.
+- [X] Add Docker Compose v2 support for PostgreSQL 18 local development.
+- [X] Add API Dockerfile and Compose-managed API service.
+- [X] Add example environment files for local, test, stage, and production without secrets.
+- [X] Add root development notes for running project parts locally with Docker Compose.
+- [X] Add Alembic migration baseline for PostgreSQL 18.
+- [X] Implement API configuration loading from environment variables with `DATABASE_URL` support.
+- [X] Add configuration validation that fails fast when `DATABASE_URL` is missing in API runtime contexts.
+- [X] Implement Flask application factory and API blueprint structure.
+- [X] Implement API health and database readiness endpoints.
+- [X] Add SQLAlchemy database setup and session lifecycle.
+- [X] Add migration command runnable through Docker Compose.
+- [X] Implement `status_record` model and initial migration.
+- [X] Implement status-record create, list, read, update, and delete endpoints under the current `/api` path.
+- [X] Implement JSON validation and structured API error helpers.
+- [X] Add API endpoint documentation.
+- [X] Scaffold React web application with TypeScript and Vite.
+- [X] Implement web API client, list view, create/edit form, detail view, delete confirmation flow, and accessibility basics.
+- [X] Scaffold Go CLI module with Cobra and Viper.
+- [X] Implement CLI API client, config resolution, add, list, show, update, delete, config, and table/JSON output.
+- [X] Run earlier validation pass. Web typecheck/build and CLI build/test passed; API validation still needs dependency/test-harness cleanup.

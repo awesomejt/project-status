@@ -34,6 +34,8 @@ If the task affects structure or rollout, also read `docs/Architecture.md` and `
 - `MEMORY.md` - persistent project memory, decisions, milestones, and run notes.
 - `status.yaml` - shared workflow state for humans and automation.
 - `PROJECT_BRIEF.md` - product goals, constraints, users, and source material.
+- `AGENT_WORKFLOW.md` - recurring local-agent, cloud-agent, and review workflow.
+- `QUALITY_CHECKLIST.md` - pre-review, pre-PR, and pre-release quality gate.
 - `.gitmessage` - Conventional Commit template with AI attribution.
 
 ## Engineering Rules
@@ -47,6 +49,29 @@ If the task affects structure or rollout, also read `docs/Architecture.md` and `
 - Run the most relevant validation before finishing.
 - Update docs when behavior, setup, deployment, or public interfaces change.
 - Do not commit secrets, credentials, local env files, private keys, or generated transcripts.
+
+## Contract And Validation Discipline
+
+This repo is developed by multiple AI agents, including short-context local loops. Prevent drift between docs, API, web, CLI, and tests.
+
+- Treat public contracts as shared source material: routes, request/response JSON, CLI arguments, config names, environment variables, database schema, and build outputs.
+- Before changing API behavior, read the API docs, web client, CLI client, tests, and TODO items that reference that behavior.
+- When changing a public contract, update all affected surfaces in the same task or leave explicit TODOs if the task is intentionally planning-only.
+- Do not mark a task complete just because code was written. "Done" requires the relevant validation to pass, or a clearly documented blocker/test gap.
+- Prefer small, vertical changes that keep API, web, CLI, tests, and docs aligned over broad partially validated rewrites.
+- Keep one canonical path/contract in docs and TODO. Remove stale endpoint names, imagined response fields, and old task wording as soon as the contract changes.
+- If validation cannot run, record why in `MEMORY.md` and keep the task open unless the user explicitly requested documentation-only work.
+
+## Generated Code Guardrails
+
+Local autonomous loops are useful for momentum, but they can create cross-task drift. Each agent run should actively check for it.
+
+- Compare implementation against the current requirements before adding new functionality.
+- Search for old names and paths after migrations, especially API prefixes, response fields, command names, env vars, and build output paths.
+- Verify tests are testing the actual app shape, not an older or imagined interface.
+- Avoid marking TODO items complete from superficial build success alone. Prefer contract tests, smoke checks, or integration checks for cross-module behavior.
+- If a task touches more than one module, validate the shared behavior at the boundary, not just each module in isolation.
+- Use `QUALITY_CHECKLIST.md` before any PR, real-use milestone, or handoff to a cloud reviewer.
 
 ## Status Workflow
 
@@ -66,11 +91,21 @@ Automated agents should set `working` only while actively editing, and return to
 Prefer tasks in this order unless `TODO.md` says otherwise:
 
 1. Blocker removal and requirements clarification.
-2. Failing tests, broken builds, and safety/security issues.
-3. Architecture or scaffolding that unlocks later work.
-4. Core implementation tasks.
-5. Tests and validation gaps.
-6. Documentation, deployment notes, and cleanup.
+2. Contract drift across API, web, CLI, docs, tests, and build outputs.
+3. Failing tests, broken builds, and safety/security issues.
+4. Architecture or scaffolding that unlocks later work.
+5. Core implementation tasks.
+6. Tests and validation gaps.
+7. Documentation, deployment notes, and cleanup.
+
+## Cloud Review Gate
+
+Before real use, release, or deployment, schedule a cloud-based AI review/refactor pass from `TODO.md`.
+
+- Cloud review should prioritize correctness, contract alignment, test reliability, maintainability, and production-readiness risks.
+- Review findings should be added to `TODO.md` before broad refactors begin.
+- Refactors should be split by module or contract boundary and validated with the root workflow once it exists.
+- Do not treat local-loop generated code as production-ready until the cloud review/refactor lane and relevant validation have completed.
 
 ## Chat Logs And External Agent Logs
 

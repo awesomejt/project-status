@@ -18,6 +18,16 @@ On each manual run:
 8. Update `TODO.md`, `MEMORY.md`, and docs.
 9. Summarize changes, validation, blockers, and follow-up.
 
+## Contract Preflight
+
+Run this quick check before implementation tasks, especially after local loop generated work.
+
+1. Identify the contract touched by the task: route, request/response JSON, CLI command, config, environment variable, database schema, build artifact, or user workflow.
+2. Search the repo for the current and previous names of that contract.
+3. Check all affected surfaces: API code, API docs, web client, CLI client, tests, Docker/Compose, README/development docs, and TODO.
+4. If surfaces disagree, prefer a small alignment task before adding new features.
+5. Record unresolved drift in `TODO.md` rather than silently carrying it forward.
+
 ## Local Agent Loop
 
 Use this loop for a persistent local agent, scheduled runner, or workflow manager.
@@ -40,22 +50,48 @@ Use this loop for a persistent local agent, scheduled runner, or workflow manage
 10. Run appropriate tests, checks, or builds.
 11. Update `TODO.md`, `MEMORY.md`, and relevant docs.
 12. If blocked, move the task to `Blocked`, add a `Needs Attention` item, set `status.yaml` to `blocked`, and stop.
-13. If complete, move the task to `Done` and return `status.yaml` to `active`.
+13. If complete and validated, move the task to `Done` and return `status.yaml` to `active`.
 14. Commit and push only when the project workflow explicitly calls for it.
+
+## Done Criteria
+
+A task is done only when the implementation and project state agree.
+
+- The change is implemented or the task was explicitly documentation-only.
+- Public contracts are aligned across API, web, CLI, docs, tests, and config where relevant.
+- The most relevant validation command has passed, or the validation gap is documented in `TODO.md` and `MEMORY.md`.
+- Stale TODO wording, old endpoint paths, and duplicate completed items are cleaned up.
+- `status.yaml` is returned to `active`, `blocked`, `error`, or `stopped`.
+
+Do not move a task to Done based only on generated code, a partial build, or an assumption that another module will be updated later.
 
 ## Task Selection Rules
 
 Prefer tasks in this order:
 
-1. Broken builds, failing tests, or safety/security issues.
-2. Requirements and architecture tasks that unblock many later tasks.
-3. Project scaffolding and developer experience.
-4. Core feature implementation.
-5. Tests and validation gaps.
-6. Documentation and deployment tasks.
-7. Cleanup tasks.
+1. Contract drift between implementation, tests, docs, and clients.
+2. Broken builds, failing tests, or safety/security issues.
+3. Requirements and architecture tasks that unblock many later tasks.
+4. Project scaffolding and developer experience.
+5. Core feature implementation.
+6. Tests and validation gaps.
+7. Documentation and deployment tasks.
+8. Cleanup tasks.
 
 Do not perform manual validation tasks unless Jason explicitly asks. Prepare checklists or scripts for them instead.
+
+## Review Mode
+
+Use this mode before real use, release, deployment, or large refactors. It is especially appropriate for a cloud-based AI agent with larger context.
+
+1. Read all root contract files, docs, source, tests, and configs.
+2. Build a contract map for API routes, request/response JSON, CLI commands, web API calls, database schema, Docker services, environment variables, and build artifacts.
+3. Compare the contract map against implementation and tests.
+4. Run available validation, or document why validation cannot run.
+5. Add findings to the `Review` section in `TODO.md`, ordered by risk.
+6. Refactor only after findings are captured and the work can be split into focused, validated changes.
+
+Cloud review should emphasize correctness, integration behavior, maintainability, test reliability, and production-readiness. It should not expand product scope unless Jason asks.
 
 ## Blocker Handling
 

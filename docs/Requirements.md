@@ -21,6 +21,8 @@
 - Web client built with React that calls the API for list, detail, create, edit, and delete workflows.
 - CLI client written in Go with Cobra commands and Viper configuration, calling the API for the same core workflows.
 - Docker Compose v2 local development workflow for starting PostgreSQL 18 and project services consistently.
+- Lightweight host-run Bash/curl smoke script for immediate human feedback against a running local stack.
+- Dedicated Python integration-test Docker container for repeatable local and agentic API workflow validation.
 - Health and readiness endpoints for local development, automated checks, and deployment probes.
 - Focused unit and integration test coverage for API behavior, database persistence, web API integration points, and CLI command behavior.
 
@@ -47,6 +49,7 @@ The first implementation should support a `status_record` resource with these fi
 - Accessibility: the web client must support keyboard operation, semantic HTML, visible focus states, and readable contrast for the main workflows.
 - Reliability: API writes should be transactional; migrations must be repeatable; health checks should distinguish application health from database readiness.
 - Local development: Docker and Docker Compose v2 should be the primary way to run PostgreSQL 18 and should also support running API/web services when useful.
+- Integration testing: a lightweight curl smoke script should provide fast human feedback, and a dedicated Docker/Compose Python test runner should execute richer black-box API workflow checks against Compose-managed services. Both should return reliable process exit codes.
 - Configuration: the API must read `DATABASE_URL` from environment-specific configuration so local, stage, and production can use different PostgreSQL endpoints without code changes.
 - Environments: local development uses a PostgreSQL 18 container; stage and production may use dedicated PostgreSQL VMs reachable through stage/production database URLs.
 - Compatibility: API runs on Python 3.14 and Flask; database runs on PostgreSQL 18; CLI builds with the latest stable Go toolchain; web targets current evergreen desktop and mobile browsers.
@@ -68,4 +71,6 @@ The first implementation should support a `status_record` resource with these fi
 - Web client can list, create, edit, view, and delete status records through the API.
 - CLI can configure an API base URL and perform add, list, show, update, and delete operations through the API.
 - Unit tests and integration tests cover successful paths and important validation/error paths.
+- A host-run curl smoke script can validate basic project health against a running Docker stack with one documented command.
+- A dedicated Python integration-test container can validate core API workflows against local Compose services with one documented command.
 - README and docs explain local setup, environment variables, development commands, and validation commands.
