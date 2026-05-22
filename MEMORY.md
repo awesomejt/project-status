@@ -70,6 +70,24 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (smoke-curl.sh)
+
+- Task: Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack.
+- Files changed: `scripts/smoke-curl.sh` (new), `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: Bash syntax validated with `bash -n`.
+- Result: Created comprehensive smoke test script at `scripts/smoke-curl.sh` with:
+  - Health and readiness endpoint checks
+  - Full CRUD workflow (create, read, list, update, verify)
+  - Validation error testing (invalid status returns 400)
+  - Not-found error testing (non-existent UUID returns 404)
+  - Automatic cleanup of test records on exit
+  - Colored output with pass/fail indicators
+  - Configurable API URL (default: http://localhost:5000)
+  - Proper exit codes (0=pass, 1=fail, 2=usage error)
+  - Uses only bash and curl (no jq dependency)
+- Commit: `4631d77` - implement smoke-curl.sh script.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (web Dockerfile)
 
 - Task: Add `web/Dockerfile` and `nginx.conf` for containerization.

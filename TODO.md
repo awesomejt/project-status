@@ -113,7 +113,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 ### Scaffolding And Infrastructure
 
 - [X] Add `web/Dockerfile` or update `docker-compose.yml` so the `web` service no longer points at a missing Dockerfile. Completed: Created multi-stage Dockerfile with develop and production stages, plus nginx.conf for SPA routing.
-- [W] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack.
+- [X] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack. Completed 2026-05-22 by opencode; implemented comprehensive smoke test script with health/readiness checks, full CRUD validation, error handling tests, and cleanup.
 - [ ] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack.
 - [ ] Make the curl smoke script dependency-light and require only common shell tools such as `bash`, `curl`, and optionally `jq`.
 - [ ] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks.
