@@ -83,7 +83,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Fix the API pytest fixtures so they match the current application factory and database/session structure. Completed 2026-05-22 by opencode; fixed engine.execute() to use connection.execute() pattern.
 - [ ] Tests should use PostgreSQL 18-only fixtures because the model uses PostgreSQL `ARRAY`. Do not use SQLite for unit tests.
 - [X] Remove or implement the stale `/api/ping` test expectation. Already removed - no ping test exists in test_api.py.
-- [W] Normalize not-found and delete responses to the documented error/response format.
+- [X] Normalize not-found and delete responses to the documented error/response format. Completed 2026-05-22; fixed get_status_record and delete_status_record endpoints to use make_error_response utility.
 - [ ] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`.
 - [ ] Implement or remove the documented `phase` list filter so API, web, and CLI behavior match.
 - [ ] Decide whether runtime `Base.metadata.create_all()` should remain or migrations should be the only schema creation path outside tests.

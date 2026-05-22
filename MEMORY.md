@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (error response normalization)
+
+- Task: Normalize not-found and delete responses to the documented error/response format.
+- Files changed: `api/project_status_api/api/__init__.py`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: Python syntax validated via AST parsing.
+- Result: Fixed `get_status_record` and `delete_status_record` endpoints to use `make_error_response` utility, ensuring all 404 responses return `{"error": {"code": 404, "message": "Record not found"}}` format instead of the inconsistent `{"error": "Record not found"}` format.
+- Commit: `8ef5642` - feat(api): normalize not-found error responses to documented format.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - Codex
 
 - Task: Implement high-priority API/CLI contract fixes to get the CLI working quickly.
