@@ -210,11 +210,59 @@ lsof -i :3000  # Web
 # Or change ports in docker-compose.yml
 ```
 
-## Next Steps
+## API Endpoints
 
-- Web scaffolding pending (React 19 + TypeScript + Vite)
-- CLI scaffolding pending (Go 1.26 + Cobra + Viper)
-- API pytest configuration and fixtures pending
-- API integration tests against PostgreSQL 18 pending
+All status record operations use the `/api/project/status/*` namespace:
 
-See `TODO.md` for detailed task tracking.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/project/status` | List records (supports pagination and filters) |
+| `POST` | `/api/project/status` | Create a new record |
+| `GET` | `/api/project/status/{id}` | Read a specific record |
+| `PATCH` | `/api/project/status/{id}` | Update a record |
+| `DELETE` | `/api/project/status/{id}` | Delete a record |
+
+Query parameters for list endpoint:
+- `page` - Page number (min: 1, max: 10000)
+- `per_page` - Records per page (min: 1, max: 100)
+- `status` - Filter by status value
+- `phase` - Filter by phase value
+
+## CLI Build And Usage
+
+Build the CLI:
+
+```bash
+# Build using Go directly
+cd cli && go build -o ../build/project-status .
+
+# Or use the Makefile
+make build-cli
+```
+
+The binary is created at `build/project-status`.
+
+CLI commands:
+
+```bash
+# Show configuration
+./build/project-status config
+
+# Set API URL
+./build/project-status config set api-url http://localhost:5000
+
+# List records
+./build/project-status list
+
+# Add a new record
+./build/project-status add --project-name "My Project" --short-name "my-proj" --status active
+
+# Show a specific record
+./build/project-status show <id>
+
+# Update a record
+./build/project-status update <id> --status blocked --reason "Waiting on X"
+
+# Delete a record
+./build/project-status delete <id>
+```

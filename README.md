@@ -19,6 +19,40 @@ AI assistants and humans should start with the root files:
 - `AGENT_WORKFLOW.md` - recurring local-agent workflow.
 - `QUALITY_CHECKLIST.md` - engineering quality checklist before review or release.
 
+## Quick Start
+
+Start services:
+
+```bash
+# Start PostgreSQL and services
+docker compose up -d
+
+# Run database migrations
+docker compose up migrations
+```
+
+API is available at `http://localhost:5000`:
+
+```bash
+# List status records
+curl http://localhost:5000/api/project/status
+
+# Create a record
+curl -X POST http://localhost:5000/api/project/status \
+  -H "Content-Type: application/json" \
+  -d '{"project_name": "My Project", "short_name": "my-proj", "status": "active"}'
+```
+
+Build and use the CLI:
+
+```bash
+# Build
+cd cli && go build -o ../build/project-status .
+
+# Use
+./build/project-status list
+```
+
 ## Intended Workflow
 
 1. Fill out `PROJECT_BRIEF.md`.

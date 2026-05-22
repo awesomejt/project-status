@@ -70,6 +70,14 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (documentation update)
+
+- Task: Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow.
+- Files changed: `docs/Development.md`, `README.md`, `.env.example`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Result: Added API endpoint documentation to `docs/Development.md` showing `/api/project/status/*` namespace with method/endpoints table and query parameters. Added CLI build and usage examples to `docs/Development.md`. Added quick start section to `README.md` with Docker Compose commands, API examples, and CLI usage. Added CLI configuration examples to `.env.example`.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (root Makefile)
 
 - Task: Add a root Makefile to standardize build, lint, test, clean, migration, and Compose workflows.

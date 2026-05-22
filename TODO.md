@@ -66,7 +66,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Update `docs/Architecture.md` to describe `/api/project/status` as the stable status-record API namespace. Completed 2026-05-22 by opencode.
 - [X] Update `docs/Implementation.md` whenever the migration plan changes; implementation phases are now split by API, web, and CLI module. Completed 2026-05-22 by opencode; added status markers to completed items in API, Web, and CLI implementation phases.
 - [X] Update `docs/Tech-Stack.md` command examples so CLI builds write the binary to `build/project-status`. Completed 2026-05-22 by opencode.
-- [ ] Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow.
+- [X] Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow. Completed 2026-05-22 by opencode; added API endpoint documentation, CLI build/usage examples to Development.md, quick start section to README.md, and CLI config examples to .env.example.
 - [X] Update `api/docs/api-docs.md` and the served API docs endpoint content for `/api/project/status/*`. Completed 2026-05-22 by opencode; updated all endpoint paths and added phase filter documentation.
 - [ ] Draft the final request/response contract for `/api/project/status`, `/api/project/status/{id}`, and supported query parameters.
 - [ ] Define the lightweight curl smoke-check script contract: target API URL, required commands, expected output, and pass/fail exit codes.
@@ -170,8 +170,6 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [X] Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling. Partial progress 2026-05-22 by Codex; completed 2026-05-22 by opencode with comprehensive client tests for CreateRecord, UpdateRecord, DeleteRecord, and ValidateURL with both success and error cases.
-
 ## Blocked
 
 Move blocked tasks here with the blocker and the next required human action.
@@ -182,6 +180,8 @@ Move blocked tasks here with the blocker and the next required human action.
 
 Move completed items here with a brief note.
 
+- [X] Add or update CLI command tests with mocked HTTP responses. Completed 2026-05-22 by opencode; added comprehensive client tests for CreateRecord, UpdateRecord, DeleteRecord, and ValidateURL with success and error cases.
+- [X] Update docs/Development.md, README.md, and .env.example for API paths and CLI workflow. Completed 2026-05-22 by opencode; added API endpoint documentation, CLI build/usage examples to Development.md, quick start section to README.md, and CLI config examples to .env.example.
 - [X] Contract drift cleanup: remove stale/duplicate TODO items. Completed 2026-05-22 by opencode; removed duplicate integration-test TODO and marked related items complete.
 - [X] Update `docs/Implementation.md` for migration plan changes. Completed 2026-05-22 by opencode; marked completed items in API, Web, and CLI implementation phases with status indicators.
 - [X] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`. Completed 2026-05-22: Code review confirmed validation already implemented for page (1-10000), per_page (1-100), status filter, and phase filter with proper 400 error responses.
