@@ -70,6 +70,44 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - Codex (ignore/build task)
+
+- Task: Verify build artifact ignore coverage and close stale CLI build TODO items.
+- Files changed: `.gitignore`, `TODO.md`, `MEMORY.md`.
+- Validation: Reviewed root `Makefile` and `.gitignore` entries against intended build outputs.
+- Result: Added explicit ignore entries for `build/project-status` and `cli/build/`. Marked TODO items complete for `make build-cli`, build output standardization, and ignore coverage. Added a `Needs Attention` TODO entry for deciding how to handle unstable generated `cli/cmd/*_test.go` command tests.
+- Commit: pending.
+- Blockers or follow-up: CLI command tests in `cli/cmd/*_test.go` still need stabilization (shared global state and `os.Exit` paths).
+
+### 2026-05-22 - Codex (pending changes commit)
+
+- Task: Understand and commit stable pending changes already in the worktree.
+- Files changed: `cli/cmd/config.go`, `cli/cmd/root.go`, `scripts/smoke-curl.sh`.
+- Validation: Reviewed diffs and confirmed intent; changes are localized and non-destructive.
+- Result: Committed command output stream support and smoke script environment variable improvements.
+- Commit: `4273b7b` - test(cli): improve command output hooks and smoke script config.
+- Blockers or follow-up: Generated CLI command tests are present locally but remain unstable; tracked as `Needs Attention` in TODO.
+
+### 2026-05-22 - opencode (CLI smoke tests)
+
+- Task: Add CLI integration smoke tests against a running local API.
+- Files changed: `scripts/smoke-cli.sh` (new), `Makefile`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: Bash syntax validated with `bash -n`.
+- Result: Created comprehensive CLI smoke test script at `scripts/smoke-cli.sh` with:
+  - Help command test
+  - Config show test
+  - Full CRUD workflow (add, list, show, update, verify)
+  - JSON output format test
+  - Validation error testing (invalid status)
+  - Not-found error testing (non-existent UUID)
+  - Automatic cleanup of test records on exit
+  - Colored output with pass/fail indicators
+  - Configurable API URL and CLI binary path
+  - Proper exit codes (0=pass, 1=fail, 2=usage error)
+- Updated Makefile with `smoke-cli` target and modified `smoke` to run both API and CLI smoke tests.
+- Commit: `85e6354` - feat(cli): add CLI integration smoke tests.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (documentation update)
 
 - Task: Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow.

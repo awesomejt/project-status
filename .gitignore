@@ -39,6 +39,8 @@ tmp/
 temp/
 working/
 build/
+build/project-status
+cli/build/
 dist/
 out/
 output/

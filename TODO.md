@@ -6,6 +6,7 @@ Task list for `Project Status`, organized by ownership and project phase.
 
 Items here require Jason's input, a decision, credentials, external access, or manual validation before agent work can continue.
 
+- [ ] Decide whether to keep, rewrite, or drop the newly generated CLI command test suite in `cli/cmd/*_test.go`; tests currently rely on shared global Cobra/Viper state and failure-path `os.Exit` behavior that needs a stable testing approach.
 - [ ] Confirm the exact `status_record` field set and allowed status values in `docs/Requirements.md`.
 - [ ] Decide whether health/readiness/docs endpoints stay at `/health`, `/ready`, and `/api/docs`, or also move under the project status API namespace.
 - [ ] Confirm deployment target and stage/production PostgreSQL VM hosting approach.
@@ -106,9 +107,9 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling. Completed 2026-05-22 by Codex: added client HTTP contract tests for list/show request paths and response parsing.
 - [X] Add CLI integration smoke tests against a running local API. Completed 2026-05-22 by opencode; created scripts/smoke-cli.sh with tests for help, config, add, list, show, update, json output, validation errors, and not-found errors. Updated Makefile with smoke-cli target.
 - [X] Build the CLI binary into a Git-ignored `build/` folder with the binary name `project-status`. Completed 2026-05-22 by Codex.
-- [ ] Ensure `.gitignore` continues to exclude the chosen build output path, including `build/project-status` and any `cli/build/` variant if selected.
+- [X] Ensure `.gitignore` continues to exclude the chosen build output path, including `build/project-status` and any `cli/build/` variant if selected. Completed 2026-05-22 by Codex; verified `build/`, `build/project-status`, and `cli/build/` ignore entries.
 - [X] Add a root `Makefile` to standardize build, lint, test, clean, migration, and Compose workflows. Completed 2026-05-22 by opencode; created comprehensive Makefile with targets for help, validate, lint, format, format-check, typecheck, build, build-cli, test (all modules), smoke, integration-test, dev, db, migrations, clean, and clean-all.
-- [ ] Add a `make build-cli` target that runs the Go build with output `build/project-status`.
+- [X] Add a `make build-cli` target that runs the Go build with output `build/project-status`. Completed 2026-05-22 by opencode; target exists in root `Makefile`.
 
 ### Scaffolding And Infrastructure
 
@@ -121,7 +122,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [ ] Make both integration runners configurable through environment variables such as `API_BASE_URL`, `TEST_PROJECT_NAME`, and optional cleanup/reset settings.
 - [ ] Add root-level validation commands through the planned `Makefile`.
 - [ ] Add `make smoke` for the host-run curl script and `make integration-test` for the Python containerized test runner.
-- [ ] Confirm `build/`, web build output, Go binaries, local env files, virtualenvs, and generated caches remain excluded from Git.
+- [X] Confirm `build/`, web build output, Go binaries, local env files, virtualenvs, and generated caches remain excluded from Git. Completed 2026-05-22 by Codex; verified `.gitignore` coverage and added explicit `build/project-status` and `cli/build/` entries.
 
 ### Tests And Quality
 
@@ -164,7 +165,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [ ] API list endpoint accepts `phase` from the CLI but does not currently filter by phase.
 - [ ] API pagination lacks input validation and maximum page-size enforcement.
 - [ ] Root `Makefile` is missing; API has a module-local Makefile only.
-- [ ] CLI build output is not standardized to `build/project-status` yet.
+- [X] CLI build output is not standardized to `build/project-status` yet. Resolved 2026-05-22 by Codex/opencode; CLI build command and Makefile target now output to `build/project-status`.
 
 ## In Progress
 
