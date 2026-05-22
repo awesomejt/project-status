@@ -16,6 +16,8 @@ from ..utils import (
 
 bp = Blueprint("api", __name__)
 bp_legacy = Blueprint("api_legacy", __name__)
+bp.strict_slashes = False
+bp_legacy.strict_slashes = False
 
 
 def _get_current_time_iso():
@@ -23,6 +25,8 @@ def _get_current_time_iso():
     return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+@bp.route("", methods=["POST"])
+@bp_legacy.route("", methods=["POST"])
 @bp.route("/", methods=["POST"])
 @bp_legacy.route("/", methods=["POST"])
 def create_status_record():
@@ -69,6 +73,8 @@ def create_status_record():
     return jsonify(record.to_dict()), 201
 
 
+@bp.route("", methods=["GET"])
+@bp_legacy.route("", methods=["GET"])
 @bp.route("/", methods=["GET"])
 @bp_legacy.route("/", methods=["GET"])
 def list_status_records():
@@ -169,8 +175,8 @@ def list_status_records():
     )
 
 
-@bp.route("/<uuid:record_id>", methods=["GET"])
-@bp_legacy.route("/<uuid:record_id>", methods=["GET"])
+@bp.route("/<record_id>", methods=["GET"])
+@bp_legacy.route("/<record_id>", methods=["GET"])
 def get_status_record(record_id):
     """Get a specific status record."""
     record = db.get(StatusRecord, record_id)
@@ -196,8 +202,8 @@ def get_status_record(record_id):
     return jsonify(response)
 
 
-@bp.route("/<uuid:record_id>", methods=["PATCH"])
-@bp_legacy.route("/<uuid:record_id>", methods=["PATCH"])
+@bp.route("/<record_id>", methods=["PATCH"])
+@bp_legacy.route("/<record_id>", methods=["PATCH"])
 def update_status_record(record_id):
     """Update a status record (partial update)."""
     record = db.get(StatusRecord, record_id)
@@ -236,8 +242,8 @@ def update_status_record(record_id):
     return jsonify(record.to_dict())
 
 
-@bp.route("/<uuid:record_id>", methods=["DELETE"])
-@bp_legacy.route("/<uuid:record_id>", methods=["DELETE"])
+@bp.route("/<record_id>", methods=["DELETE"])
+@bp_legacy.route("/<record_id>", methods=["DELETE"])
 def delete_status_record(record_id):
     """Delete a status record."""
     record = db.get(StatusRecord, record_id)

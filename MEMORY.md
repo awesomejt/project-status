@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - Codex (API route compatibility fix)
+
+- Task: Fix API collection/detail route compatibility issues uncovered by smoke tests.
+- Files changed: `api/project_status_api/api/__init__.py`, `scripts/smoke-curl.sh`, `TODO.md`, `MEMORY.md`, `status.yaml`.
+- Validation: `docker compose up -d --build api`; `./scripts/smoke-curl.sh` (passed full health/readiness/CRUD/validation/not-found workflow with cleanup).
+- Result: Added both `""` and `"/"` collection route registrations to avoid 308 redirects for clients that omit trailing slashes. Switched detail route converters from `<uuid:record_id>` to `<record_id>` to match current schema (`status_records.id` stored as string/varchar), resolving 500 errors on read/update/delete by ID.
+- Commit: pending.
+- Blockers or follow-up: `make integration-test` still depends on API Compose healthcheck wiring; smoke is healthy.
+
 ### 2026-05-22 - Codex (integration runner env config)
 
 - Task: Make both integration runners configurable via environment variables and align integration test payloads with current API contract.
