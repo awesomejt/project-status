@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - Codex (doc alignment + diagrams)
+
+- Task: Run a docs consistency sweep, reduce mixed signals, and add visual diagrams.
+- Files changed: `docs/Architecture.md`, `docs/Development.md`, `README.md`, `TODO.md`, `MEMORY.md`.
+- Validation: Cross-checked docs against current API-first MVP direction, Compose-first local workflows, and existing smoke/integration tooling.
+- Result: Added Mermaid validation and sequence diagrams, added a Compose-first MVP loop to dev docs, documented smoke+integration commands in README, and marked stale resolved review findings in TODO to reduce confusion.
+- Session note: Added local context handoff note at `chats/2026-05-22-doc-alignment-and-diagrams.md` (not committed by design).
+- Commit: pending.
+
 ### 2026-05-22 - Codex (API contract canonicalization)
 
 - Task: Draft a canonical MVP API request/response contract document.

@@ -166,14 +166,14 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ## Review Findings From 2026-05-21
 
-- [ ] Current docs and clients still reference `/api`; plan and implement migration to `/api/project/status`.
+- [X] Current docs and clients still reference `/api`; plan and implement migration to `/api/project/status`. Resolved 2026-05-22.
 - [ ] API tests are not runnable as written: they pass unsupported kwargs to `create_app` (ping test already removed), reference `app.db`, use integer IDs for 404 checks, and must use PostgreSQL 18 instead of SQLite against a PostgreSQL-specific `ARRAY` column.
-- [ ] CLI does not match the API contract: API IDs are UUID strings but CLI expects ints; API list response uses `records` but CLI expects `items`.
-- [ ] `docker-compose.yml` references `web/Dockerfile`, but that file is missing.
-- [ ] API error responses are inconsistent for not-found paths; some return `{"error": "Record not found"}` instead of the documented structured error object.
-- [ ] API list endpoint accepts `phase` from the CLI but does not currently filter by phase.
-- [ ] API pagination lacks input validation and maximum page-size enforcement.
-- [ ] Root `Makefile` is missing; API has a module-local Makefile only.
+- [X] CLI does not match the API contract: API IDs are UUID strings but CLI expects ints; API list response uses `records` but CLI expects `items`. Resolved 2026-05-22.
+- [X] `docker-compose.yml` references `web/Dockerfile`, but that file is missing. Resolved 2026-05-22.
+- [X] API error responses are inconsistent for not-found paths; some return `{"error": "Record not found"}` instead of the documented structured error object. Resolved 2026-05-22.
+- [X] API list endpoint accepts `phase` from the CLI but does not currently filter by phase. Resolved 2026-05-22.
+- [X] API pagination lacks input validation and maximum page-size enforcement. Resolved 2026-05-22.
+- [X] Root `Makefile` is missing; API has a module-local Makefile only. Resolved 2026-05-22.
 - [X] CLI build output is not standardized to `build/project-status` yet. Resolved 2026-05-22 by Codex/opencode; CLI build command and Makefile target now output to `build/project-status`.
 
 ## In Progress

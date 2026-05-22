@@ -31,6 +31,41 @@ flowchart TD
     Compose --> DB
 ```
 
+## Validation Workflow Diagram
+
+```mermaid
+flowchart LR
+    Dev[Human or Agent]
+    Dev --> Smoke["Host smoke script\nscripts/smoke-curl.sh"]
+    Dev --> Compose["docker compose run --rm integration-test"]
+    Smoke --> API[Flask API]
+    Compose --> API
+    API --> DB[(PostgreSQL 18)]
+    Smoke --> Exit0{Pass?}
+    Compose --> Exit1{Pass?}
+    Exit0 -->|Yes| Ready[Ready for next task]
+    Exit0 -->|No| Fix[Fix API or contract drift]
+    Exit1 -->|Yes| Ready
+    Exit1 -->|No| Fix
+```
+
+## API Workflow Sequence
+
+```mermaid
+sequenceDiagram
+    participant U as User/Agent
+    participant C as Client (Web/CLI)
+    participant A as Flask API
+    participant D as PostgreSQL
+    U->>C: create/update/list/read/delete action
+    C->>A: HTTP JSON request
+    A->>A: validate payload/query + apply rules
+    A->>D: transactional read/write
+    D-->>A: data/result
+    A-->>C: JSON response (success or structured error)
+    C-->>U: rendered output
+```
+
 ## Components
 
 - API service:

@@ -53,6 +53,16 @@ cd cli && go build -o ../build/project-status .
 ./build/project-status list
 ```
 
+Run validation checks with Docker Compose-first workflows:
+
+```bash
+# Fast smoke validation
+./scripts/smoke-curl.sh
+
+# Extended integration checks in container
+docker compose run --rm integration-test
+```
+
 ## Intended Workflow
 
 1. Fill out `PROJECT_BRIEF.md`.

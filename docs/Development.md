@@ -83,8 +83,6 @@ postgresql://project_status:project_status_dev@localhost:5432/project_status
 | Port | `3000:3000` |
 | Depends On | `api` |
 
-**Note:** Web scaffolding is in progress. See `TODO.md` for status.
-
 ### Migrations (migrations)
 
 | Configuration | Value |
@@ -130,6 +128,22 @@ VITE_API_BASE_URL=http://localhost:5000
 | React Web | 3000 |
 
 ## Development Workflows
+
+### Compose-First MVP Loop
+
+```bash
+# 1) Start API stack
+docker compose up -d --build db api
+
+# 2) Run migrations
+docker compose up migrations
+
+# 3) Fast human smoke check
+./scripts/smoke-curl.sh
+
+# 4) Extended integration suite in isolated container
+docker compose run --rm integration-test
+```
 
 ### Run API Outside Docker (Hot Reload)
 
