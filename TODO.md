@@ -78,7 +78,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Update `docs/Tech-Stack.md` command examples so CLI builds write the binary to `build/project-status`. Completed 2026-05-22 by opencode.
 - [X] Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow. Completed 2026-05-22 by opencode; added API endpoint documentation, CLI build/usage examples to Development.md, quick start section to README.md, and CLI config examples to .env.example.
 - [X] Update `api/docs/api-docs.md` and the served API docs endpoint content for `/api/project/status/*`. Completed 2026-05-22 by opencode; updated all endpoint paths and added phase filter documentation.
-- [ ] Draft the final request/response contract for `/api/project/status`, `/api/project/status/{id}`, and supported query parameters.
+- [X] Draft the final request/response contract for `/api/project/status`, `/api/project/status/{id}`, and supported query parameters. Completed 2026-05-22 by Codex; added canonical contract in `docs/API-Contract.md`.
 - [ ] Define the lightweight curl smoke-check script contract: target API URL, required commands, expected output, and pass/fail exit codes.
 - [ ] Define the Python integration-test container contract: inputs, target API URL, database reset expectations, output format, and pass/fail exit codes.
 - [ ] Decide whether to support temporary redirects or compatibility routes from `/api/*` to `/api/project/status/*`.

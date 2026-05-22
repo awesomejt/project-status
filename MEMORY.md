@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - Codex (API contract canonicalization)
+
+- Task: Draft a canonical MVP API request/response contract document.
+- Files changed: `docs/API-Contract.md`, `TODO.md`, `MEMORY.md`.
+- Validation: Contract content cross-checked against current API handlers and smoke/integration runner behavior.
+- Result: Added canonical endpoint/query/error-shape contract for `/api/project/status` and detail routes, plus health/readiness and compatibility notes.
+- Commit: pending.
+- Blockers or follow-up: decide whether to formalize this into OpenAPI for generation/validation tooling.
+
 ### 2026-05-22 - Codex (API-first scaffolding reliability)
 
 - Task: Execute first API/scaffolding task under new MVP direction by unblocking Compose integration-test flow.
