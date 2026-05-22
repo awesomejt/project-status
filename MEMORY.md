@@ -8,10 +8,10 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 
 ## Current Status
 
-- Current phase: review and planning for API namespace migration and quality cleanup.
-- Last major milestone: reviewed project structure, source, tests, configs, and local tool availability; reorganized TODO into module-specific implementation phases.
-- Next recommended task: run the cloud review lane or update requirements/docs, then implement the API namespace migration from `/api/*` to `/api/project/status/*` across API, web, CLI, tests, and API docs.
-- Current blocker: none blocking agent planning work, but Jason should confirm whether health/readiness/docs endpoints move and whether temporary `/api/*` compatibility routes are needed.
+- Current phase: implementation for API/CLI contract migration and CLI stabilization.
+- Last major milestone: API now serves `/api/project/status/*` and keeps temporary `/api/*` compatibility; CLI now uses UUID IDs and parses `records` list responses.
+- Next recommended task: migrate the web client to `/api/project/status`, then update API docs and normalize API error responses/tests.
+- Current blocker: none for local implementation; product decision still needed for long-term compatibility route policy and docs/health endpoint namespace.
 
 ## Key Decisions
 
@@ -70,6 +70,14 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - Codex
+
+- Task: Implement high-priority API/CLI contract fixes to get the CLI working quickly.
+- Files changed: `api/project_status_api/__init__.py`, `api/project_status_api/api/__init__.py`, `cli/internal/client/client.go`, `cli/internal/client/client_test.go`, `cli/cmd/add.go`, `cli/cmd/list.go`, `cli/cmd/show.go`, `cli/cmd/update.go`, `cli/cmd/delete.go`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: `cd cli && go test ./...` passed; `cd cli && go build -o ../build/project-status .` passed.
+- Result: Migrated primary API prefix to `/api/project/status` with temporary legacy `/api` compatibility routes, updated CLI paths to `/api/project/status`, converted CLI record IDs from `int` to UUID `string`, aligned list parsing from `items` to `records`, updated table output for UUID width, and added HTTP-client tests verifying list/show path + parsing behavior.
+- Blockers or follow-up: API pytest harness remains pending; web client still targets `/api` and should be migrated next.
+
 ### 2026-05-22 - opencode (follow-up)
 
 - Task: Update `docs/Tech-Stack.md` CLI build command to use `build/project-status` output path.
@@ -79,6 +87,14 @@ Newest entries first.
 - Blockers or follow-up: none.
 
 ### 2026-05-22 - opencode
+
+- Task: Migrate web API client from `/api` to `/api/project/status`.
+- Files changed: `web/src/api/client.ts`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: TypeScript typecheck passed, Vite build successful (260kb bundle).
+- Result: Updated `API_STATUS_RECORDS_PATH` constant in `web/src/api/client.ts` from `/api` to `/api/project/status`, aligning web client with the migrated API namespace.
+- Blockers or follow-up: none.
+
+### 2026-05-22 - opencode (earlier)
 
 - Task: Update docs/Requirements.md and docs/Architecture.md to use `/api/project/status/*` API paths.
 - Files changed: `docs/Requirements.md`, `docs/Architecture.md`, `TODO.md`.

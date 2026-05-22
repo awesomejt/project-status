@@ -92,7 +92,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ### Implementation Phase: Web Module
 
-- [W] Change the web API client path constant from `/api` to `/api/project/status`.
+- [X] Change the web API client path constant from `/api` to `/api/project/status`. Completed 2026-05-22 by opencode.
 - [ ] Update web UI/API assumptions after the API response contract is finalized.
 - [ ] Fix TypeScript client return types so create/read/update methods return `StatusRecord`, not `StatusRecordCreate`.
 - [ ] Add web unit/component tests for list, form, detail, delete, loading, empty, and error states.
