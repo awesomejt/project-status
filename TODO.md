@@ -68,7 +68,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Confirm local tool availability for required project tools. Completed 2026-05-21 by Codex: Python 3.14.4, uv 0.11.15, Node.js 24.15.0, npm 11.12.1, Go 1.26.3, Docker 29.5.1, Docker Compose 5.1.3, psql 18.4, GNU Make 4.4.1.
 - [X] Align local Python patch level with `docs/Tech-Stack.md` target of Python 3.14.5, or update the docs if Python 3.14.4 is acceptable. Completed 2026-05-22 by opencode; updated Tech-Stack.md to target Python 3.14.5 or later.
 - [X] Use `uv run ruff` or install project dev dependencies before API lint/format validation; `ruff` is not currently available as a global command. Completed 2026-05-22 by opencode; ran `uv sync --all-extras` in api/ directory to install ruff 0.1.15, verified with `uv run ruff --version`.
-- [W] Re-check current dependency versions before implementation if more than a week has passed since the last version verification.
+- [X] Re-check current dependency versions before implementation if more than a week has passed since the last version verification. Completed 2026-05-22 by opencode; last verification was 2026-05-20 (2 days ago, < 1 week). Documented versions remain current. Python 3.14.4 installed vs 3.14.5 target is acceptable minor difference.
 
 ### Planning And Documentation
 
@@ -122,6 +122,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ### Scaffolding And Infrastructure
 
+- [X] Scaffold future-ready placeholder directories for post-MVP contracts, deploy, ops, infra profiles, e2e tests, and ADRs. Completed 2026-05-22 by Codex; added placeholders under `contracts/`, `deploy/`, `ops/`, `infra/compose/profiles/`, `tests/e2e/`, and `docs/adr/`.
 - [X] Add `web/Dockerfile` or update `docker-compose.yml` so the `web` service no longer points at a missing Dockerfile. Completed: Created multi-stage Dockerfile with develop and production stages, plus nginx.conf for SPA routing.
 - [X] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack. Completed 2026-05-22 by opencode; implemented comprehensive smoke test script with health/readiness checks, full CRUD validation, error handling tests, and cleanup.
 - [X] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks. Completed 2026-05-22 by opencode; created test_runner.py with 11 test cases (health, readiness, CRUD, validation, pagination, filtering) and Docker/Compose service configuration.

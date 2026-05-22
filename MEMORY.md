@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - Codex (future-ready scaffolding pass)
+
+- Task: Add placeholder scaffolding for post-MVP growth while keeping MVP paths clear.
+- Files changed: `contracts/`, `deploy/`, `ops/`, `infra/`, `scripts/lib/`, `tests/e2e/`, `docs/adr/`, `docs/Structure.md`, `TODO.md`, `MEMORY.md`, `status.yaml`.
+- Validation: Structural/docs-only change; no runtime behavior changed.
+- Result: Added reviewable placeholder directories with README intent docs and a new `docs/Structure.md` map + Mermaid layout to reduce future refactoring risk while preserving API-first MVP focus.
+- Commit: pending.
+- Blockers or follow-up: waiting on Jason review of structure/scaffolding before moving to next implementation-phase work.
+
 ### 2026-05-22 - Codex (doc alignment + diagrams)
 
 - Task: Run a docs consistency sweep, reduce mixed signals, and add visual diagrams.
