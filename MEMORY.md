@@ -70,6 +70,19 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (smoke script dependency validation)
+
+- Task: Make the curl smoke script dependency-light and require only common shell tools such as `bash`, `curl`, and optionally `jq`.
+- Files changed: `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: Code review of `scripts/smoke-curl.sh`.
+- Result: Confirmed existing smoke-curl.sh is already dependency-light. Only uses:
+  - `bash` (shell)
+  - `curl` (HTTP client)
+  - Standard POSIX utilities: `grep`, `sed`, `cut`, `tail`, `echo`, `date`
+  - Does NOT use `jq` or any other heavy dependencies.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (smoke-curl.sh)
 
 - Task: Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack.

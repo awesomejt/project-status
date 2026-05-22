@@ -10,7 +10,7 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "working"
+status: "active"
 phase: "implementation"
 reason: ""
 worker: "opencode"
