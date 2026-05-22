@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "active"
+status: "working"
 phase: "implementation"
-reason: "CLI command tests completed - 10 client tests added covering create, update, delete, and validation"
+reason: "Working on: Tests should use PostgreSQL 18-only fixtures because the model uses PostgreSQL ARRAY. Do not use SQLite for unit tests."
 worker: "opencode"
-updated: "2026-05-22 18:30 MDT"
+updated: "2026-05-22 18:35 MDT"
