@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (web Dockerfile)
+
+- Task: Add `web/Dockerfile` and `nginx.conf` for containerization.
+- Files changed: `web/Dockerfile` (new), `web/nginx.conf` (new), `docker-compose.yml`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: `docker compose build web` succeeded.
+- Result: Created multi-stage Dockerfile with `develop` stage (Node.js 24 Alpine, runs Vite dev server on port 3000) and `production` stage (nginx serving built assets). Added nginx.conf with SPA fallback routing, gzip compression, and static asset caching. Updated docker-compose.yml to use `target: develop` for the web service.
+- Commit: `6e09f41` - feat(web): add Dockerfile and nginx.conf for containerization.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (pagination validation)
 
 - Task: Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`.
