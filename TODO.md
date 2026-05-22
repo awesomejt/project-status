@@ -84,7 +84,7 @@ These items are good candidates for a local model or cloud agent.
 - [ ] Implement web delete confirmation flow.
 - [ ] Implement web loading, empty, validation, and API error states.
 - [X] Check web accessibility basics for the primary workflows. Completed - Added aria-labels to buttons, proper label/input associations, keyboard navigation to table rows, dialog role for delete confirmation, form accessibility improvements, accessible tag management.
-- [ ] Scaffold Go CLI module with Cobra and Viper.
+- [W] Scaffold Go CLI module with Cobra and Viper.
 - [ ] Implement CLI API client and config resolution.
 - [ ] Implement `status config` command.
 - [ ] Implement `status add` command.
