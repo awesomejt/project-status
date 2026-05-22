@@ -12,6 +12,6 @@
 
 status: "active"
 phase: "implementation"
-reason: "Completed CLI command tests task - already done by Codex on 2026-05-22. Marked task complete and cleaned up W marker."
+reason: "Completed CLI integration smoke tests task. Created smoke-cli.sh and updated Makefile."
 worker: "opencode"
-updated: "2026-05-22 20:15 MDT"
+updated: "2026-05-22 20:25 MDT"

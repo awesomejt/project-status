@@ -21,7 +21,9 @@ help:
 	@echo "  test-api      - Run API tests"
 	@echo "  test-web      - Run web tests"
 	@echo "  test-cli      - Run CLI tests"
-	@echo "  smoke         - Run smoke tests"
+	@echo "  smoke         - Run smoke tests (API and CLI)"
+	@echo "  smoke-api     - Run API smoke tests only"
+	@echo "  smoke-cli     - Run CLI smoke tests only"
 	@echo "  integration-test - Run integration tests"
 	@echo ""
 	@echo "Development:"
@@ -101,8 +103,15 @@ test-cli:
 	cd cli && go test ./...
 
 ## Run smoke tests
-smoke:
+smoke: smoke-api smoke-cli
+
+## Run API smoke tests
+smoke-api:
 	./scripts/smoke-curl.sh
+
+## Run CLI smoke tests
+smoke-cli:
+	./scripts/smoke-cli.sh
 
 ## Run integration tests
 integration-test:
