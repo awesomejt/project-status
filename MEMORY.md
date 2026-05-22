@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 19:00 - opencode
+
+- Task: Scaffold Go CLI module with Cobra and Viper.
+- Files changed: `cli/go.mod`, `cli/go.sum`, `cli/main.go`, `cli/cmd/root.go`, `cli/cmd/config.go`, `cli/cmd/add.go`, `cli/cmd/list.go`, `cli/cmd/show.go`, `cli/cmd/update.go`, `cli/cmd/delete.go`, `cli/internal/client/client.go`.
+- Validation: Go build successful, CLI help command works.
+- Result: Created Go CLI with Cobra v1.10.2 and Viper v1.21.0. Implemented commands: `config` (show/set), `add`, `list`, `show`, `update`, `delete`. API client in `internal/client/` handles HTTP requests. Supports `--api-url` flag for API base URL, `--output` flag for table/json format. Config uses Viper with environment variable support (`PROJECT_STATUS_API_URL`, `PROJECT_STATUS_OUTPUT`).
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 18:45 - opencode
 
 - Task: Implement web status record detail view.
