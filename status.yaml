@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "working"
+status: "active"
 phase: "implementation"
-reason: "Adding API endpoint documentation/OpenAPI output"
+reason: "API documentation task completed"
 worker: "opencode"
-updated: "2026-05-21 19:05 MDT"
+updated: "2026-05-21 19:30 MDT"

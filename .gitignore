@@ -77,6 +77,8 @@ env/
 # Go
 bin/
 pkg/
+!*-cli
+cli/status-cli
 
 # Java / JVM
 target/

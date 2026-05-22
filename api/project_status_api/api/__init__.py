@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_from_directory
+import os
+from datetime import datetime
 
 from .. import db
 from ..models import StatusRecord
@@ -12,6 +14,11 @@ from ..utils import (
 )
 
 bp = Blueprint("api", __name__)
+
+
+def _get_current_time_iso():
+    """Return current UTC timestamp in ISO format."""
+    return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 @bp.route("/", methods=["POST"])
@@ -182,3 +189,15 @@ def delete_status_record(record_id):
     db.commit()
 
     return jsonify({"message": "Record deleted"})
+
+
+@bp.route("/docs", methods=["GET"])
+def api_docs():
+    """Return API documentation."""
+    docs_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "docs", "api-docs.md")
+    docs_path = os.path.abspath(docs_path)
+    
+    if os.path.exists(docs_path):
+        return send_from_directory(os.path.dirname(docs_path), os.path.basename(docs_path)), 200, {'Content-Type': 'text/markdown'}
+    
+    return jsonify({"error": "Documentation not found"}), 404

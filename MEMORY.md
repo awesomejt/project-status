@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 19:25 - opencode
+
+- Task: Add API endpoint documentation or OpenAPI output.
+- Files changed: `api/docs/api-docs.md` (new), `api/project_status_api/api/__init__.py`.
+- Validation: Python syntax verified.
+- Result: Created comprehensive API documentation at `api/docs/api-docs.md` covering all endpoints (health, ready, CRUD for status records) with request/response examples, error formats, and parameter descriptions. Added `/api/docs` endpoint to serve the documentation as markdown.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 19:00 - opencode
 
 - Task: Scaffold Go CLI module with Cobra and Viper.
