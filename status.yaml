@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "active"
-phase: "review-and-planning"
-reason: "Workflow update complete; agent guardrails and cloud AI review/refactor tasks are documented"
-worker: "codex"
-updated: "2026-05-21 21:16 MDT"
+status: "working"
+phase: "implementation"
+reason: "Migrating API/CLI contracts to /api/project/status and restoring CLI compatibility with UUID IDs"
+worker: "opencode"
+updated: "2026-05-22 02:04 MDT"
