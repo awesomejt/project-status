@@ -70,6 +70,21 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (root Makefile)
+
+- Task: Add a root Makefile to standardize build, lint, test, clean, migration, and Compose workflows.
+- Files changed: `Makefile` (new), `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: `make help` displays all targets, `make format-check-api` runs ruff format check, `make build-cli` builds CLI to `build/project-status` (verified: 11.8MB binary).
+- Result: Created comprehensive root Makefile with the following target categories:
+  - **Validation**: `validate`, `lint`, `format`, `format-check`, `typecheck`
+  - **Build**: `build`, `build-web`, `build-cli`
+  - **Tests**: `test`, `test-api`, `test-web`, `test-cli`, `smoke`, `integration-test`
+  - **Development**: `dev`, `db`, `migrations`
+  - **Cleanup**: `clean`, `clean-api`, `clean-web`, `clean-cli`, `clean-all`
+  - **Help**: `help` (displays all targets with descriptions)
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (CLI command tests)
 
 - Task: Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling.

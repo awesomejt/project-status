@@ -107,7 +107,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [ ] Add CLI integration smoke tests against a running local API.
 - [X] Build the CLI binary into a Git-ignored `build/` folder with the binary name `project-status`. Completed 2026-05-22 by Codex.
 - [ ] Ensure `.gitignore` continues to exclude the chosen build output path, including `build/project-status` and any `cli/build/` variant if selected.
-- [W] Add a root `Makefile` to standardize build, lint, test, clean, migration, and Compose workflows.
+- [X] Add a root `Makefile` to standardize build, lint, test, clean, migration, and Compose workflows. Completed 2026-05-22 by opencode; created comprehensive Makefile with targets for help, validate, lint, format, format-check, typecheck, build, build-cli, test (all modules), smoke, integration-test, dev, db, migrations, clean, and clean-all.
 - [ ] Add a `make build-cli` target that runs the Go build with output `build/project-status`.
 
 ### Scaffolding And Infrastructure
