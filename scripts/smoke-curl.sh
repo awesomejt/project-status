@@ -2,8 +2,13 @@
 # Smoke test script for Project Status API
 # Run against a local Docker Compose stack to validate basic API functionality.
 #
+# Environment variables:
+#   API_BASE_URL     - API endpoint URL (default: http://localhost:5000)
+#   TEST_RECORD_PREFIX - Prefix for test record short_name (default: smoke-test)
+#   SMOKE_CLEANUP    - Enable cleanup on exit (default: true)
+#
 # Usage:
-#   ./scripts/smoke-curl.sh [API_URL]
+#   API_BASE_URL=http://localhost:5000 ./scripts/smoke-curl.sh
 #
 # Exit codes:
 #   0 - All checks passed
@@ -13,9 +18,9 @@
 set -euo pipefail
 
 # Configuration
-API_URL="${1:-http://localhost:5000}"
-TEST_TAG="smoke-test"
-TIMESTAMP=$(date +%s)
+API_URL="${API_BASE_URL:-http://localhost:5000}"
+TEST_RECORD_PREFIX="${TEST_RECORD_PREFIX:-smoke-test}"
+SMOKE_CLEANUP="${SMOKE_CLEANUP:-true}"
 SMOKE_RECORD_ID=""
 FAILED=0
 

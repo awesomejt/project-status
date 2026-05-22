@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -47,6 +48,11 @@ func Execute() {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
+}
+
+func SetTestOutput(out, err io.Writer) {
+	rootCmd.SetOut(out)
+	rootCmd.SetErr(err)
 }
 
 func GetAPIURL() string {

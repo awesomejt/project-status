@@ -13,12 +13,12 @@ var configCmd = &cobra.Command{
 	Short: "Show or set configuration",
 	Long:  `Show current configuration or set a config value.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Current Configuration:")
-		fmt.Printf("  API URL: %s\n", viper.GetString("api_url"))
-		fmt.Printf("  Output:  %s\n", viper.GetString("output"))
+		cmd.Println("Current Configuration:")
+		cmd.Printf("  API URL: %s\n", viper.GetString("api_url"))
+		cmd.Printf("  Output:  %s\n", viper.GetString("output"))
 
 		if viper.ConfigFileUsed() != "" {
-			fmt.Printf("  Config File: %s\n", viper.ConfigFileUsed())
+			cmd.Printf("  Config File: %s\n", viper.ConfigFileUsed())
 		}
 	},
 }
