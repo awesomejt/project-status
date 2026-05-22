@@ -83,7 +83,7 @@ These items are good candidates for a local model or cloud agent.
 - [X] Implement web status record detail view. Completed - StatusDetailView component with read-only display, edit button, delete confirmation flow, loading/error states, clickable rows in list view. Updated routes: /detail/:id for view, /edit/:id for form.
 - [ ] Implement web delete confirmation flow.
 - [ ] Implement web loading, empty, validation, and API error states.
-- [ ] Check web accessibility basics for the primary workflows.
+- [X] Check web accessibility basics for the primary workflows. Completed - Added aria-labels to buttons, proper label/input associations, keyboard navigation to table rows, dialog role for delete confirmation, form accessibility improvements, accessible tag management.
 - [ ] Scaffold Go CLI module with Cobra and Viper.
 - [ ] Implement CLI API client and config resolution.
 - [ ] Implement `status config` command.

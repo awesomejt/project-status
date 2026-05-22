@@ -101,6 +101,7 @@ const StatusListView = () => {
         </div>
         <button
           onClick={() => navigate("/create")}
+          aria-label="Create a new status record"
           style={{
             padding: "10px 20px",
             backgroundColor: "#3b82f6",
@@ -117,13 +118,15 @@ const StatusListView = () => {
       </header>
 
       <section style={{ marginBottom: "20px" }}>
-        <label style={{ marginRight: "8px", fontWeight: 500 }}>Filter:</label>
+        <label htmlFor="status-filter" style={{ marginRight: "8px", fontWeight: 500 }}>Filter:</label>
         <select
+          id="status-filter"
           value={filterStatus}
           onChange={(e) => {
             setFilterStatus(e.target.value as StatusValue | "all");
             fetchRecords(1);
           }}
+          aria-label="Filter status records by status"
           style={{
             padding: "8px 12px",
             borderRadius: "6px",
@@ -225,6 +228,7 @@ const StatusListView = () => {
             }}
           >
             <table
+              aria-label="Status records table showing project name, status, phase, summary, and last updated date"
               style={{
                 width: "100%",
                 borderCollapse: "collapse",
@@ -249,13 +253,24 @@ const StatusListView = () => {
                 {records.map((record) => (
                   <tr
                     key={record.id}
+                    role="row"
+                    tabIndex={0}
                     style={{
                       borderBottom: "1px solid #e5e7eb",
                       cursor: "pointer",
+                      outline: "none",
                     }}
                     onClick={() => navigate(`/detail/${record.id}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        navigate(`/detail/${record.id}`);
+                      }
+                    }}
                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f9fafb")}
                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+                    onFocus={(e) => (e.currentTarget.style.backgroundColor = "#f9fafb")}
+                    onBlur={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                   >
                     <td style={cellStyle}>
                       <div style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}>

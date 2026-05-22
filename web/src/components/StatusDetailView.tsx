@@ -90,6 +90,22 @@ const StatusDetailView = () => {
     setShowDeleteConfirm(false);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (showDeleteConfirm && e.key === 'Escape') {
+        setShowDeleteConfirm(false);
+      }
+    };
+    
+    if (showDeleteConfirm) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showDeleteConfirm]);
+
   if (loading) {
     return (
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "20px" }}>
@@ -215,6 +231,7 @@ const StatusDetailView = () => {
               </button>
               <button
                 onClick={() => setShowDeleteConfirm(true)}
+                aria-label={`Delete status record "${record.project_name}"`}
                 style={{
                   padding: "10px 20px",
                   backgroundColor: "#ef4444",
@@ -235,24 +252,31 @@ const StatusDetailView = () => {
 
       {showDeleteConfirm && (
         <div
+          role="alertdialog"
+          aria-labelledby="delete-dialog-title"
+          aria-describedby="delete-dialog-desc"
           style={{
             marginBottom: "20px",
             padding: "16px",
             backgroundColor: "#fff7ed",
             border: "1px solid #fed7aa",
             borderRadius: "8px",
+            outline: "none",
           }}
+          tabIndex={-1}
+          ref={(el) => el?.focus()}
         >
-          <p style={{ fontWeight: 600, marginBottom: "8px" }}>
+          <p id="delete-dialog-title" style={{ fontWeight: 600, marginBottom: "8px" }}>
             Are you sure you want to delete "{record.project_name}"?
           </p>
-          <p style={{ color: "#666", fontSize: "14px", marginBottom: "16px" }}>
+          <p id="delete-dialog-desc" style={{ color: "#666", fontSize: "14px", marginBottom: "16px" }}>
             This action cannot be undone.
           </p>
           <div style={{ display: "flex", gap: "8px" }}>
             <button
               onClick={handleDelete}
               disabled={deleting}
+              aria-describedby="delete-dialog-desc"
               style={{
                 padding: "8px 16px",
                 backgroundColor: "#dc2626",
@@ -269,6 +293,7 @@ const StatusDetailView = () => {
             <button
               onClick={handleCancelDelete}
               disabled={deleting}
+              aria-label="Cancel delete confirmation"
               style={{
                 padding: "8px 16px",
                 backgroundColor: "white",

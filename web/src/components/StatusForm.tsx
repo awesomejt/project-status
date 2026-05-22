@@ -220,11 +220,12 @@ const StatusForm = () => {
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
       <header style={{ marginBottom: "24px" }}>
-        <h1 style={{ fontSize: "28px", marginBottom: "8px" }}>
+        <h1 id="form-title" style={{ fontSize: "28px", marginBottom: "8px" }}>
           {isEditing ? "Edit Status Record" : peek ? "Review Status Record" : "Create Status Record"}
         </h1>
-        <p style={{ color: "#666", fontSize: "14px" }}>
+        <p id="form-description" style={{ color: "#666", fontSize: "14px" }}>
           {isEditing ? "Update an existing status record" : "Add a new project status record"}
+          {!(isEditing || peek) && " Fields marked with an asterisk (*) are required."}
         </p>
       </header>
       
@@ -244,7 +245,7 @@ const StatusForm = () => {
         </div>
       )}
       
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} aria-labelledby="form-title" aria-describedby="form-description">
         <div style={{ marginBottom: "20px" }}>
           <label htmlFor="project_name" style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}>
             Project Name <span style={{ color: "#dc2626" }}>*</span>
@@ -452,13 +453,19 @@ const StatusForm = () => {
         </div>
         
         <div style={{ marginBottom: "24px" }}>
-          <label htmlFor="tags" style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}>
-            Tags
-          </label>
+          <div>
+            <label htmlFor="tags-input" style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}>
+              Tags
+            </label>
+            <span style={{ fontSize: "12px", color: "#6b7280" }}>
+              Type a tag and press Enter or click Add. Press Backspace to remove the last tag.
+            </span>
+          </div>
           <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
             <input
               type="text"
-              id="tags"
+              id="tags-input"
+              aria-describedby="tags-instructions"
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={handleKeyDownTag}
@@ -476,6 +483,7 @@ const StatusForm = () => {
             <button
               type="button"
               onClick={handleTagAdd}
+              aria-label="Add tag"
               disabled={peek || !tagInput.trim()}
               style={{
                 padding: "10px 20px",
@@ -490,6 +498,7 @@ const StatusForm = () => {
               Add
             </button>
           </div>
+          <span id="tags-instructions" style={{ display: "none" }}>Type a tag and press Enter or click Add. Press Backspace to remove the last tag.</span>
           {formData.tags && formData.tags.length > 0 && (
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
               {formData.tags.map((tag) => (
@@ -506,25 +515,31 @@ const StatusForm = () => {
                   }}
                 >
                   {tag}
-                  {!peek && (
-                    <button
-                      type="button"
-                      onClick={() => handleTagRemove(tag)}
-                      style={{
-                        marginLeft: "6px",
-                        border: "none",
-                        background: "none",
-                        cursor: "pointer",
-                        color: "#6b7280",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        padding: "0",
-                        lineHeight: 1,
-                      }}
-                    >
-                      ×
-                    </button>
-                  )}
+                   {!peek && (
+                     <button
+                       type="button"
+                       onClick={() => handleTagRemove(tag)}
+                       aria-label={`Remove tag "${tag}"`}
+                       style={{
+                         marginLeft: "6px",
+                         border: "none",
+                         background: "none",
+                         cursor: "pointer",
+                         color: "#6b7280",
+                         fontSize: "14px",
+                         fontWeight: 600,
+                         padding: "0",
+                         lineHeight: 1,
+                         width: "16px",
+                         height: "16px",
+                         display: "flex",
+                         alignItems: "center",
+                         justifyContent: "center",
+                       }}
+                     >
+                       ×
+                     </button>
+                   )}
                 </span>
               ))}
             </div>
