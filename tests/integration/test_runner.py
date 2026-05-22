@@ -155,11 +155,13 @@ def test_filtering():
 
 def test_delete_record():
     """Test deleting a status record."""
+    global TEST_RECORD_ID
     status, resp = make_request("DELETE", f"/api/project/status/{TEST_RECORD_ID}")
     assert status == 200, f"Delete record failed: {status} - {resp}"
     
     status, resp = make_request("GET", f"/api/project/status/{TEST_RECORD_ID}")
     assert status == 404, "Record should be deleted"
+    TEST_RECORD_ID = None
     return True
 
 

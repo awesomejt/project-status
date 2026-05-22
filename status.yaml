@@ -12,9 +12,9 @@
 
 status: "active"
 phase: "implementation"
-reason: "Completed TEST_PROJECT_NAME env var addition to both smoke scripts; both API and CLI smoke tests passing"
+reason: "Pivoted to API-first MVP direction; Compose integration-test flow now health-gated and passing"
 worker: "codex"
-updated: "2026-05-22 10:30 MDT"
+updated: "2026-05-22 10:34 MDT"
 
 active_task:
   id: null

@@ -20,6 +20,7 @@ What problem does this project solve?
 
 The project is successful when:
 
+- MVP priority: API layer and infrastructure are production-shaped and reliable before CLI/web polish.
 - A Flask API persists status records in PostgreSQL 18 and exposes documented CRUD/list endpoints.
 - A React web client can perform the core status workflows through the API.
 - A Go Cobra/Viper CLI can perform the same core status workflows through the API.
@@ -30,8 +31,8 @@ The project is successful when:
 - Primary user: agents
 - Secondary users: humans
 - Most important workflow: api/add
-- Repeated or high-frequency workflow: cli/add 
-- Admin or maintenance workflow: cli/add
+- Repeated or high-frequency workflow: api/list
+- Admin or maintenance workflow: api/readiness + integration test
 
 ## Must Include
 
@@ -79,3 +80,4 @@ Add items that need Jason, a browser, a real device, account access, credentials
 - Confirm deployment target and production database hosting approach.
 - Confirm stage and production PostgreSQL VM connection details and secret management approach.
 - Confirm whether an OpenAPI spec is required for MVP or can follow initial CRUD implementation.
+- Confirm when to start local-model dogfooding after cloud-AI implementation pass reaches MVP readiness.

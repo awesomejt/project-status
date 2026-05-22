@@ -53,6 +53,7 @@ The first implementation should support a `status_record` resource with these fi
 - Configuration: the API must read `DATABASE_URL` from environment-specific configuration so local, stage, and production can use different PostgreSQL endpoints without code changes.
 - Environments: local development uses a PostgreSQL 18 container; stage and production may use dedicated PostgreSQL VMs reachable through stage/production database URLs.
 - Compatibility: API runs on Python 3.14 and Flask; database runs on PostgreSQL 18; CLI builds with the latest stable Go toolchain; web targets current evergreen desktop and mobile browsers.
+- Delivery strategy: prioritize API-first MVP correctness and scaffolding completeness (contract, migrations, readiness, integration runners, Compose reliability) before CLI/web expansion. Cloud-AI implementation passes are preferred for MVP acceleration; local-model dogfooding follows once MVP stability gates pass.
 
 ## Out Of Scope
 

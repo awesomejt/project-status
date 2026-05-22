@@ -24,6 +24,16 @@ High-level order of implementation. Keep this aligned with `TODO.md`.
 - Define two local integration feedback layers:
   - A host-run Bash/curl smoke script for quick human feedback against a running Docker stack. [DONE]
   - A Python-based Docker/Compose integration-test container for richer agentic assertions and diagnostics.
+- Explicitly prefer cloud-AI implementation passes for MVP completion; defer local-model dogfooding until MVP quality gates are passing.
+
+## MVP Direction
+
+- Build vertically with API and scaffolding first:
+  - complete API correctness and contract reliability
+  - complete Compose/test scaffolding and integration gates
+  - then consume the stable API from CLI and web
+- Avoid shortcut-driven client work that outruns API reliability.
+- Use dogfooding as a validation phase after MVP baseline is stable, not as an early substitute for API/scaffolding completion.
 
 ## Implementation Phase: API Module
 
@@ -57,6 +67,7 @@ High-level order of implementation. Keep this aligned with `TODO.md`.
 - Build the CLI binary into the ignored `build/` folder as `project-status`. [DONE]
 - Add a root `Makefile` target for CLI builds, plus standard test/lint/build orchestration for the repo.
 - Add command tests with mocked HTTP responses and integration smoke tests against a running local API.
+- Treat additional CLI UX polish as post-MVP unless required to validate API correctness.
 
 ## Refinement
 

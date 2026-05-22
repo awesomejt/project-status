@@ -8,10 +8,10 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 
 ## Current Status
 
-- Current phase: implementation for API/CLI contract migration and CLI stabilization.
-- Last major milestone: API now serves `/api/project/status/*` and keeps temporary `/api/*` compatibility; CLI now uses UUID IDs and parses `records` list responses.
-- Next recommended task: migrate the web client to `/api/project/status`, then update API docs and normalize API error responses/tests.
-- Current blocker: none for local implementation; product decision still needed for long-term compatibility route policy and docs/health endpoint namespace.
+- Current phase: API-first MVP implementation and scaffolding hardening.
+- Last major milestone: smoke workflow validates health/readiness plus full CRUD path after API route compatibility fixes.
+- Next recommended task: finish scaffolding reliability gaps that block API-first gates (Compose healthcheck + integration-test flow), then continue API-focused test/contract completion.
+- Current blocker: none for local implementation; human decisions remain for deployment target, secret management, and final docs/health namespace policy.
 
 ## Key Decisions
 
@@ -69,6 +69,24 @@ Record findings from real systems, live services, browser/device testing, deploy
 ## Agent Run Log
 
 Newest entries first.
+
+### 2026-05-22 - Codex (API-first scaffolding reliability)
+
+- Task: Execute first API/scaffolding task under new MVP direction by unblocking Compose integration-test flow.
+- Files changed: `docker-compose.yml`, `tests/integration/test_runner.py`, `TODO.md`, `PROJECT_BRIEF.md`, `docs/Requirements.md`, `docs/Implementation.md`, `MEMORY.md`, `status.yaml`.
+- Validation: `docker compose up -d --build db api`; `docker compose run --rm integration-test` (all integration tests passed); smoke workflow already passing.
+- Result: Added API Compose healthcheck and made integration-test service health-gated on API readiness. Removed duplicate cleanup warning in the integration runner. Updated planning docs to enforce API-first MVP sequencing and cloud-AI-first implementation preference before local-model dogfooding.
+- Commit: pending (direction + scaffolding commit).
+- Blockers or follow-up: next API-first tasks should focus on contract finalization and API test coverage hardening.
+
+### 2026-05-22 - Codex (direction pivot to API-first MVP)
+
+- Task: Preserve existing in-progress work, then pivot planning/docs toward API-first MVP execution.
+- Files changed: `PROJECT_BRIEF.md`, `docs/Requirements.md`, `docs/Implementation.md`, `TODO.md`, `MEMORY.md`, `status.yaml`, plus checkpoint commit files.
+- Validation: Documentation consistency review across brief/requirements/implementation/todo.
+- Result: Committed pending smoke-script and CLI command test draft work as a holding checkpoint (`25b61fb`), then updated planning docs to prioritize API/scaffolding/API-layer completion before further CLI-first optimization. Added explicit cloud-AI-first MVP implementation preference and deferred local-model dogfooding until MVP gates pass.
+- Commit: pending (docs pivot commit).
+- Blockers or follow-up: execute next API/scaffolding task immediately.
 
 ### 2026-05-22 - Codex (API route compatibility fix)
 

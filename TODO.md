@@ -32,6 +32,14 @@ These items need Jason to validate on real systems, live services, devices, acco
 
 These items are good candidates for a local model or cloud agent.
 
+### MVP Priority Order (API-First)
+
+- [ ] Complete remaining planning/research items that materially affect API contracts and infrastructure decisions.
+- [ ] Complete scaffolding and infrastructure reliability (Compose readiness, migration/test flows, integration runner execution path).
+- [ ] Complete API-layer correctness, validation, consistency, and integration coverage.
+- [ ] Then harden CLI and web against the finalized API contract.
+- [ ] After MVP gates pass, run dogfooding workflows and local-model validation.
+
 ### Review
 
 Use this section for a cloud-based AI agent or larger-context reviewer before real use, release, or deployment.
@@ -49,8 +57,9 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [ ] Cloud refactor: repair API tests and test fixtures so they run against the real app and database strategy.
 - [ ] Cloud refactor: repair CLI/API contract mismatches, including UUID IDs and list response field names.
 - [ ] Cloud refactor: add the curl smoke script and Python integration-test container, then use them as validation gates.
-- [ ] Cloud refactor: add the root `Makefile` and standardized `make validate`, `make smoke`, `make integration-test`, `make build-cli`, and cleanup targets.
+- [X] Cloud refactor: add the root `Makefile` and standardized `make validate`, `make smoke`, `make integration-test`, `make build-cli`, and cleanup targets. Completed 2026-05-22 by Codex/opencode; targets are implemented and integration-test path now health-gated.
 - [ ] Cloud review signoff: confirm all high-risk review findings are resolved or explicitly deferred before real use.
+- [ ] Cloud implementation pass: execute the API-first MVP roadmap end-to-end before local-model dogfooding.
 
 ### Discovery And Environment
 
@@ -120,8 +129,8 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks. Completed 2026-05-22 by opencode; created test_runner.py with 11 test cases and Docker/Compose service configuration.
 - [X] Add Python integration-test runner files under a clear path such as `tests/integration/`. Completed 2026-05-22 by opencode; files exist at tests/integration/test_runner.py and tests/integration/Dockerfile.
 - [X] Make both integration runners configurable through environment variables such as `API_BASE_URL`, `TEST_PROJECT_NAME`, and optional cleanup/reset settings. Completed 2026-05-22 by Codex; updated `scripts/smoke-curl.sh` and `tests/integration/test_runner.py` to support env-driven base URL, naming/prefix controls, and cleanup toggles.
-- [ ] Add root-level validation commands through the planned `Makefile`.
-- [ ] Add `make smoke` for the host-run curl script and `make integration-test` for the Python containerized test runner. `make smoke` is wired and validated; `make integration-test` target exists but currently depends on API Compose healthcheck configuration.
+- [X] Add root-level validation commands through the planned `Makefile`. Completed 2026-05-22 by opencode/Codex.
+- [X] Add `make smoke` for the host-run curl script and `make integration-test` for the Python containerized test runner. Completed 2026-05-22 by Codex; added API Compose healthcheck and validated `docker compose run --rm integration-test`.
 - [X] Confirm `build/`, web build output, Go binaries, local env files, virtualenvs, and generated caches remain excluded from Git. Completed 2026-05-22 by Codex; verified `.gitignore` coverage and added explicit `build/project-status` and `cli/build/` entries.
 
 ### Tests And Quality
