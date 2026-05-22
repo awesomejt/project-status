@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiClient } from "../api/client";
 import type { StatusRecord, StatusValue, ApiError } from "../types/statusRecord";
 
@@ -31,6 +32,7 @@ const StatusBadge = ({ status }: { status: StatusValue }) => {
 };
 
 const StatusListView = () => {
+  const navigate = useNavigate();
   const [records, setRecords] = useState<StatusRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<ApiError | null>(null);
@@ -90,11 +92,28 @@ const StatusListView = () => {
 
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "20px" }}>
-      <header style={{ marginBottom: "24px" }}>
-        <h1 style={{ fontSize: "28px", marginBottom: "8px" }}>Project Status</h1>
-        <p style={{ color: "#666", fontSize: "14px" }}>
-          Track and manage project status across your organization
-        </p>
+      <header style={{ marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <h1 style={{ fontSize: "28px", marginBottom: "8px" }}>Project Status</h1>
+          <p style={{ color: "#666", fontSize: "14px" }}>
+            Track and manage project status across your organization
+          </p>
+        </div>
+        <button
+          onClick={() => navigate("/create")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#3b82f6",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            fontSize: "14px",
+            cursor: "pointer",
+            fontWeight: 500,
+          }}
+        >
+          + Create Status Record
+        </button>
       </header>
 
       <section style={{ marginBottom: "20px" }}>
@@ -191,8 +210,10 @@ const StatusListView = () => {
             <h3 style={{ fontSize: "18px", marginBottom: "8px" }}>No status records found</h3>
             <p style={{ color: "#666" }}>
               {filterStatus !== "all"
-                ? `No records with status "${filterStatus}"
-            </div>
+                ? `No records with status "${filterStatus}". Try a different filter.`
+                : "Click \"Create Status Record\" to add your first status record."}
+            </p>
+          </div>
         </section>
       ) : (
         <section>
@@ -230,13 +251,14 @@ const StatusListView = () => {
                     key={record.id}
                     style={{
                       borderBottom: "1px solid #e5e7eb",
-                      hover: { backgroundColor: "#f9fafb" },
+                      cursor: "pointer",
                     }}
+                    onClick={() => navigate(`/detail/${record.id}`)}
                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f9fafb")}
                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                   >
                     <td style={cellStyle}>
-                      <div>
+                      <div style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}>
                         <strong>{record.project_name}</strong>
                       </div>
                       <div style={{ fontSize: "12px", color: "#6b7280" }}>
@@ -300,8 +322,14 @@ const StatusListView = () => {
                   style={{
                     ...buttonStyle,
                     opacity: pagination.page >= pagination.pages ? 0.5 : 1,
-                    cursor:
+                    cursor: pagination.page >= pagination.pages ? "not-allowed" : "pointer",
+                  }}
+                >
+                  Next
+                </button>
+              </div>
             </div>
+          )}
         </section>
       )}
     </div>

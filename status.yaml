@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "working"
+status: "active"
 phase: "implementation"
-reason: "Implementing web create/edit status record form"
+reason: "Web status record detail view completed"
 worker: "opencode"
-updated: "2026-05-21 18:00 MDT"
+updated: "2026-05-21 18:45 MDT"

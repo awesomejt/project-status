@@ -65,6 +65,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-21 18:45 - opencode
+
+- Task: Implement web status record detail view.
+- Files changed: `web/src/components/StatusDetailView.tsx` (new), `web/src/App.tsx`, `web/src/components/StatusListView.tsx`, `web/src/api/client.ts`.
+- Validation: TypeScript typecheck passed, Vite build successful (258kb bundle).
+- Result: Created StatusDetailView component with read-only display of all status record fields, formatted metadata grid (status, phase, source, timestamps), edit button navigating to `/edit/:id`, delete confirmation flow with modal-style prompt. Updated StatusListView to make rows clickable (navigate to detail view). Refactored routes: `/detail/:id` for read-only view, `/edit/:id` for edit form.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 17:35 - opencode
 
 - Task: Migrate API paths from `/api/v1/status-records/*` to `/api/*`: Rename `api_v1` module to `api`.

@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000
 const API_STATUS_RECORDS_PATH = "/api";
 
 interface RequestConfig extends RequestInit {
-  data?: Record<string, unknown>;
+  data?: object;
 }
 
 const onRequestError = (error: Error): ApiError => ({
@@ -64,8 +64,8 @@ export const apiClient = {
     );
   },
   
-  getRecord(id: string): Promise<StatusRecordCreate> {
-    return fetcher<StatusRecordCreate>(`${API_STATUS_RECORDS_PATH}/${id}`, { method: "GET" });
+  getRecord(id: string): Promise<StatusRecordCreate & { created_at: string; updated_at: string }> {
+    return fetcher<StatusRecordCreate & { created_at: string; updated_at: string }>(`${API_STATUS_RECORDS_PATH}/${id}`, { method: "GET" });
   },
   
   createRecord(data: StatusRecordCreate): Promise<StatusRecordCreate> {
