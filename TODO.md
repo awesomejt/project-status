@@ -65,7 +65,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Update `docs/Requirements.md` to replace `/api/*` status endpoints with `/api/project/status/*`. Completed 2026-05-22 by opencode.
 - [X] Update `docs/Architecture.md` to describe `/api/project/status` as the stable status-record API namespace. Completed 2026-05-22 by opencode.
 - [ ] Update `docs/Implementation.md` whenever the migration plan changes; implementation phases are now split by API, web, and CLI module.
-- [ ] Update `docs/Tech-Stack.md` command examples so CLI builds write the binary to `build/project-status`.
+- [X] Update `docs/Tech-Stack.md` command examples so CLI builds write the binary to `build/project-status`. Completed 2026-05-22 by opencode.
 - [ ] Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow.
 - [ ] Update `api/docs/api-docs.md` and the served API docs endpoint content for `/api/project/status/*`.
 - [ ] Draft the final request/response contract for `/api/project/status`, `/api/project/status/{id}`, and supported query parameters.

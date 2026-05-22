@@ -63,7 +63,7 @@ docker compose run --rm integration-test
 
 # Build after scaffolding
 cd web && npm run build
-cd cli && go build ./...
+cd cli && go build -o ../build/project-status ./...
 ```
 
 ## Environment

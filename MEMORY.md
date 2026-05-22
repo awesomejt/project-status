@@ -70,6 +70,14 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (follow-up)
+
+- Task: Update `docs/Tech-Stack.md` CLI build command to use `build/project-status` output path.
+- Files changed: `docs/Tech-Stack.md`, `TODO.md`.
+- Validation: Documentation-only update; verified change matches Implementation.md spec.
+- Result: Updated CLI build command in Tech-Stack.md to `go build -o ../build/project-status ./...` to write binary to the correct location.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode
 
 - Task: Update docs/Requirements.md and docs/Architecture.md to use `/api/project/status/*` API paths.
