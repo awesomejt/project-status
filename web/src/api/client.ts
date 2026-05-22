@@ -51,12 +51,14 @@ export const apiClient = {
     page?: number;
     per_page?: number;
     status?: StatusValue;
+    phase?: string;
   }): Promise<StatusRecordListResponse> {
     const searchParams = new URLSearchParams();
     
     if (params?.page) searchParams.set("page", String(params.page));
     if (params?.per_page) searchParams.set("per_page", String(params.per_page));
     if (params?.status) searchParams.set("status", params.status);
+    if (params?.phase) searchParams.set("phase", params.phase);
     
     return fetcher<StatusRecordListResponse>(
       `${API_STATUS_RECORDS_PATH}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`,

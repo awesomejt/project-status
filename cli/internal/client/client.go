@@ -11,18 +11,18 @@ import (
 )
 
 type StatusRecord struct {
-	ID         int      `json:"id"`
-	ProjectName string  `json:"project_name"`
-	ShortName   string  `json:"short_name"`
-	Status      string  `json:"status"`
-	Phase       *string `json:"phase,omitempty"`
-	Summary     string  `json:"summary"`
-	Reason      *string `json:"reason,omitempty"`
-	Details     *string `json:"details,omitempty"`
+	ID          string   `json:"id"`
+	ProjectName string   `json:"project_name"`
+	ShortName   string   `json:"short_name"`
+	Status      string   `json:"status"`
+	Phase       *string  `json:"phase,omitempty"`
+	Summary     string   `json:"summary"`
+	Reason      *string  `json:"reason,omitempty"`
+	Details     *string  `json:"details,omitempty"`
 	Tags        []string `json:"tags,omitempty"`
-	Source      *string `json:"source,omitempty"`
-	CreatedAt   string  `json:"created_at"`
-	UpdatedAt   string  `json:"updated_at"`
+	Source      *string  `json:"source,omitempty"`
+	CreatedAt   string   `json:"created_at"`
+	UpdatedAt   string   `json:"updated_at"`
 }
 
 type StatusRecordCreate struct {
@@ -38,23 +38,23 @@ type StatusRecordCreate struct {
 }
 
 type StatusRecordUpdate struct {
-	ProjectName *string  `json:"project_name,omitempty"`
-	ShortName   *string  `json:"short_name,omitempty"`
-	Status      *string  `json:"status,omitempty"`
-	Phase       *string  `json:"phase,omitempty"`
-	Summary     *string  `json:"summary,omitempty"`
-	Reason      *string  `json:"reason,omitempty"`
-	Details     *string  `json:"details,omitempty"`
+	ProjectName *string   `json:"project_name,omitempty"`
+	ShortName   *string   `json:"short_name,omitempty"`
+	Status      *string   `json:"status,omitempty"`
+	Phase       *string   `json:"phase,omitempty"`
+	Summary     *string   `json:"summary,omitempty"`
+	Reason      *string   `json:"reason,omitempty"`
+	Details     *string   `json:"details,omitempty"`
 	Tags        *[]string `json:"tags,omitempty"`
 	Source      *string   `json:"source,omitempty"`
 }
 
 type ListResponse struct {
-	Items     []StatusRecord `json:"items"`
-	Total     int            `json:"total"`
-	Page      int            `json:"page"`
-	PerPage   int            `json:"per_page"`
-	Pages     int            `json:"pages"`
+	Records []StatusRecord `json:"records"`
+	Total   int            `json:"total"`
+	Page    int            `json:"page"`
+	PerPage int            `json:"per_page"`
+	Pages   int            `json:"pages"`
 }
 
 type ErrorResponse struct {
@@ -77,14 +77,13 @@ func NewClient(baseURL string) *Client {
 	}
 }
 
-func (c *Client) GetRecord(id int) (*StatusRecord, error) {
-	rawID := strconv.Itoa(id)
-	resp, err := c.request("GET", "/api/"+rawID, nil)
+func (c *Client) GetRecord(id string) (*StatusRecord, error) {
+	resp, err := c.request("GET", "/api/project/status/"+id, nil)
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode == http.StatusNotFound {
-		return nil, fmt.Errorf("status record not found: %d", id)
+		return nil, fmt.Errorf("status record not found: %s", id)
 	}
 	if resp.StatusCode != http.StatusOK {
 		err := c.parseError(resp)
@@ -113,7 +112,7 @@ func (c *Client) ListRecords(page, perPage int, status, phase string) (*ListResp
 		query.Set("phase", phase)
 	}
 
-	endpoint := "/api"
+	endpoint := "/api/project/status"
 	if query.Encode() != "" {
 		endpoint += "?" + query.Encode()
 	}
@@ -141,7 +140,7 @@ func (c *Client) CreateRecord(record StatusRecordCreate) (*StatusRecord, error) 
 		return nil, fmt.Errorf("failed to encode request: %w", err)
 	}
 
-	httpResp, err := c.request("POST", "/api", body)
+	httpResp, err := c.request("POST", "/api/project/status", body)
 	if err != nil {
 		return nil, err
 	}
@@ -158,14 +157,13 @@ func (c *Client) CreateRecord(record StatusRecordCreate) (*StatusRecord, error) 
 	return &created, nil
 }
 
-func (c *Client) UpdateRecord(id int, record StatusRecordUpdate) (*StatusRecord, error) {
-	rawID := strconv.Itoa(id)
+func (c *Client) UpdateRecord(id string, record StatusRecordUpdate) (*StatusRecord, error) {
 	body, err := json.Marshal(record)
 	if err != nil {
 		return nil, fmt.Errorf("failed to encode request: %w", err)
 	}
 
-	httpResp, err := c.request("PATCH", "/api/"+rawID, body)
+	httpResp, err := c.request("PATCH", "/api/project/status/"+id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -182,9 +180,8 @@ func (c *Client) UpdateRecord(id int, record StatusRecordUpdate) (*StatusRecord,
 	return &updated, nil
 }
 
-func (c *Client) DeleteRecord(id int) error {
-	rawID := strconv.Itoa(id)
-	httpResp, err := c.request("DELETE", "/api/"+rawID, nil)
+func (c *Client) DeleteRecord(id string) error {
+	httpResp, err := c.request("DELETE", "/api/project/status/"+id, nil)
 	if err != nil {
 		return err
 	}

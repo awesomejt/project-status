@@ -37,6 +37,7 @@ const StatusListView = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<ApiError | null>(null);
   const [filterStatus, setFilterStatus] = useState<StatusValue | "all">("all");
+  const [filterPhase, setFilterPhase] = useState<string | "all">("all");
   const [pagination, setPagination] = useState({
     page: 1,
     per_page: 20,
@@ -46,6 +47,7 @@ const StatusListView = () => {
 
   // Refs to track the current filterStatus for the fetch callback
   const filterStatusRef = useRef<StatusValue | "all">("all");
+  const filterPhaseRef = useRef<string | "all">("all");
   const recordsRef = useRef<StatusRecord[]>([]);
   const paginationRef = useRef({ page: 1, per_page: 20, total: 0, pages: 0 });
   const loadingRef = useRef(true);
@@ -53,6 +55,7 @@ const StatusListView = () => {
 
   // Keep refs in sync with state
   useEffect(() => { filterStatusRef.current = filterStatus; }, [filterStatus]);
+  useEffect(() => { filterPhaseRef.current = filterPhase; }, [filterPhase]);
   useEffect(() => { recordsRef.current = records; }, [records]);
   useEffect(() => { paginationRef.current = pagination; }, [pagination]);
   useEffect(() => { loadingRef.current = loading; }, [loading]);
@@ -60,9 +63,10 @@ const StatusListView = () => {
 
   const fetchRecords = useCallback(async (page = 1) => {
     const status = filterStatusRef.current === "all" ? undefined : filterStatusRef.current;
+    const phase = filterPhaseRef.current === "all" ? undefined : filterPhaseRef.current;
 
     try {
-      const response = await apiClient.getRecords({ page, per_page: 20, status });
+      const response = await apiClient.getRecords({ page, per_page: 20, status, phase });
 
       setRecords(response.records);
       setPagination({
@@ -129,26 +133,11 @@ const StatusListView = () => {
         </button>
       </header>
 
-      <section style={{ marginBottom: "20px" }}>
-        <label htmlFor="status-filter" style={{ marginRight: "8px", fontWeight: 500 }}>Filter:</label>
-        <select
-          id="status-filter"
-          value={filterStatus}
-          onChange={(e) => {
-            setFilterStatus(e.target.value as StatusValue | "all");
-            setLoading(true);
-            setError(null);
-            fetchRecords(1);
-          }}
-          aria-label="Filter status records by status"
-          style={{
-            padding: "8px 12px",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            fontSize: "14px",
-          }}
-        >
-          <option value="all">All Status</option>
+       <section style={{ marginBottom: "20px" }}>
+        <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+          <div>
+            <label htmlFor="status-filter" style={{ marginRight: "8px", fontWeight: 500 }}>Status:</label>
+            <select
           <option value="active">Active</option>
           <option value="paused">Paused</option>
           <option value="blocked">Blocked</option>

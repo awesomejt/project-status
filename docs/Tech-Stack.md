@@ -4,7 +4,7 @@ Document the approved tools, languages, frameworks, libraries, and versions for 
 
 ## Runtime And Language
 
-- API language/runtime: Python 3.14, targeting current patch release Python 3.14.5.
+- API language/runtime: Python 3.14, targeting current patch release Python 3.14.5 or later.
 - Web language/runtime: TypeScript on Node.js 24 LTS.
 - CLI language/runtime: Go 1.26, targeting current patch release Go 1.26.3.
 - Database runtime: PostgreSQL 18, targeting current patch release PostgreSQL 18.4.

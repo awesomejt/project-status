@@ -39,7 +39,7 @@ services:
   web:
     build:
       context: ./web
-      dockerfile: Dockerfile
+      target: develop
     container_name: project-status-web
     environment:
       VITE_API_BASE_URL: http://localhost:5000
@@ -50,7 +50,6 @@ services:
     volumes:
       - ./web:/app
       - /app/node_modules
-    command: npm run dev -- --host 0.0.0.0
 
   migrations:
     build:

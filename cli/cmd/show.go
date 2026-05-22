@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/awesomejt/project-status/cli/internal/client"
 	"github.com/spf13/cobra"
@@ -20,11 +19,7 @@ var showCmd = &cobra.Command{
 		output := GetOutputFormat()
 		apiClient := client.NewClient(apiURL)
 
-		id, err := strconv.Atoi(args[0])
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error: invalid ID: %s\n", args[0])
-			os.Exit(1)
-		}
+		id := args[0]
 
 		record, err := apiClient.GetRecord(id)
 		if err != nil {
@@ -36,7 +31,7 @@ var showCmd = &cobra.Command{
 			b, _ := json.MarshalIndent(record, "", "  ")
 			fmt.Println(string(b))
 		} else {
-			fmt.Printf("Status Record #%d\n", record.ID)
+			fmt.Printf("Status Record %s\n", record.ID)
 			fmt.Printf("  Project: %s\n", record.ProjectName)
 			fmt.Printf("  Short Name: %s\n", record.ShortName)
 			fmt.Printf("  Status: %s\n", record.Status)

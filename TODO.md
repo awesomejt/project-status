@@ -84,8 +84,8 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [ ] Tests should use PostgreSQL 18-only fixtures because the model uses PostgreSQL `ARRAY`. Do not use SQLite for unit tests.
 - [X] Remove or implement the stale `/api/ping` test expectation. Already removed - no ping test exists in test_api.py.
 - [X] Normalize not-found and delete responses to the documented error/response format. Completed 2026-05-22; fixed get_status_record and delete_status_record endpoints to use make_error_response utility.
-- [ ] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`.
-- [ ] Implement or remove the documented `phase` list filter so API, web, and CLI behavior match.
+- [X] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`. Completed 2026-05-22 by opencode.
+- [X] Implement or remove the documented `phase` list filter so API, web, and CLI behavior match. Already implemented in API at api/project_status_api/api/__init__.py:130-131.
 - [ ] Decide whether runtime `Base.metadata.create_all()` should remain or migrations should be the only schema creation path outside tests.
 - [ ] Review database session lifecycle and app configuration so test, local, stage, and production environments cannot leak state across app instances.
 
@@ -112,7 +112,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ### Scaffolding And Infrastructure
 
-- [ ] Add `web/Dockerfile` or update `docker-compose.yml` so the `web` service no longer points at a missing Dockerfile.
+- [W] Add `web/Dockerfile` or update `docker-compose.yml` so the `web` service no longer points at a missing Dockerfile.
 - [ ] Add a Compose command or profile for running API pytest against PostgreSQL 18.
 - [ ] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack.
 - [ ] Make the curl smoke script dependency-light and require only common shell tools such as `bash`, `curl`, and optionally `jq`.
@@ -170,7 +170,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [X] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`. Completed: Added validation for page (1-10000), per_page (1-100), status filter against valid statuses, and phase filter against valid phases.
+- [ ]
 
 ## Blocked
 
@@ -182,6 +182,7 @@ Move blocked tasks here with the blocker and the next required human action.
 
 Move completed items here with a brief note.
 
+- [X] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`. Completed 2026-05-22: Code review confirmed validation already implemented for page (1-10000), per_page (1-100), status filter, and phase filter with proper 400 error responses.
 - [X] Replace all template placeholder values in project files before starting agent work.
 - [X] Read required project files and relevant planning docs before making changes. Completed 2026-05-20 by Codex.
 - [X] Pulled latest changes before planning update. Completed 2026-05-20 by Codex.

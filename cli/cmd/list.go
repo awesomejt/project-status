@@ -33,14 +33,14 @@ var listCmd = &cobra.Command{
 			b, _ := json.MarshalIndent(response, "", "  ")
 			fmt.Println(string(b))
 		} else {
-			fmt.Printf("%-6s %-20s %-12s %-12s %s\n", "ID", "PROJECT", "STATUS", "PHASE", "SUMMARY")
-			fmt.Println("---------------------------------------------------------------")
-			for _, record := range response.Items {
+			fmt.Printf("%-36s %-20s %-12s %-12s %s\n", "ID", "PROJECT", "STATUS", "PHASE", "SUMMARY")
+			fmt.Println("--------------------------------------------------------------------------------------------------------")
+			for _, record := range response.Records {
 				phaseStr := ""
 				if record.Phase != nil {
 					phaseStr = *record.Phase
 				}
-				fmt.Printf("%-6d %-20s %-12s %-12s %s\n", record.ID, record.ProjectName, record.Status, phaseStr, record.Summary)
+				fmt.Printf("%-36s %-20s %-12s %-12s %s\n", record.ID, record.ProjectName, record.Status, phaseStr, record.Summary)
 			}
 			fmt.Printf("\nTotal: %d records (page %d of %d)\n", response.Total, response.Page, response.Pages)
 		}

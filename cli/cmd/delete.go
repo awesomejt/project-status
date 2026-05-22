@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/awesomejt/project-status/cli/internal/client"
 	"github.com/spf13/cobra"
@@ -18,16 +17,12 @@ var deleteCmd = &cobra.Command{
 		apiURL := GetAPIURL()
 		apiClient := client.NewClient(apiURL)
 
-		id, err := strconv.Atoi(args[0])
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error: invalid ID: %s\n", args[0])
-			os.Exit(1)
-		}
+		id := args[0]
 
 		force, _ := cmd.Flags().GetBool("force")
 
 		if !force {
-			fmt.Print(fmt.Sprintf("Are you sure you want to delete status record #%d? [y/N] ", id))
+			fmt.Print(fmt.Sprintf("Are you sure you want to delete status record %s? [y/N] ", id))
 			var response string
 			fmt.Scanln(&response)
 			if response != "y" && response != "Y" {
@@ -36,13 +31,13 @@ var deleteCmd = &cobra.Command{
 			}
 		}
 
-		err = apiClient.DeleteRecord(id)
+		err := apiClient.DeleteRecord(id)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error deleting record: %v\n", err)
 			os.Exit(1)
 		}
 
-		fmt.Printf("Deleted status record #%d\n", id)
+		fmt.Printf("Deleted status record %s\n", id)
 	},
 }
 

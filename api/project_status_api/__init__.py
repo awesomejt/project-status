@@ -52,7 +52,9 @@ def create_app(config_name=None):
     # Register blueprints
     from . import api
 
-    app.register_blueprint(api.bp, url_prefix="/api")
+    app.register_blueprint(api.bp, url_prefix="/api/project/status")
+    # Temporary compatibility prefix while clients migrate to /api/project/status.
+    app.register_blueprint(api.bp_legacy, url_prefix="/api")
 
     # Health endpoints
     @app.route("/health")

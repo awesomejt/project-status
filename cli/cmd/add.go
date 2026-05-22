@@ -15,11 +15,11 @@ var addCmd = &cobra.Command{
 	Long:  `Add a new status record via the API.`,
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-	apiURL := GetAPIURL()
-	output := GetOutputFormat()
-	apiClient := client.NewClient(apiURL)
+		apiURL := GetAPIURL()
+		output := GetOutputFormat()
+		apiClient := client.NewClient(apiURL)
 
-	projectName, _ := cmd.Flags().GetString("project-name")
+		projectName, _ := cmd.Flags().GetString("project-name")
 		shortName, _ := cmd.Flags().GetString("short-name")
 		status, _ := cmd.Flags().GetString("status")
 		phase, _ := cmd.Flags().GetString("phase")
@@ -47,19 +47,19 @@ var addCmd = &cobra.Command{
 			}
 		}
 
-	record := client.StatusRecordCreate{
-		ProjectName: projectName,
-		ShortName:   shortName,
-		Status:      status,
-		Phase:       &phase,
-		Summary:     summary,
-		Reason:      &reason,
-		Details:     &details,
-		Tags:        tags,
-		Source:      stringPtr("cli"),
-	}
+		record := client.StatusRecordCreate{
+			ProjectName: projectName,
+			ShortName:   shortName,
+			Status:      status,
+			Phase:       &phase,
+			Summary:     summary,
+			Reason:      &reason,
+			Details:     &details,
+			Tags:        tags,
+			Source:      stringPtr("cli"),
+		}
 
-	created, err := apiClient.CreateRecord(record)
+		created, err := apiClient.CreateRecord(record)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error creating record: %v\n", err)
 			os.Exit(1)
@@ -69,7 +69,7 @@ var addCmd = &cobra.Command{
 			b, _ := json.MarshalIndent(created, "", "  ")
 			fmt.Println(string(b))
 		} else {
-			fmt.Printf("Created status record #%d\n", created.ID)
+			fmt.Printf("Created status record %s\n", created.ID)
 			fmt.Printf("  Project: %s (%s)\n", created.ProjectName, created.ShortName)
 			fmt.Printf("  Status: %s\n", created.Status)
 			if created.Phase != nil {
