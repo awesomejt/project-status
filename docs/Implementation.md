@@ -18,42 +18,43 @@ High-level order of implementation. Keep this aligned with `TODO.md`.
   - `web/` for React application and browser tests.
   - `cli/` for Cobra/Viper client and Go tests.
   - `docker-compose.yml` for PostgreSQL 18 and Compose-managed local development support.
-- Migrate the status-record REST contract from `/api/*` to `/api/project/status/*`.
-- Decide whether temporary compatibility routes from `/api/*` are needed during the migration.
+- Migrate the status-record REST contract from `/api/*` to `/api/project/status/*`. [DONE]
+- Add temporary compatibility routes from `/api/*` via legacy blueprint for smooth client migration. [DONE]
 - Keep health/readiness endpoints separate unless Jason decides they should also move.
 - Define two local integration feedback layers:
-  - A host-run Bash/curl smoke script for quick human feedback against a running Docker stack.
+  - A host-run Bash/curl smoke script for quick human feedback against a running Docker stack. [DONE]
   - A Python-based Docker/Compose integration-test container for richer agentic assertions and diagnostics.
 
 ## Implementation Phase: API Module
 
-- Update Flask route registration so status-record CRUD/list endpoints are served under `/api/project/status`.
+- Update Flask route registration so status-record CRUD/list endpoints are served under `/api/project/status`. [DONE]
+- Add legacy compatibility blueprint at `/api` that forwards to the same endpoints for smooth CLI/web migration. [DONE]
 - Keep the endpoint contract explicit:
   - `GET /api/project/status`
   - `POST /api/project/status`
   - `GET /api/project/status/{id}`
   - `PATCH /api/project/status/{id}`
   - `DELETE /api/project/status/{id}`
-- Update API documentation and examples to use the new namespace.
-- Fix API test fixtures so they match the current application factory and database/session lifecycle.
-- Use PostgreSQL-backed test coverage where PostgreSQL-specific model fields are required.
-- Add validation and tests for pagination, supported filters, UUID IDs, not-found responses, and error response shape.
+- Update API documentation and examples to use the new namespace. [DONE]
+- Fix API test fixtures so they match the current application factory and database/session lifecycle. [DONE]
+- Use PostgreSQL-backed test coverage where PostgreSQL-specific model fields are required. [PENDING]
+- Add validation and tests for pagination, supported filters, UUID IDs, not-found responses, and error response shape. [DONE]
 - Review whether runtime schema creation should be replaced by migration-only startup outside tests.
 
 ## Implementation Phase: Web Module
 
-- Update the shared web API client path constant to `/api/project/status`.
+- Update the shared web API client path constant to `/api/project/status`. [DONE]
 - Keep all web workflows API-backed: list, detail, create, edit, delete, loading, empty, validation, and error states.
-- Align TypeScript response types with the API contract.
+- Align TypeScript response types with the API contract. [DONE]
 - Add component tests for the primary workflows and browser smoke coverage when the dev server is available.
 - Update local development docs and environment examples for the new API path when needed.
 
 ## Implementation Phase: CLI Module
 
-- Update the CLI HTTP client paths to `/api/project/status`.
-- Treat record IDs as UUID strings across command parsing, API calls, output formatting, and tests.
-- Align list response parsing with the API contract.
-- Build the CLI binary into the ignored `build/` folder as `project-status`.
+- Update the CLI HTTP client paths to `/api/project/status`. [DONE]
+- Treat record IDs as UUID strings across command parsing, API calls, output formatting, and tests. [DONE]
+- Align list response parsing with the API contract (`records` vs `items`). [DONE]
+- Build the CLI binary into the ignored `build/` folder as `project-status`. [DONE]
 - Add a root `Makefile` target for CLI builds, plus standard test/lint/build orchestration for the repo.
 - Add command tests with mocked HTTP responses and integration smoke tests against a running local API.
 

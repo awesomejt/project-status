@@ -64,7 +64,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 - [X] Update `docs/Requirements.md` to replace `/api/*` status endpoints with `/api/project/status/*`. Completed 2026-05-22 by opencode.
 - [X] Update `docs/Architecture.md` to describe `/api/project/status` as the stable status-record API namespace. Completed 2026-05-22 by opencode.
-- [ ] Update `docs/Implementation.md` whenever the migration plan changes; implementation phases are now split by API, web, and CLI module.
+- [X] Update `docs/Implementation.md` whenever the migration plan changes; implementation phases are now split by API, web, and CLI module. Completed 2026-05-22 by opencode; added status markers to completed items in API, Web, and CLI implementation phases.
 - [X] Update `docs/Tech-Stack.md` command examples so CLI builds write the binary to `build/project-status`. Completed 2026-05-22 by opencode.
 - [ ] Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow.
 - [X] Update `api/docs/api-docs.md` and the served API docs endpoint content for `/api/project/status/*`. Completed 2026-05-22 by opencode; updated all endpoint paths and added phase filter documentation.
@@ -182,6 +182,7 @@ Move blocked tasks here with the blocker and the next required human action.
 
 Move completed items here with a brief note.
 
+- [X] Update `docs/Implementation.md` for migration plan changes. Completed 2026-05-22 by opencode; marked completed items in API, Web, and CLI implementation phases with status indicators.
 - [X] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`. Completed 2026-05-22: Code review confirmed validation already implemented for page (1-10000), per_page (1-100), status filter, and phase filter with proper 400 error responses.
 - [X] Replace all template placeholder values in project files before starting agent work.
 - [X] Read required project files and relevant planning docs before making changes. Completed 2026-05-20 by Codex.
