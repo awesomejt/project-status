@@ -66,6 +66,21 @@ services:
       - ./api:/app
     command: alembic -c alembic.ini upgrade head
 
+  integration-test:
+    build:
+      context: .
+      dockerfile: tests/integration/Dockerfile
+    container_name: project-status-integration-test
+    environment:
+      API_BASE_URL: http://api:5000
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - ./tests/integration:/app/tests/integration:ro
+    working_dir: /app
+    command: python tests/integration/test_runner.py
+
 volumes:
   postgres_data:
 

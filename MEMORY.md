@@ -70,6 +70,24 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (integration-test service)
+
+- Task: Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks.
+- Files changed: `tests/integration/test_runner.py` (new), `tests/integration/Dockerfile` (new), `docker-compose.yml`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: Python syntax validated with `py_compile`.
+- Result: Created comprehensive integration test runner with 11 test cases:
+  - Health and readiness endpoint checks
+  - CRUD operations (create, read, list, update, delete)
+  - Validation error testing (invalid status,超长 short_name)
+  - Not-found error testing (non-existent UUID returns 404)
+  - Pagination validation (page min/max, per_page min/max)
+  - Filter validation (status and phase filters with invalid value handling)
+- Added `integration-test` Docker/Compose service that depends on the API service and runs tests against it.
+- Service uses Python 3.14-slim image, requires no external dependencies beyond stdlib.
+- Test runner exits 0 on success, 1 on any failure with detailed diagnostics.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (smoke script dependency validation)
 
 - Task: Make the curl smoke script dependency-light and require only common shell tools such as `bash`, `curl`, and optionally `jq`.

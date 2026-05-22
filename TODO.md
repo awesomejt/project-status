@@ -114,7 +114,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 - [X] Add `web/Dockerfile` or update `docker-compose.yml` so the `web` service no longer points at a missing Dockerfile. Completed: Created multi-stage Dockerfile with develop and production stages, plus nginx.conf for SPA routing.
 - [X] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack. Completed 2026-05-22 by opencode; implemented comprehensive smoke test script with health/readiness checks, full CRUD validation, error handling tests, and cleanup.
-- [ ] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack.
+- [X] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks. Completed 2026-05-22 by opencode; created test_runner.py with 11 test cases (health, readiness, CRUD, validation, pagination, filtering) and Docker/Compose service configuration.
 - [X] Make the curl smoke script dependency-light and require only common shell tools such as `bash`, `curl`, and optionally `jq`. Completed 2026-05-22 by opencode; validation confirmed existing smoke-curl.sh only uses bash, curl, and standard POSIX utilities (grep, sed, cut, tail, date) without jq or other heavy dependencies.
 - [ ] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks.
 - [ ] Add Python integration-test runner files under a clear path such as `tests/integration/` or `integration/`.
