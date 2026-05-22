@@ -4,8 +4,8 @@ from flask import Flask
 
 
 # Must set environment variables BEFORE importing the app module
-# SQLite for unit tests - fast and in-memory
-TEST_DATABASE_URL = "sqlite:///:memory:"
+# Use PostgreSQL 18 for tests. Do not use SQLite.
+TEST_DATABASE_URL = "postgresql://project_status:project_status_dev@db:5432/project_status_test"
 
 # Set testing environment
 # Note: config.py expects APP_ENV="testing" for TestingConfig

@@ -82,7 +82,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [ ] Change the Flask status-record blueprint prefix from `/api` to `/api/project/status`.
 - [ ] Update API route tests and fixtures to use `/api/project/status` and UUID record IDs.
 - [ ] Fix the API pytest fixtures so they match the current application factory and database/session structure.
-- [ ] Decide whether tests should use PostgreSQL-only fixtures because the model uses PostgreSQL `ARRAY`, or refactor tags storage for SQLite-compatible unit tests.
+- [ ] Tests should use PostgreSQL 18-only fixtures because the model uses PostgreSQL `ARRAY`. Do not use SQLite for unit tests.
 - [ ] Remove or implement the stale `/api/ping` test expectation.
 - [ ] Normalize not-found and delete responses to the documented error/response format.
 - [ ] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`.
@@ -158,7 +158,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 ## Review Findings From 2026-05-21
 
 - [ ] Current docs and clients still reference `/api`; plan and implement migration to `/api/project/status`.
-- [ ] API tests are not runnable as written: they expect `/api/ping`, pass unsupported kwargs to `create_app`, reference `app.db`, use integer IDs for 404 checks, and use SQLite against a PostgreSQL-specific `ARRAY` column.
+- [ ] API tests are not runnable as written: they expect `/api/ping`, pass unsupported kwargs to `create_app`, reference `app.db`, use integer IDs for 404 checks, and must use PostgreSQL 18 instead of SQLite against a PostgreSQL-specific `ARRAY` column.
 - [ ] CLI does not match the API contract: API IDs are UUID strings but CLI expects ints; API list response uses `records` but CLI expects `items`.
 - [ ] `docker-compose.yml` references `web/Dockerfile`, but that file is missing.
 - [ ] API error responses are inconsistent for not-found paths; some return `{"error": "Record not found"}` instead of the documented structured error object.
