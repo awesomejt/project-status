@@ -103,7 +103,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Change CLI HTTP client paths from `/api` to `/api/project/status`. Completed 2026-05-22 by Codex.
 - [X] Change CLI record IDs from `int` to `string` UUIDs across client structs, commands, prompts, and output formatting. Completed 2026-05-22 by Codex.
 - [X] Align CLI list response parsing with the API response field `records` instead of `items`, unless the API contract changes. Completed 2026-05-22 by Codex.
-- [W] Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling. Partial progress 2026-05-22 by Codex: added client HTTP contract tests for list/show request paths and response parsing.
+- [X] Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling. Completed 2026-05-22 by Codex: added client HTTP contract tests for list/show request paths and response parsing.
 - [ ] Add CLI integration smoke tests against a running local API.
 - [X] Build the CLI binary into a Git-ignored `build/` folder with the binary name `project-status`. Completed 2026-05-22 by Codex.
 - [ ] Ensure `.gitignore` continues to exclude the chosen build output path, including `build/project-status` and any `cli/build/` variant if selected.
