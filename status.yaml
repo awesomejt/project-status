@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "working"
+status: "active"
 phase: "implementation"
-reason: "Migrating API/CLI contracts to /api/project/status and restoring CLI compatibility with UUID IDs"
+reason: "Task completed: API blueprint was already migrated to /api/project/status"
 worker: "opencode"
-updated: "2026-05-22 02:04 MDT"
+updated: "2026-05-22 02:05 MDT"

@@ -79,7 +79,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ### Implementation Phase: API Module
 
-- [W] Change the Flask status-record blueprint prefix from `/api` to `/api/project/status`.
+- [X] Change the Flask status-record blueprint prefix from `/api` to `/api/project/status`. Already completed; blueprint is registered at `/api/project/status` with legacy compatibility at `/api`.
 - [ ] Update API route tests and fixtures to use `/api/project/status` and UUID record IDs.
 - [ ] Fix the API pytest fixtures so they match the current application factory and database/session structure.
 - [ ] Tests should use PostgreSQL 18-only fixtures because the model uses PostgreSQL `ARRAY`. Do not use SQLite for unit tests.
@@ -171,7 +171,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [W] Change the Flask status-record blueprint prefix from `/api` to `/api/project/status`.
+- [ ]
 
 ## Blocked
 
