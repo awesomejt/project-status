@@ -170,7 +170,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [ ]
+- [X] Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling. Partial progress 2026-05-22 by Codex; completed 2026-05-22 by opencode with comprehensive client tests for CreateRecord, UpdateRecord, DeleteRecord, and ValidateURL with both success and error cases.
 
 ## Blocked
 

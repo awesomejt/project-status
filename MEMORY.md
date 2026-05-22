@@ -70,6 +70,23 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (CLI command tests)
+
+- Task: Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling.
+- Files changed: `cli/internal/client/client_test.go`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: `go test ./...` passed (10 tests: TestListRecordsUsesProjectStatusPathAndParsesRecords, TestGetRecordUsesStringIDPath, TestCreateRecordUsesCorrectPathAndPayload, TestCreateRecordReturnsErrorOnValidationFailure, TestUpdateRecordUsesCorrectPathAndPayload, TestUpdateRecordReturnsErrorOnNotFound, TestDeleteRecordUsesCorrectPath, TestDeleteRecordReturnsErrorOnFailure, TestValidateURLAcceptsValidURLs, TestValidateURLRejectsInvalidURLs).
+- Result: Added comprehensive client tests:
+  - `TestCreateRecordUsesCorrectPathAndPayload`: Verifies POST to `/api/project/status` with correct payload
+  - `TestCreateRecordReturnsErrorOnValidationFailure`: Verifies 400 error handling
+  - `TestUpdateRecordUsesCorrectPathAndPayload`: Verifies PATCH to `/api/project/status/{id}` with correct payload
+  - `TestUpdateRecordReturnsErrorOnNotFound`: Verifies 404 error handling
+  - `TestDeleteRecordUsesCorrectPath`: Verifies DELETE to `/api/project/status/{id}` returns 204
+  - `TestDeleteRecordReturnsErrorOnFailure`: Verifies 404 error handling
+  - `TestValidateURLAcceptsValidURLs`: Verifies valid URL formats are accepted
+  - `TestValidateURLRejectsInvalidURLs`: Verifies invalid URL formats are rejected
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (API lint/format setup)
 
 - Task: Install ruff via `uv sync --all-extras` and run lint/format validation.
