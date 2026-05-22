@@ -1,6 +1,6 @@
 import os
 import pytest
-from flask import Flask
+from sqlalchemy import text
 
 
 # Must set environment variables BEFORE importing the app module
@@ -8,32 +8,30 @@ from flask import Flask
 TEST_DATABASE_URL = "postgresql://project_status:project_status_dev@db:5432/project_status_test"
 
 # Set testing environment
-# Note: config.py expects APP_ENV="testing" for TestingConfig
 os.environ["APP_ENV"] = "testing"
 os.environ["FLASK_ENV"] = "testing"
 os.environ["TEST_DATABASE_URL"] = TEST_DATABASE_URL
+os.environ["DATABASE_URL"] = TEST_DATABASE_URL
 
 
 @pytest.fixture(scope="session")
 def app():
     """Create and configure a test Flask application."""
-    from project_status_api import create_app
+    from project_status_api import create_app, get_engine, db
     
-    app = create_app(
-        DATABASE_URL=TEST_DATABASE_URL,
-        APP_ENV="test",
-        FLASK_ENV="testing"
-    )
+    app = create_app(config_name="testing")
     app.config.update(
         TESTING=True,
-        SQLALCHEMY_DATABASE_URI=TEST_DATABASE_URL,
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
     
     with app.app_context():
-        app.db.create_all()
+        with get_engine().connect() as conn:
+            conn.execute(text("TRUNCATE TABLE status_records CASCADE"))
+            conn.commit()
         yield app
-        app.db.drop_all()
+        with get_engine().connect() as conn:
+            conn.execute(text("TRUNCATE TABLE status_records CASCADE"))
+            conn.commit()
 
 
 @pytest.fixture
@@ -51,18 +49,23 @@ def runner(app):
 @pytest.fixture(autouse=True)
 def clean_db(app):
     """Clean database before and after each test."""
+    from project_status_api import get_engine
+    
     with app.app_context():
-        app.db.drop_all()
-        app.db.create_all()
+        with get_engine().connect() as conn:
+            conn.execute(text("DELETE FROM status_records"))
+            conn.commit()
     yield
     with app.app_context():
-        app.db.drop_all()
-        app.db.create_all()
+        with get_engine().connect() as conn:
+            conn.execute(text("DELETE FROM status_records"))
+            conn.commit()
 
 
 @pytest.fixture
 def sample_status_record(app):
     """Create a sample status record for testing."""
+    from project_status_api import db
     from project_status_api.models import StatusRecord
     
     with app.app_context():
@@ -73,15 +76,15 @@ def sample_status_record(app):
             phase="planning",
             summary="A test status record",
             reason=None,
-            details="This is a test record for pytest fixtures",  
+            details="This is a test record for pytest fixtures",
             tags=["test", "sample"],
             source="test"
         )
-        app.db.session.add(record)
-        app.db.session.commit()
+        db.add(record)
+        db.commit()
         yield record
-        app.db.session.delete(record)
-        app.db.session.commit()
+        db.delete(record)
+        db.commit()
 
 
 @pytest.fixture

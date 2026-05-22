@@ -86,6 +86,14 @@ Newest entries first.
 - Result: Updated CLI build command in Tech-Stack.md to `go build -o ../build/project-status ./...` to write binary to the correct location.
 - Blockers or follow-up: none.
 
+### 2026-05-22 - opencode (fixtures fix)
+
+- Task: Fix the API pytest fixtures so they match the current application factory and database/session structure.
+- Files changed: `api/tests/conftest.py`.
+- Validation: Python syntax verified; fixtures now use `engine.connect()` context manager pattern instead of incorrect `engine.execute()` calls.
+- Result: Fixed three fixture functions: `app` fixture (session setup/teardown), `clean_db` fixture (per-test cleanup), and removed unused imports. The `sample_status_record` fixture was already correct (SQLAlchemy auto-generates UUIDs). Tests cannot run locally without PostgreSQL container, but the code structure is now correct.
+- Blockers or follow-up: need Docker Compose with PostgreSQL 18 container running to validate tests.
+
 ### 2026-05-22 - opencode
 
 - Task: Migrate web API client from `/api` to `/api/project/status`.
