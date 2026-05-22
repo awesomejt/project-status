@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "active"
+status: "working"
 phase: "implementation"
-reason: "Web client API path migration to /api/project/status complete"
+reason: "Fixing API pytest fixtures to match current application factory and database/session structure"
 worker: "opencode"
-updated: "2026-05-22 02:11 MDT"
+updated: "2026-05-22 02:15 MDT"
