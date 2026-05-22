@@ -94,6 +94,14 @@ Newest entries first.
 - Result: Fixed three fixture functions: `app` fixture (session setup/teardown), `clean_db` fixture (per-test cleanup), and removed unused imports. The `sample_status_record` fixture was already correct (SQLAlchemy auto-generates UUIDs). Tests cannot run locally without PostgreSQL container, but the code structure is now correct.
 - Blockers or follow-up: need Docker Compose with PostgreSQL 18 container running to validate tests.
 
+### 2026-05-22 - opencode (client return types fix)
+
+- Task: Fix TypeScript client return types for `getRecord`, `createRecord`, and `updateRecord` methods in `web/src/api/client.ts`.
+- Files changed: `web/src/api/client.ts`, `TODO.md`.
+- Validation: TypeScript typecheck passed, Vite build successful (260kb bundle).
+- Result: Changed `getRecord` return type from `Promise<StatusRecordCreate & { created_at: string; updated_at: string }>` to `Promise<StatusRecord>`, changed `createRecord` return type from `Promise<StatusRecordCreate>` to `Promise<StatusRecord>`, and changed `updateRecord` return type from `Promise<StatusRecordCreate>` to `Promise<StatusRecord>`. All three methods now correctly return the full `StatusRecord` type that the API provides, including `id`, `created_at`, and `updated_at` fields.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode
 
 - Task: Migrate web API client from `/api` to `/api/project/status`.

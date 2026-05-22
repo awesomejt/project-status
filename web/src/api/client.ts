@@ -1,4 +1,4 @@
-import type { StatusRecordCreate, StatusRecordUpdate, StatusRecordListResponse, ApiError, StatusValue } from "../types/statusRecord";
+import type { StatusRecord, StatusRecordCreate, StatusRecordUpdate, StatusRecordListResponse, ApiError, StatusValue } from "../types/statusRecord";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
@@ -64,19 +64,19 @@ export const apiClient = {
     );
   },
   
-  getRecord(id: string): Promise<StatusRecordCreate & { created_at: string; updated_at: string }> {
-    return fetcher<StatusRecordCreate & { created_at: string; updated_at: string }>(`${API_STATUS_RECORDS_PATH}/${id}`, { method: "GET" });
+  getRecord(id: string): Promise<StatusRecord> {
+    return fetcher<StatusRecord>(`${API_STATUS_RECORDS_PATH}/${id}`, { method: "GET" });
   },
   
-  createRecord(data: StatusRecordCreate): Promise<StatusRecordCreate> {
-    return fetcher<StatusRecordCreate>(API_STATUS_RECORDS_PATH, {
+  createRecord(data: StatusRecordCreate): Promise<StatusRecord> {
+    return fetcher<StatusRecord>(API_STATUS_RECORDS_PATH, {
       method: "POST",
       data,
     });
   },
   
-  updateRecord(id: string, data: StatusRecordUpdate): Promise<StatusRecordCreate> {
-    return fetcher<StatusRecordCreate>(`${API_STATUS_RECORDS_PATH}/${id}`, {
+  updateRecord(id: string, data: StatusRecordUpdate): Promise<StatusRecord> {
+    return fetcher<StatusRecord>(`${API_STATUS_RECORDS_PATH}/${id}`, {
       method: "PATCH",
       data,
     });
