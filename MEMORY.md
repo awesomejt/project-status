@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (contract drift cleanup)
+
+- Task: Remove stale/duplicate TODO items in `Scaffolding And Infrastructure` section.
+- Files changed: `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: Code review confirmed integration-test files exist at `tests/integration/test_runner.py` and `tests/integration/Dockerfile`; docker-compose.yml has proper `integration-test` service.
+- Result: Removed duplicate incomplete TODO item (line 119) for integration-test service that was already completed. Marked related TODO item (integration-test runner files) as complete with verification notes.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (integration-test service)
 
 - Task: Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks.

@@ -116,8 +116,8 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Add a host-run Bash/curl smoke script, such as `scripts/smoke-curl.sh`, for quick human feedback against a running Docker stack. Completed 2026-05-22 by opencode; implemented comprehensive smoke test script with health/readiness checks, full CRUD validation, error handling tests, and cleanup.
 - [X] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks. Completed 2026-05-22 by opencode; created test_runner.py with 11 test cases (health, readiness, CRUD, validation, pagination, filtering) and Docker/Compose service configuration.
 - [X] Make the curl smoke script dependency-light and require only common shell tools such as `bash`, `curl`, and optionally `jq`. Completed 2026-05-22 by opencode; validation confirmed existing smoke-curl.sh only uses bash, curl, and standard POSIX utilities (grep, sed, cut, tail, date) without jq or other heavy dependencies.
-- [ ] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks.
-- [ ] Add Python integration-test runner files under a clear path such as `tests/integration/` or `integration/`.
+- [X] Add a dedicated Python `integration-test` Docker/Compose service that depends on the API and PostgreSQL services and exits non-zero on failed checks. Completed 2026-05-22 by opencode; created test_runner.py with 11 test cases and Docker/Compose service configuration.
+- [X] Add Python integration-test runner files under a clear path such as `tests/integration/`. Completed 2026-05-22 by opencode; files exist at tests/integration/test_runner.py and tests/integration/Dockerfile.
 - [ ] Make both integration runners configurable through environment variables such as `API_BASE_URL`, `TEST_PROJECT_NAME`, and optional cleanup/reset settings.
 - [ ] Add root-level validation commands through the planned `Makefile`.
 - [ ] Add `make smoke` for the host-run curl script and `make integration-test` for the Python containerized test runner.
@@ -182,6 +182,7 @@ Move blocked tasks here with the blocker and the next required human action.
 
 Move completed items here with a brief note.
 
+- [X] Contract drift cleanup: remove stale/duplicate TODO items. Completed 2026-05-22 by opencode; removed duplicate integration-test TODO and marked related items complete.
 - [X] Update `docs/Implementation.md` for migration plan changes. Completed 2026-05-22 by opencode; marked completed items in API, Web, and CLI implementation phases with status indicators.
 - [X] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`. Completed 2026-05-22: Code review confirmed validation already implemented for page (1-10000), per_page (1-100), status filter, and phase filter with proper 400 error responses.
 - [X] Replace all template placeholder values in project files before starting agent work.
