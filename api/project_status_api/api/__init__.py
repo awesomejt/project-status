@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, request, send_from_directory
 import os
 from datetime import datetime
+
+from flask import Blueprint, jsonify, request, send_from_directory
 
 from .. import db
 from ..models import StatusRecord
@@ -112,13 +113,17 @@ def list_status_records():
         return jsonify(response), code
 
     if status_filter and status_filter not in VALID_STATUS_FILTERS:
-        response, code = make_error_response(f"Invalid 'status' parameter: must be one of {', '.join(VALID_STATUS_FILTERS)}", 400)
+        response, code = make_error_response(
+            f"Invalid 'status' parameter: must be one of {', '.join(VALID_STATUS_FILTERS)}", 400
+        )
         return jsonify(response), code
 
     if phase_filter:
         VALID_PHASES = ["planning", "implementation", "validation", "release"]
         if phase_filter not in VALID_PHASES:
-            response, code = make_error_response(f"Invalid 'phase' parameter: must be one of {', '.join(VALID_PHASES)}", 400)
+            response, code = make_error_response(
+                f"Invalid 'phase' parameter: must be one of {', '.join(VALID_PHASES)}", 400
+            )
             return jsonify(response), code
 
     # Build query
@@ -252,8 +257,12 @@ def api_docs():
     """Return API documentation."""
     docs_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "docs", "api-docs.md")
     docs_path = os.path.abspath(docs_path)
-    
+
     if os.path.exists(docs_path):
-        return send_from_directory(os.path.dirname(docs_path), os.path.basename(docs_path)), 200, {'Content-Type': 'text/markdown'}
-    
+        return (
+            send_from_directory(os.path.dirname(docs_path), os.path.basename(docs_path)),
+            200,
+            {"Content-Type": "text/markdown"},
+        )
+
     return jsonify({"error": "Documentation not found"}), 404

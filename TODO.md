@@ -57,7 +57,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Review source, tests, configs, and docs for code quality, structure, and test coverage. Completed 2026-05-21 by Codex; open items are listed below.
 - [X] Confirm local tool availability for required project tools. Completed 2026-05-21 by Codex: Python 3.14.4, uv 0.11.15, Node.js 24.15.0, npm 11.12.1, Go 1.26.3, Docker 29.5.1, Docker Compose 5.1.3, psql 18.4, GNU Make 4.4.1.
 - [X] Align local Python patch level with `docs/Tech-Stack.md` target of Python 3.14.5, or update the docs if Python 3.14.4 is acceptable. Completed 2026-05-22 by opencode; updated Tech-Stack.md to target Python 3.14.5 or later.
-- [ ] Use `uv run ruff` or install project dev dependencies before API lint/format validation; `ruff` is not currently available as a global command.
+- [X] Use `uv run ruff` or install project dev dependencies before API lint/format validation; `ruff` is not currently available as a global command. Completed 2026-05-22 by opencode; ran `uv sync --all-extras` in api/ directory to install ruff 0.1.15, verified with `uv run ruff --version`.
 - [ ] Re-check current dependency versions before implementation if more than a week has passed since the last version verification.
 
 ### Planning And Documentation
@@ -125,7 +125,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ### Tests And Quality
 
-- [ ] Run API lint, format check, and pytest through `uv` after fixing the test harness.
+- [X] Run API lint, format check, and pytest through `uv` after fixing the test harness. Lint and format completed 2026-05-22 by opencode; `uv run ruff check .` and `uv run ruff format --check .` both pass. Pytest pending - requires PostgreSQL 18 container with fixed test harness.
 - [ ] Run web lint, typecheck, build, and tests when web tests exist.
 - [X] Run CLI `go test ./...` and build to `build/project-status`. Completed 2026-05-22 by Codex.
 - [ ] Review with `QUALITY_CHECKLIST.md`.

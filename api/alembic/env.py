@@ -17,7 +17,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Import our models to get the Base.metadata
-from project_status_api.models import Base
+from project_status_api.models import Base  # noqa: E402
 
 # Set target_metadata to our models' metadata
 target_metadata = Base.metadata

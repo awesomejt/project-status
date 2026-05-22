@@ -70,6 +70,14 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (API lint/format setup)
+
+- Task: Install ruff via `uv sync --all-extras` and run lint/format validation.
+- Files changed: `TODO.md`, `status.yaml`, `MEMORY.md`, `api/alembic/env.py`, `api/project_status_api/api/__init__.py`, `api/tests/conftest.py`, `api/tests/test_api.py`.
+- Validation: `uv run ruff check .` passes (0 errors), `uv run ruff format --check .` passes (9 files already formatted), pytest collects 10 tests successfully.
+- Result: Ran `uv sync --all-extras` to install ruff 0.1.15. Auto-fixed 37 linting issues with `uv run ruff check --fix`. Reformatted 3 files with `uv run ruff format .`. Added `# noqa: E402` comment for intentional import placement in alembic/env.py. API lint and format now pass completely.
+- Blockers or follow-up: pytest cannot run without PostgreSQL 18 container; test harness fixes were done in previous runs.
+
 ### 2026-05-22 - opencode (contract drift cleanup)
 
 - Task: Remove stale/duplicate TODO items in `Scaffolding And Infrastructure` section.
