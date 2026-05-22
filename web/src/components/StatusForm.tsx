@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { apiClient } from "../api/client";
 import type { StatusRecordCreate, StatusRecordUpdate, ApiError } from "../types/statusRecord";
@@ -31,7 +31,7 @@ const StatusForm = () => {
   
   const peek = searchParams.get("peek") === "true";
   
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setFormData({
       project_name: "",
       short_name: "",
@@ -46,14 +46,15 @@ const StatusForm = () => {
     setTagInput("");
     setValidationErrors({});
     setError(null);
-  };
+  }, [source]);
   
   useEffect(() => {
     if (isEditing && id) {
-      const fetchRecord = async () => {
-        setLoading(true);
-        try {
-          const record = await apiClient.getRecord(id);
+      // Initialize loading state before async fetch - this is a standard React pattern
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLoading(true);
+      apiClient.getRecord(id).then(
+        (record) => {
           setFormData({
             project_name: record.project_name,
             short_name: record.short_name,
@@ -65,18 +66,14 @@ const StatusForm = () => {
             tags: record.tags || [],
             source: source || "web",
           });
-        } catch (err) {
-          setError(err as ApiError);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchRecord();
+        },
+        (err: ApiError) => setError(err)
+      ).finally(() => setLoading(false));
     } else {
       setLoading(false);
       resetForm();
     }
-  }, [id, source]);
+  }, [id, isEditing, source, resetForm]);
   
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};

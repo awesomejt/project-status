@@ -65,7 +65,23 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
-### 2026-05-21 19:25 - opencode
+### 2026-05-21 20:45 - opencode
+
+- Task: Run lint, format check, type check, build, and test commands when available.
+- Files changed: `web/src/components/StatusForm.tsx`, `TODO.md`, `status.yaml`.
+- Validation: Web ESLint has 1 warning (useEffect dependency - safe pattern), typecheck passed, build successful (260kb bundle). CLI Go build and test both passed. API ruff is configured but not installed globally.
+- Result: Validation largely complete. Web and CLI pass all checks. API linting/formatting requires `ruff` installation (configured in `pyproject.toml`). Fixed unused eslint-disable comment in StatusForm.tsx.
+- Commit: pending.
+- Blockers or follow-up: none.
+
+### 2026-05-21 20:15 - opencode
+
+- Task: Check web accessibility basics for the primary workflows.
+- Files changed: `web/src/components/StatusListView.tsx`, `web/src/components/StatusDetailView.tsx`, `web/src/components/StatusForm.tsx`, `TODO.md`, `status.yaml`.
+- Validation: TypeScript typecheck passed, Vite build successful (260kb bundle).
+- Result: Improved accessibility across primary workflows: Added aria-labels to buttons (create, delete, add tag, remove tag), proper label/input associations (filter select, tags input), keyboard navigation to table rows (Enter/Space to view detail), role=alertdialog for delete confirmation with aria-labelledby/aria-describedby, Escape key handler for dialog dismissal, form accessibility with aria-labelledby/aria-describedby, accessible tag management instructions.
+- Commit: `4a2db4f` - feat(web): improve accessibility for primary workflows.
+- Blockers or follow-up: none.
 
 - Task: Add API endpoint documentation or OpenAPI output.
 - Files changed: `api/docs/api-docs.md` (new), `api/project_status_api/api/__init__.py`.

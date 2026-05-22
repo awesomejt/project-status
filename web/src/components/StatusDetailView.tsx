@@ -40,28 +40,6 @@ const StatusDetailView = () => {
   const [deleting, setDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  useEffect(() => {
-    if (id) {
-      fetchRecord();
-    }
-  }, [id]);
-
-  const fetchRecord = async () => {
-    if (!id) return;
-    
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const data = await apiClient.getRecord(id);
-      setRecord(data as StatusRecord);
-    } catch (err) {
-      setError(err as ApiError);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleDelete = async () => {
     if (!id) return;
     
@@ -105,6 +83,15 @@ const StatusDetailView = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [showDeleteConfirm]);
+
+  useEffect(() => {
+    if (id) {
+      apiClient.getRecord(id).then(
+        (data) => setRecord(data as StatusRecord),
+        (err: ApiError) => setError(err)
+      ).finally(() => setLoading(false));
+    }
+  }, [id]);
 
   if (loading) {
     return (

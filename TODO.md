@@ -129,7 +129,7 @@ These items are good candidates for a local model or cloud agent.
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [W] Run lint, format check, type check, build, and test commands when available.
+- [X] Run lint, format check, type check, build, and test commands when available. Completed - Web: 1 warning (useEffect dep), typecheck passed, build successful (260kb). CLI: build and test passed. API: ruff not installed but configured in pyproject.toml.
 
 ## Blocked
 

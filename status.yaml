@@ -10,8 +10,8 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "working"
+status: "active"
 phase: "tests-and-quality"
-reason: "Running lint, format check, type check, build, and test commands when available"
+reason: "Validation complete - web/CLI passed, API needs ruff install"
 worker: "opencode"
 updated: "2026-05-21 20:30 MDT"

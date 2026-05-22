@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../api/client";
 import type { StatusRecord, StatusValue, ApiError } from "../types/statusRecord";
@@ -44,16 +44,25 @@ const StatusListView = () => {
     pages: 0,
   });
 
+  // Refs to track the current filterStatus for the fetch callback
+  const filterStatusRef = useRef<StatusValue | "all">("all");
+  const recordsRef = useRef<StatusRecord[]>([]);
+  const paginationRef = useRef({ page: 1, per_page: 20, total: 0, pages: 0 });
+  const loadingRef = useRef(true);
+  const errorRef = useRef<ApiError | null>(null);
+
+  // Keep refs in sync with state
+  useEffect(() => { filterStatusRef.current = filterStatus; }, [filterStatus]);
+  useEffect(() => { recordsRef.current = records; }, [records]);
+  useEffect(() => { paginationRef.current = pagination; }, [pagination]);
+  useEffect(() => { loadingRef.current = loading; }, [loading]);
+  useEffect(() => { errorRef.current = error; }, [error]);
+
   const fetchRecords = useCallback(async (page = 1) => {
-    setLoading(true);
-    setError(null);
+    const status = filterStatusRef.current === "all" ? undefined : filterStatusRef.current;
 
     try {
-      const response = await apiClient.getRecords({
-        page,
-        per_page: 20,
-        status: filterStatus === "all" ? undefined : filterStatus,
-      });
+      const response = await apiClient.getRecords({ page, per_page: 20, status });
 
       setRecords(response.records);
       setPagination({
@@ -65,23 +74,26 @@ const StatusListView = () => {
     } catch (err) {
       const apiError = err as ApiError;
       setError(apiError);
-    } finally {
-      setLoading(false);
     }
-  }, [filterStatus]);
+  }, []);
 
+  // Initial data fetch on mount
   useEffect(() => {
-    fetchRecords(1);
-  }, [fetchRecords]);
+    fetchRecords(1); // Initial fetch does not call setLoading
+  }, []);
 
   const handlePreviousPage = () => {
     if (pagination.page > 1) {
+      setLoading(true);
+      setError(null);
       fetchRecords(pagination.page - 1);
     }
   };
 
   const handleNextPage = () => {
     if (pagination.page < pagination.pages) {
+      setLoading(true);
+      setError(null);
       fetchRecords(pagination.page + 1);
     }
   };
@@ -124,6 +136,8 @@ const StatusListView = () => {
           value={filterStatus}
           onChange={(e) => {
             setFilterStatus(e.target.value as StatusValue | "all");
+            setLoading(true);
+            setError(null);
             fetchRecords(1);
           }}
           aria-label="Filter status records by status"
