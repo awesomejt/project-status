@@ -5,7 +5,7 @@ Project Status API - REST API for managing status records.
 ## Base URL
 
 ```
-http://localhost:5000/api
+http://localhost:5000/api/project/status
 ```
 
 ## Endpoints
@@ -57,7 +57,7 @@ Check if the API and database are ready.
 ### Create Status Record
 
 ```
-POST /api
+POST /api/project/status
 ```
 
 Create a new status record.
@@ -134,7 +134,7 @@ Create a new status record.
 ### List Status Records
 
 ```
-GET /api
+GET /api/project/status
 ```
 
 List all status records with pagination and filtering.
@@ -146,8 +146,9 @@ List all status records with pagination and filtering.
 | page | integer | 1 | Page number (1-indexed) |
 | per_page | integer | 20 | Records per page (max 100) |
 | status | string | - | Filter by status |
+| phase | string | - | Filter by phase (planning, implementation, validation, release) |
 
-**Example:** `GET /api?page=1&per_page=10&status=active`
+**Example:** `GET /api/project/status?page=1&per_page=10&status=active`
 
 **Response:** 200 OK
 
@@ -175,7 +176,7 @@ List all status records with pagination and filtering.
 ### Get Status Record
 
 ```
-GET /api/{id}
+GET /api/project/status/{id}
 ```
 
 Get a specific status record by ID.
@@ -209,14 +210,17 @@ Get a specific status record by ID.
 
 ```json
 {
-  "error": "Record not found"
+  "error": {
+    "code": 404,
+    "message": "Record not found"
+  }
 }
 ```
 
 ### Update Status Record
 
 ```
-PATCH /api/{id}
+PATCH /api/project/status/{id}
 ```
 
 Partially update a status record.
@@ -283,7 +287,7 @@ Partially update a status record.
 ### Delete Status Record
 
 ```
-DELETE /api/{id}
+DELETE /api/project/status/{id}
 ```
 
 Delete a status record.
@@ -298,7 +302,7 @@ Delete a status record.
 
 ```json
 {
-  "message": "Record deleted"
+  "message": "Record deleted successfully"
 }
 ```
 
@@ -306,7 +310,10 @@ Delete a status record.
 
 ```json
 {
-  "error": "Record not found"
+  "error": {
+    "code": 404,
+    "message": "Record not found"
+  }
 }
 ```
 
