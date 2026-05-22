@@ -170,7 +170,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [ ]
+- [W] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`.
 
 ## Blocked
 
