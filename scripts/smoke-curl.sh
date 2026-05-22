@@ -83,6 +83,10 @@ http_request() {
 
 # Cleanup function
 cleanup() {
+    if [[ "$SMOKE_CLEANUP" != "true" ]]; then
+        log "Skipping cleanup (SMOKE_CLEANUP=$SMOKE_CLEANUP)"
+        return
+    fi
     if [[ -n "$SMOKE_RECORD_ID" ]]; then
         log "Cleaning up test record..."
         local response
@@ -135,7 +139,7 @@ echo ""
 
 # Check 3: Create a status record
 log "Creating status record..."
-create_body='{"project_name":"Smoke Test Project","short_name":"smoke-test-1","status":"active","phase":"implementation","summary":"Test record created by smoke script","source":"smoke-test"}'
+create_body="{\"project_name\":\"Smoke Test Project\",\"short_name\":\"${TEST_RECORD_PREFIX}-$(date +%s)\",\"status\":\"active\",\"phase\":\"implementation\",\"summary\":\"Test record created by smoke script\",\"source\":\"smoke-test\"}"
 response=$(http_request "POST" "/api/project/status" "$create_body")
 http_code=$(echo "$response" | cut -d$'\t' -f1)
 body_content=$(echo "$response" | cut -d$'\t' -f2-)
@@ -233,17 +237,9 @@ fi
 echo ""
 log "Cleaning up..."
 
-# Disable trap and cleanup manually
+# Disable trap and run cleanup manually once for clearer output.
 trap - EXIT
-if [[ -n "$SMOKE_RECORD_ID" ]]; then
-    response=$(http_request "DELETE" "/api/project/status/${SMOKE_RECORD_ID}" "")
-    http_code=$(echo "$response" | cut -d$'\t' -f1)
-    if [[ "$http_code" == "200" ]]; then
-        log_pass "Test record deleted"
-    else
-        log_fail "Failed to delete test record (HTTP $http_code)"
-    fi
-fi
+cleanup
 
 echo ""
 echo "========================================"

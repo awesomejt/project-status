@@ -6,6 +6,10 @@ import uuid
 from urllib.parse import urlparse
 
 BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:5000")
+TEST_PROJECT_NAME = os.environ.get("TEST_PROJECT_NAME", "Integration Test Project")
+TEST_RECORD_PREFIX = os.environ.get("TEST_RECORD_PREFIX", "int-test")
+INTEGRATION_CLEANUP = os.environ.get("INTEGRATION_CLEANUP", "true").lower() == "true"
+TEST_RECORD_ID = None
 
 
 def make_request(method: str, path: str, body=None) -> tuple[int, dict | None]:
@@ -49,15 +53,16 @@ def test_create_record():
     """Test creating a status record."""
     global TEST_RECORD_ID
     body = {
-        "short_name": f"int-test-{uuid.uuid4().hex[:8]}",
-        "description": "Integration test record",
-        "status": "planning",
+        "project_name": TEST_PROJECT_NAME,
+        "short_name": f"{TEST_RECORD_PREFIX}-{uuid.uuid4().hex[:8]}",
+        "summary": "Integration test record",
+        "status": "active",
         "phase": "planning",
         "source": "integration-test",
-        "tags": ["test", "integration"]
+        "tags": ["test", "integration"],
     }
     status, resp = make_request("POST", "/api/project/status", body)
-    assert status == 200, f"Create record failed: {status} - {resp}"
+    assert status == 201, f"Create record failed: {status} - {resp}"
     assert "id" in resp, "Response missing 'id' field"
     TEST_RECORD_ID = resp["id"]
     return True
@@ -84,20 +89,20 @@ def test_read_record():
 def test_update_record():
     """Test updating a status record."""
     body = {
-        "status": "implementation",
-        "description": "Updated description"
+        "status": "working",
+        "summary": "Updated integration test summary",
     }
     status, resp = make_request("PATCH", f"/api/project/status/{TEST_RECORD_ID}", body)
     assert status == 200, f"Update record failed: {status} - {resp}"
-    assert resp["status"] == "implementation", "Status not updated"
+    assert resp["status"] == "working", "Status not updated"
     return True
 
 
 def test_validation_errors():
     """Test validation error responses."""
     invalid_bodies = [
-        ({"status": "invalid_status"}, 400),
-        ({"short_name": "x" * 101}, 400),
+        ({"project_name": TEST_PROJECT_NAME, "short_name": "invalid-status", "status": "invalid_status"}, 400),
+        ({"project_name": TEST_PROJECT_NAME, "short_name": "x" * 101, "status": "active"}, 400),
     ]
     for body, expected_status in invalid_bodies:
         status, resp = make_request("POST", "/api/project/status", body)
@@ -134,7 +139,7 @@ def test_pagination():
 
 def test_filtering():
     """Test filter parameters."""
-    status, resp = make_request("GET", f"/api/project/status?status=implementation")
+    status, resp = make_request("GET", f"/api/project/status?status=working")
     assert status == 200, f"Filter test failed: {status} - {resp}"
     
     status, resp = make_request("GET", f"/api/project/status?phase=planning")
@@ -192,6 +197,13 @@ def main():
             failed.append(name)
     
     print("=" * 60)
+    if INTEGRATION_CLEANUP and TEST_RECORD_ID:
+        cleanup_status, _ = make_request("DELETE", f"/api/project/status/{TEST_RECORD_ID}")
+        if cleanup_status != 200:
+            print(f"  [WARN] Cleanup failed for record {TEST_RECORD_ID}: HTTP {cleanup_status}")
+        else:
+            print(f"  [CLEANUP] Deleted test record {TEST_RECORD_ID}")
+
     if failed:
         print(f"FAILED: {len(failed)} test(s) failed:")
         for name in failed:

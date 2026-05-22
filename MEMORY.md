@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - Codex (integration runner env config)
+
+- Task: Make both integration runners configurable via environment variables and align integration test payloads with current API contract.
+- Files changed: `scripts/smoke-curl.sh`, `tests/integration/test_runner.py`, `TODO.md`, `MEMORY.md`, `status.yaml`.
+- Validation: `bash -n scripts/smoke-curl.sh`; `python -m py_compile tests/integration/test_runner.py`.
+- Result: Added/used `API_BASE_URL`, `TEST_PROJECT_NAME`, `TEST_RECORD_PREFIX`, and cleanup toggles (`SMOKE_CLEANUP`, `INTEGRATION_CLEANUP`) across smoke and integration runners. Updated integration runner create/update/validation payloads and status expectations to match current API fields and status values.
+- Commit: pending.
+- Blockers or follow-up: full runtime integration checks still require a running API/database stack.
+
 ### 2026-05-22 - Codex (web scaffold cleanup)
 
 - Task: Remove unused web scaffold assets and validate the web build path.
