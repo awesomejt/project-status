@@ -70,6 +70,20 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode (pagination validation)
+
+- Task: Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`.
+- Files changed: `api/project_status_api/api/__init__.py`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: Code review.
+- Result: Added comprehensive query parameter validation to `list_status_records` endpoint:
+  - `page`: must be integer, minimum 1, maximum 10000
+  - `per_page`: must be integer, minimum 1, maximum 100
+  - `status`: if provided, must be one of the valid status values
+  - `phase`: if provided, must be one of `planning`, `implementation`, `validation`, `release`
+  - Added `phase` filter functionality to the query (was missing)
+  - All validation errors return consistent 400 error responses
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - opencode (error response normalization)
 
 - Task: Normalize not-found and delete responses to the documented error/response format.

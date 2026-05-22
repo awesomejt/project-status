@@ -72,15 +72,63 @@ def create_status_record():
 @bp_legacy.route("/", methods=["GET"])
 def list_status_records():
     """List status records with pagination and filters."""
-    page = request.args.get("page", 1, type=int)
-    per_page = request.args.get("per_page", 20, type=int)
+    VALID_STATUS_FILTERS = ["active", "paused", "blocked", "working", "error", "stopped", "completed"]
+    MAX_PER_PAGE = 100
+    MIN_PER_PAGE = 1
+    MAX_PAGE = 10000
+    MIN_PAGE = 1
+
+    page_raw = request.args.get("page", "1")
+    per_page_raw = request.args.get("per_page", "20")
     status_filter = request.args.get("status")
+    phase_filter = request.args.get("phase")
+
+    try:
+        page = int(page_raw)
+    except ValueError:
+        response, code = make_error_response("Invalid 'page' parameter: must be an integer", 400)
+        return jsonify(response), code
+
+    try:
+        per_page = int(per_page_raw)
+    except ValueError:
+        response, code = make_error_response("Invalid 'per_page' parameter: must be an integer", 400)
+        return jsonify(response), code
+
+    if page < MIN_PAGE:
+        response, code = make_error_response(f"'page' must be at least {MIN_PAGE}", 400)
+        return jsonify(response), code
+
+    if page > MAX_PAGE:
+        response, code = make_error_response(f"'page' must be at most {MAX_PAGE}", 400)
+        return jsonify(response), code
+
+    if per_page < MIN_PER_PAGE:
+        response, code = make_error_response(f"'per_page' must be at least {MIN_PER_PAGE}", 400)
+        return jsonify(response), code
+
+    if per_page > MAX_PER_PAGE:
+        response, code = make_error_response(f"'per_page' must be at most {MAX_PER_PAGE}", 400)
+        return jsonify(response), code
+
+    if status_filter and status_filter not in VALID_STATUS_FILTERS:
+        response, code = make_error_response(f"Invalid 'status' parameter: must be one of {', '.join(VALID_STATUS_FILTERS)}", 400)
+        return jsonify(response), code
+
+    if phase_filter:
+        VALID_PHASES = ["planning", "implementation", "validation", "release"]
+        if phase_filter not in VALID_PHASES:
+            response, code = make_error_response(f"Invalid 'phase' parameter: must be one of {', '.join(VALID_PHASES)}", 400)
+            return jsonify(response), code
 
     # Build query
     query = db.query(StatusRecord)
 
     if status_filter:
         query = query.filter(StatusRecord.status == status_filter)
+
+    if phase_filter:
+        query = query.filter(StatusRecord.phase == phase_filter)
 
     # Get total count
     total = query.count()
