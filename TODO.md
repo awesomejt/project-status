@@ -56,7 +56,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Pull latest changes before the review session. Completed 2026-05-21 by Codex; repo was already up to date.
 - [X] Review source, tests, configs, and docs for code quality, structure, and test coverage. Completed 2026-05-21 by Codex; open items are listed below.
 - [X] Confirm local tool availability for required project tools. Completed 2026-05-21 by Codex: Python 3.14.4, uv 0.11.15, Node.js 24.15.0, npm 11.12.1, Go 1.26.3, Docker 29.5.1, Docker Compose 5.1.3, psql 18.4, GNU Make 4.4.1.
-- [W] Align local Python patch level with `docs/Tech-Stack.md` target of Python 3.14.5, or update the docs if Python 3.14.4 is acceptable.
+- [X] Align local Python patch level with `docs/Tech-Stack.md` target of Python 3.14.5, or update the docs if Python 3.14.4 is acceptable. Completed 2026-05-22 by opencode; updated Tech-Stack.md to target Python 3.14.5 or later.
 - [ ] Use `uv run ruff` or install project dev dependencies before API lint/format validation; `ruff` is not currently available as a global command.
 - [ ] Re-check current dependency versions before implementation if more than a week has passed since the last version verification.
 
@@ -82,7 +82,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Change the Flask status-record blueprint prefix from `/api` to `/api/project/status`. Already completed; blueprint is registered at `/api/project/status` with legacy compatibility at `/api`.
 - [X] Fix the API pytest fixtures so they match the current application factory and database/session structure. Completed 2026-05-22 by opencode; fixed engine.execute() to use connection.execute() pattern.
 - [ ] Tests should use PostgreSQL 18-only fixtures because the model uses PostgreSQL `ARRAY`. Do not use SQLite for unit tests.
-- [ ] Remove or implement the stale `/api/ping` test expectation.
+- [X] Remove or implement the stale `/api/ping` test expectation. Already removed - no ping test exists in test_api.py.
 - [ ] Normalize not-found and delete responses to the documented error/response format.
 - [ ] Validate `page`, `per_page`, `status`, and `phase` query parameters; enforce a maximum `per_page`.
 - [ ] Implement or remove the documented `phase` list filter so API, web, and CLI behavior match.
@@ -157,7 +157,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 ## Review Findings From 2026-05-21
 
 - [ ] Current docs and clients still reference `/api`; plan and implement migration to `/api/project/status`.
-- [ ] API tests are not runnable as written: they expect `/api/ping`, pass unsupported kwargs to `create_app`, reference `app.db`, use integer IDs for 404 checks, and must use PostgreSQL 18 instead of SQLite against a PostgreSQL-specific `ARRAY` column.
+- [ ] API tests are not runnable as written: they pass unsupported kwargs to `create_app` (ping test already removed), reference `app.db`, use integer IDs for 404 checks, and must use PostgreSQL 18 instead of SQLite against a PostgreSQL-specific `ARRAY` column.
 - [ ] CLI does not match the API contract: API IDs are UUID strings but CLI expects ints; API list response uses `records` but CLI expects `items`.
 - [ ] `docker-compose.yml` references `web/Dockerfile`, but that file is missing.
 - [ ] API error responses are inconsistent for not-found paths; some return `{"error": "Record not found"}` instead of the documented structured error object.
