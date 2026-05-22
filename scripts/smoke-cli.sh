@@ -10,6 +10,7 @@
 #   API_BASE_URL     - API endpoint URL (default: http://localhost:5000)
 #   CLI_BINARY       - Path to CLI binary (default: ./build/project-status)
 #   TEST_RECORD_PREFIX - Prefix for test record short_name (default: cli-smoke)
+#   TEST_PROJECT_NAME  - Project name for test record (default: CLI Smoke Test Project)
 #   CLI_SMOKE_CLEANUP  - Enable cleanup on exit (default: true)
 #
 # Usage:
@@ -26,6 +27,7 @@ set -euo pipefail
 API_URL="${API_BASE_URL:-http://localhost:5000}"
 CLI_BINARY="${CLI_BINARY:-./build/project-status}"
 TEST_RECORD_PREFIX="${TEST_RECORD_PREFIX:-cli-smoke}"
+TEST_PROJECT_NAME="${TEST_PROJECT_NAME:-CLI Smoke Test Project}"
 CLI_SMOKE_CLEANUP="${CLI_SMOKE_CLEANUP:-true}"
 CLI_SMOKE_RECORD_ID=""
 FAILED=0
@@ -104,7 +106,7 @@ set +e
 output=$("$CLI_BINARY" \
     --api-url "$API_URL" \
     add \
-    --project-name "CLI Smoke Test Project" \
+    --project-name "$TEST_PROJECT_NAME" \
     --short-name "${TEST_RECORD_PREFIX}-1" \
     --status "active" \
     --phase "implementation" \
@@ -155,7 +157,7 @@ set -e
 
 if [[ $exit_code -eq 0 ]]; then
     log_pass "Status record shown via CLI"
-    if echo "$output" | grep -q "CLI Smoke Test Project"; then
+    if echo "$output" | grep -q "$TEST_PROJECT_NAME"; then
         log_pass "Correct project name displayed"
     else
         log_fail "Wrong project name displayed"

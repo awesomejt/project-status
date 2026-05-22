@@ -5,6 +5,7 @@
 # Environment variables:
 #   API_BASE_URL     - API endpoint URL (default: http://localhost:5000)
 #   TEST_RECORD_PREFIX - Prefix for test record short_name (default: smoke-test)
+#   TEST_PROJECT_NAME  - Project name for test record (default: Smoke Test Project)
 #   SMOKE_CLEANUP    - Enable cleanup on exit (default: true)
 #
 # Usage:
@@ -20,6 +21,7 @@ set -euo pipefail
 # Configuration
 API_URL="${API_BASE_URL:-http://localhost:5000}"
 TEST_RECORD_PREFIX="${TEST_RECORD_PREFIX:-smoke-test}"
+TEST_PROJECT_NAME="${TEST_PROJECT_NAME:-Smoke Test Project}"
 SMOKE_CLEANUP="${SMOKE_CLEANUP:-true}"
 SMOKE_RECORD_ID=""
 FAILED=0
@@ -139,7 +141,7 @@ echo ""
 
 # Check 3: Create a status record
 log "Creating status record..."
-create_body="{\"project_name\":\"Smoke Test Project\",\"short_name\":\"${TEST_RECORD_PREFIX}-$(date +%s)\",\"status\":\"active\",\"phase\":\"implementation\",\"summary\":\"Test record created by smoke script\",\"source\":\"smoke-test\"}"
+create_body="{\"project_name\":\"${TEST_PROJECT_NAME}\",\"short_name\":\"${TEST_RECORD_PREFIX}-$(date +%s)\",\"status\":\"active\",\"phase\":\"implementation\",\"summary\":\"Test record created by smoke script\",\"source\":\"smoke-test\"}"
 response=$(http_request "POST" "/api/project/status" "$create_body")
 http_code=$(echo "$response" | cut -d$'\t' -f1)
 body_content=$(echo "$response" | cut -d$'\t' -f2-)
