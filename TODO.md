@@ -81,18 +81,18 @@ These items are good candidates for a local model or cloud agent.
 - [X] Implement web status record list view. Completed - Created StatusListView component with table display, status filtering, pagination, loading/error/empty states.
 - [X] Implement web create/edit status record form. Completed - StatusForm component with create and edit modes, validation, tags management, peek mode, loading/error states, and routing.
 - [X] Implement web status record detail view. Completed - StatusDetailView component with read-only display, edit button, delete confirmation flow, loading/error states, clickable rows in list view. Updated routes: /detail/:id for view, /edit/:id for form.
-- [ ] Implement web delete confirmation flow.
-- [ ] Implement web loading, empty, validation, and API error states.
+- [X] Implement web delete confirmation flow. Completed - StatusDetailView has modal-style delete confirmation dialog with role=alertdialog, aria-labelledby, aria-describedby, Escape key handler, and 'Deleting...' state.
+- [X] Implement web loading, empty, validation, and API error states. Completed - All components (StatusListView, StatusForm, StatusDetailView) have loading spinners, error states, empty states, and validation error display for form fields.
 - [X] Check web accessibility basics for the primary workflows. Completed - Added aria-labels to buttons, proper label/input associations, keyboard navigation to table rows, dialog role for delete confirmation, form accessibility improvements, accessible tag management.
-- [W] Scaffold Go CLI module with Cobra and Viper.
-- [ ] Implement CLI API client and config resolution.
-- [ ] Implement `status config` command.
-- [ ] Implement `status add` command.
-- [ ] Implement `status list` command with filter flags.
-- [ ] Implement `status show` command.
-- [ ] Implement `status update` command.
-- [ ] Implement `status delete` command with confirmation or force flag.
-- [ ] Add CLI output formats such as table and JSON.
+- [X] Scaffold Go CLI module with Cobra and Viper. Completed - CLI scaffolded with Cobra v1.10.2 and Viper v1.21.0, including all commands (config, add, list, show, update, delete) and API client with config resolution.
+- [X] Implement CLI API client and config resolution. Completed - Client in internal/client/client.go with HTTP methods, StatusRecord types, pagination support, error handling. Config uses Viper with env var support (PROJECT_STATUS_API_URL, PROJECT_STATUS_OUTPUT).
+- [X] Implement `status config` command. Completed - Shows current config (api_url, output) and allows setting values via `status config set <key> <value>`.
+- [X] Implement `status add` command. Completed - Supports --project-name, --short-name, --status, --phase, --summary, --reason, --details, --tags flags with validation.
+- [X] Implement `status list` command with filter flags. Completed - Supports --page, --per-page, --status, --phase filters with pagination info.
+- [X] Implement `status show` command. Completed - Shows full status record details for given ID with proper error handling for not found.
+- [X] Implement `status update` command. Completed - Supports all updatable fields with partial update support.
+- [X] Implement `status delete` command with confirmation or force flag. Completed - Supports --force flag to skip confirmation prompt.
+- [X] Add CLI output formats such as table and JSON. Completed - All commands support --output flag (table/json), with table as default.
 
 ### Tests And Quality
 
@@ -129,7 +129,7 @@ These items are good candidates for a local model or cloud agent.
 
 Move exactly one task here while working if multiple agents may run at the same time.
 
-- [ ]
+- [W] Run lint, format check, type check, build, and test commands when available.
 
 ## Blocked
 
