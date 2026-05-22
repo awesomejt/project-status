@@ -10,11 +10,11 @@
 #   error   - severe repo or automation failure; agent should log details and halt
 #   working - agent is actively working on a task; other agents should skip
 
-status: "active"
+status: "paused"
 phase: "implementation"
-reason: "Dependency version check complete; versions current as of 2026-05-20 verification"
-worker: "opencode"
-updated: "2026-05-22 10:55 MDT"
+reason: "Paused for Jason manual review of planning/scaffolding direction and quarantined-test policy"
+worker: "codex"
+updated: "2026-05-22 12:15 MDT"
 
 active_task:
   id: null

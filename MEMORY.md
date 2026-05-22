@@ -8,10 +8,10 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 
 ## Current Status
 
-- Current phase: API-first MVP implementation and scaffolding hardening.
+- Current phase: API-first MVP planning/scaffolding review before next implementation cycle.
 - Last major milestone: smoke workflow validates health/readiness plus full CRUD path after API route compatibility fixes.
-- Next recommended task: finish scaffolding reliability gaps that block API-first gates (Compose healthcheck + integration-test flow), then continue API-focused test/contract completion.
-- Current blocker: none for local implementation; human decisions remain for deployment target, secret management, and final docs/health namespace policy.
+- Next recommended task: Jason manual review of direction/scaffolding, then repair the API test harness and Compose test lifecycle before deeper API implementation.
+- Current blocker: paused for Jason's manual review of planning/scaffolding direction and quarantined-test policy before the next implementation cycle.
 
 ## Key Decisions
 
@@ -30,10 +30,13 @@ Keep this file concise and durable. Do not paste full chat transcripts here; sto
 - Local development uses a PostgreSQL 18 container.
 - Stage and production may use dedicated PostgreSQL VMs, selected by environment-specific `DATABASE_URL` values.
 - Authentication, authorization, and advanced logging remain out of scope for MVP.
+- Each implementation cycle should include matching tests in the same commit whenever practical; planning/research/scaffolding cycles may use document/contract/scaffold validation instead.
+- Premature code or tests may be quarantined when they block the current phase, but the reason and re-enable criteria must be recorded in `TODO.md`.
+- CLI command tests generated before command construction is testable are quarantined behind the `premature_cli_command_tests` build tag; stable CLI HTTP client tests remain active.
 
 ## Architecture Notes
 
-- Planned status-record REST namespace is `/api/project/status` (to migrate from current `/api` routes).
+- Primary status-record REST namespace is `/api/project/status`; `/api` remains a temporary compatibility namespace while clients and tests settle.
 - First resource is `status_record`, supporting create, list, read, update, and delete.
 - List endpoints should support pagination and common filters from the first API release.
 - Database migrations should be introduced with the first schema commit.
@@ -69,6 +72,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 ## Agent Run Log
 
 Newest entries first.
+
+### 2026-05-22 - Codex (direction/test-discipline cleanup)
+
+- Task: Incorporate Jason's guidance that clear direction, research, scaffolding, and phase-appropriate test discipline matter more than stabilizing premature CLI/web code immediately.
+- Files changed: `docs/Requirements.md`, `docs/Implementation.md`, `AGENT_WORKFLOW.md`, `TODO.md`, `Makefile`, `cli/cmd/*_test.go`, `MEMORY.md`, `status.yaml`.
+- Validation: `cd cli && go test ./...` passed; `make build-cli` passed; `make test-web` now reports that web tests are not configured yet instead of failing; `git diff --check` passed.
+- Result: Added explicit phase gates and test-paired implementation policy. Quarantined draft CLI command tests behind the `premature_cli_command_tests` build tag so stable CLI client tests can continue running while command architecture is refactored later. Updated TODO wording so smoke/integration scaffolding is recognized while API pytest remains open.
+- Commit: pending.
+- Blockers or follow-up: Jason manual review before proceeding to API test harness repair and next implementation cycle.
 
 ### 2026-05-22 - Codex (future-ready scaffolding pass)
 

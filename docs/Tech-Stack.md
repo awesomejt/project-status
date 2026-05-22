@@ -51,8 +51,8 @@ docker compose up --build
 
 # Run tests after scaffolding
 docker compose up -d db
-cd api && DATABASE_URL="${DATABASE_URL}" uv run pytest
-cd web && npm test
+cd api && DATABASE_URL="${DATABASE_URL}" uv run pytest  # pending test-harness repair
+cd web && npm test  # once web test script is configured
 cd cli && go test ./...
 
 # Run quick host smoke checks against the Docker stack after the script exists

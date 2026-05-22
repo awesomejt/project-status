@@ -96,7 +96,11 @@ test-api:
 
 ## Run web tests
 test-web:
-	cd web && npm test
+	@cd web && if node -e "const pkg=require('./package.json'); process.exit(pkg.scripts && pkg.scripts.test ? 0 : 1)"; then \
+		npm test; \
+	else \
+		echo "Web tests are not configured yet; see TODO.md for planned web coverage."; \
+	fi
 
 ## Run CLI tests
 test-cli:
@@ -139,7 +143,7 @@ clean-web:
 	cd web && rm -rf dist .vite
 
 clean-cli:
-	rm -rf cli/build
+	rm -rf build/project-status cli/build
 
 ## Clean all artifacts including Docker volumes
 clean-all: clean

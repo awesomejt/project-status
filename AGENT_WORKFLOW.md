@@ -14,9 +14,10 @@ On each manual run:
 4. Check `git status`.
 5. Pick the highest-priority unblocked task from `TODO.md`, or follow the user's explicit task.
 6. Implement only that task.
-7. Run the most relevant validation available.
-8. Update `TODO.md`, `MEMORY.md`, and docs.
-9. Summarize changes, validation, blockers, and follow-up.
+7. Add or update the tests that correspond to that task, unless the task is explicitly planning-only or scaffolding-only.
+8. Run the most relevant validation available.
+9. Update `TODO.md`, `MEMORY.md`, and docs.
+10. Summarize changes, validation, blockers, and follow-up.
 
 ## Contract Preflight
 
@@ -58,8 +59,11 @@ Use this loop for a persistent local agent, scheduled runner, or workflow manage
 A task is done only when the implementation and project state agree.
 
 - The change is implemented or the task was explicitly documentation-only.
+- Implementation tasks include matching unit, integration, smoke, browser, or CLI tests in the same cycle whenever practical.
+- Planning, research, and scaffolding tasks define their future validation expectations even when executable tests are not yet appropriate.
 - Public contracts are aligned across API, web, CLI, docs, tests, and config where relevant.
 - The most relevant validation command has passed, or the validation gap is documented in `TODO.md` and `MEMORY.md`.
+- Premature generated tests may be disabled only when they are blocking the current phase and the re-enable/refactor task is captured in `TODO.md`.
 - Stale TODO wording, old endpoint paths, and duplicate completed items are cleaned up.
 - `status.yaml` is returned to `active`, `blocked`, `error`, or `stopped`.
 

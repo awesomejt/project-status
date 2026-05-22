@@ -163,10 +163,16 @@ cd api && uv run flask --app project_status_api run
 ### Run API Tests
 
 ```bash
+# Preferred target after the Compose test service is added
+make test-api
+
+# Current host-run pytest path is pending test-harness repair.
 docker compose up -d db
 export DATABASE_URL="postgresql://project_status:project_status_dev@localhost:5432/project_status"
 cd api && uv run pytest
 ```
+
+Implementation cycles should add or update the relevant tests with the code change. Planning and scaffolding cycles should document their validation expectations and may leave executable coverage as explicit TODOs until the corresponding implementation phase.
 
 ### Run Migrations
 

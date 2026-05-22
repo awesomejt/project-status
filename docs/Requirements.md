@@ -54,6 +54,8 @@ The first implementation should support a `status_record` resource with these fi
 - Environments: local development uses a PostgreSQL 18 container; stage and production may use dedicated PostgreSQL VMs reachable through stage/production database URLs.
 - Compatibility: API runs on Python 3.14 and Flask; database runs on PostgreSQL 18; CLI builds with the latest stable Go toolchain; web targets current evergreen desktop and mobile browsers.
 - Delivery strategy: prioritize API-first MVP correctness and scaffolding completeness (contract, migrations, readiness, integration runners, Compose reliability) before CLI/web expansion. Cloud-AI implementation passes are preferred for MVP acceleration; local-model dogfooding follows once MVP stability gates pass.
+- Implementation discipline: each implementation cycle should include the relevant tests in the same commit whenever practical. API behavior changes should include API unit or database-backed integration tests; CLI behavior changes should include Go client or command tests; web behavior changes should include component, type, or browser smoke coverage. Planning, research, and scaffolding cycles may instead be validated by document consistency checks, contract review, build/smoke scaffolds, or explicit TODOs for later executable coverage.
+- Premature-code handling: code or tests created ahead of the finalized API/scaffolding direction may be disabled or quarantined when they block current phase progress, but the reason and re-enable criteria must be recorded in `TODO.md` and `MEMORY.md`.
 
 ## Out Of Scope
 

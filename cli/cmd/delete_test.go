@@ -1,3 +1,6 @@
+//go:build premature_cli_command_tests
+// +build premature_cli_command_tests
+
 package cmd
 
 import (

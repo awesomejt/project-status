@@ -34,6 +34,27 @@ High-level order of implementation. Keep this aligned with `TODO.md`.
   - then consume the stable API from CLI and web
 - Avoid shortcut-driven client work that outruns API reliability.
 - Use dogfooding as a validation phase after MVP baseline is stable, not as an early substitute for API/scaffolding completion.
+- Treat premature implementation as provisional. If earlier CLI, web, or API code conflicts with the current phase, prefer quarantining or refactoring it over letting it dictate the roadmap.
+- Pair each implementation cycle with tests in the same commit whenever practical. The test level should match the change: unit tests for isolated logic, integration tests for API/database behavior, smoke tests for cross-service behavior, and browser/CLI tests for client workflows.
+
+## Phase Gates
+
+- Planning/research gate:
+  - requirements, architecture, implementation plan, API contract, and TODO agree
+  - unresolved product or deployment decisions are isolated in `Needs Attention`
+  - current validation gaps are named rather than hidden behind failing or misleading gates
+- Scaffolding gate:
+  - directory layout, Compose services, scripts, migration path, and root commands exist
+  - scaffolding commands either pass or clearly report that a test suite is intentionally not configured yet
+  - provisional tests from premature work are quarantined with a TODO to restore them
+- API implementation gate:
+  - route contracts, validators, serializers, persistence, migrations, and error shapes agree
+  - API unit tests and PostgreSQL-backed integration tests cover success and important failure paths
+  - curl smoke and Python Compose integration checks pass for the implemented contract
+- Client implementation gate:
+  - web and CLI consume the finalized API contract without private database access
+  - client tests cover command/client behavior, API errors, loading/empty states, and critical user workflows
+  - cross-service smoke checks prove the API contract from the client side before dogfooding begins
 
 ## Implementation Phase: API Module
 
