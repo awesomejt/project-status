@@ -12,11 +12,11 @@
 ## Key Features
 
 - REST API for project status record CRUD operations:
-  - `GET /api` - List records with pagination and filters.
-  - `POST /api` - Create a project status record.
-  - `GET /api/{id}` - Read one record by ID.
-  - `PATCH /api/{id}` - Update full or partial record details.
-  - `DELETE /api/{id}` - Delete a record.
+  - `GET /api/project/status` - List records with pagination and filters.
+  - `POST /api/project/status` - Create a project status record.
+  - `GET /api/project/status/{id}` - Read one record by ID.
+  - `PATCH /api/project/status/{id}` - Update full or partial record details.
+  - `DELETE /api/project/status/{id}` - Delete a record.
 - PostgreSQL-backed persistence for status records, timestamps, status history, and queryable metadata.
 - Web client built with React that calls the API for list, detail, create, edit, and delete workflows.
 - CLI client written in Go with Cobra commands and Viper configuration, calling the API for the same core workflows.

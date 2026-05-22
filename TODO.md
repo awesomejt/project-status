@@ -62,8 +62,8 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ### Planning And Documentation
 
-- [ ] Update `docs/Requirements.md` to replace `/api/*` status endpoints with `/api/project/status/*`.
-- [ ] Update `docs/Architecture.md` to describe `/api/project/status` as the stable status-record API namespace.
+- [X] Update `docs/Requirements.md` to replace `/api/*` status endpoints with `/api/project/status/*`. Completed 2026-05-22 by opencode.
+- [X] Update `docs/Architecture.md` to describe `/api/project/status` as the stable status-record API namespace. Completed 2026-05-22 by opencode.
 - [ ] Update `docs/Implementation.md` whenever the migration plan changes; implementation phases are now split by API, web, and CLI module.
 - [ ] Update `docs/Tech-Stack.md` command examples so CLI builds write the binary to `build/project-status`.
 - [ ] Update `docs/Development.md`, `README.md`, and `.env.example` examples for the new API path and CLI build workflow.

@@ -70,6 +70,14 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - opencode
+
+- Task: Update docs/Requirements.md and docs/Architecture.md to use `/api/project/status/*` API paths.
+- Files changed: `docs/Requirements.md`, `docs/Architecture.md`, `TODO.md`.
+- Validation: Documentation-only update; verified path consistency with docs/Implementation.md.
+- Result: Updated API endpoint documentation in Requirements.md and Architecture.md to use the correct `/api/project/status/*` namespace. Migration planning documentation is now consistent.
+- Blockers or follow-up: none.
+
 ### 2026-05-21 21:10 - Codex
 
 - Task: Review project for API path migration, code quality, structure, tests, local tools, and TODO planning only.
