@@ -97,7 +97,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 - [X] Fix TypeScript client return types so create/read/update methods return `StatusRecord`, not `StatusRecordCreate`. Completed; typecheck and build passed.
 - [ ] Add web unit/component tests for list, form, detail, delete, loading, empty, and error states.
 - [ ] Add a browser smoke test for create, list, view, update, and delete workflows when the dev server is available.
-- [ ] Remove unused scaffold assets if they are not part of the final UI.
+- [X] Remove unused scaffold assets if they are not part of the final UI. Completed 2026-05-22 by Codex; removed `web/src/assets/{hero.png,react.svg,vite.svg}` and validated web typecheck/build.
 
 ### Implementation Phase: CLI Module
 

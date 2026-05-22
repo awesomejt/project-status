@@ -70,6 +70,15 @@ Record findings from real systems, live services, browser/device testing, deploy
 
 Newest entries first.
 
+### 2026-05-22 - Codex (web scaffold cleanup)
+
+- Task: Remove unused web scaffold assets and validate the web build path.
+- Files changed: `web/src/assets/hero.png` (deleted), `web/src/assets/react.svg` (deleted), `web/src/assets/vite.svg` (deleted), `web/src/components/StatusListView.tsx`, `TODO.md`, `status.yaml`, `MEMORY.md`.
+- Validation: `cd web && npm run typecheck`; `cd web && npm run build` (passed).
+- Result: Removed unused scaffold asset files and repaired a broken filter JSX block in `StatusListView` that was preventing production builds. Also ensured loading/error state handling resets correctly after fetch attempts.
+- Commit: pending.
+- Blockers or follow-up: none.
+
 ### 2026-05-22 - Codex (ignore/build task)
 
 - Task: Verify build artifact ignore coverage and close stale CLI build TODO items.

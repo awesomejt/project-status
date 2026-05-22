@@ -75,9 +75,12 @@ const StatusListView = () => {
         total: response.total,
         pages: response.pages,
       });
+      setError(null);
     } catch (err) {
       const apiError = err as ApiError;
       setError(apiError);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -133,19 +136,52 @@ const StatusListView = () => {
         </button>
       </header>
 
-       <section style={{ marginBottom: "20px" }}>
+      <section style={{ marginBottom: "20px" }}>
         <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
           <div>
             <label htmlFor="status-filter" style={{ marginRight: "8px", fontWeight: 500 }}>Status:</label>
             <select
-          <option value="active">Active</option>
-          <option value="paused">Paused</option>
-          <option value="blocked">Blocked</option>
-          <option value="working">Working</option>
-          <option value="error">Error</option>
-          <option value="stopped">Stopped</option>
-          <option value="completed">Completed</option>
-        </select>
+              id="status-filter"
+              value={filterStatus}
+              onChange={(event) => {
+                setFilterStatus(event.target.value as StatusValue | "all");
+                setLoading(true);
+                setError(null);
+                fetchRecords(1);
+              }}
+              style={{ padding: "6px 10px", borderRadius: "4px", border: "1px solid #ccc" }}
+            >
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="paused">Paused</option>
+              <option value="blocked">Blocked</option>
+              <option value="working">Working</option>
+              <option value="error">Error</option>
+              <option value="stopped">Stopped</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="phase-filter" style={{ marginRight: "8px", fontWeight: 500 }}>Phase:</label>
+            <select
+              id="phase-filter"
+              value={filterPhase}
+              onChange={(event) => {
+                setFilterPhase(event.target.value);
+                setLoading(true);
+                setError(null);
+                fetchRecords(1);
+              }}
+              style={{ padding: "6px 10px", borderRadius: "4px", border: "1px solid #ccc" }}
+            >
+              <option value="all">All</option>
+              <option value="planning">Planning</option>
+              <option value="implementation">Implementation</option>
+              <option value="validation">Validation</option>
+              <option value="release">Release</option>
+            </select>
+          </div>
+        </div>
       </section>
 
       {loading ? (
