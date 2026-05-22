@@ -92,7 +92,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ### Implementation Phase: Web Module
 
-- [ ] Change the web API client path constant from `/api` to `/api/project/status`.
+- [W] Change the web API client path constant from `/api` to `/api/project/status`.
 - [ ] Update web UI/API assumptions after the API response contract is finalized.
 - [ ] Fix TypeScript client return types so create/read/update methods return `StatusRecord`, not `StatusRecordCreate`.
 - [ ] Add web unit/component tests for list, form, detail, delete, loading, empty, and error states.
@@ -101,12 +101,12 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 ### Implementation Phase: CLI Module
 
-- [ ] Change CLI HTTP client paths from `/api` to `/api/project/status`.
-- [ ] Change CLI record IDs from `int` to `string` UUIDs across client structs, commands, prompts, and output formatting.
-- [ ] Align CLI list response parsing with the API response field `records` instead of `items`, unless the API contract changes.
-- [ ] Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling.
+- [X] Change CLI HTTP client paths from `/api` to `/api/project/status`. Completed 2026-05-22 by Codex.
+- [X] Change CLI record IDs from `int` to `string` UUIDs across client structs, commands, prompts, and output formatting. Completed 2026-05-22 by Codex.
+- [X] Align CLI list response parsing with the API response field `records` instead of `items`, unless the API contract changes. Completed 2026-05-22 by Codex.
+- [ ] Add or update CLI command tests with mocked HTTP responses for add, list, show, update, delete, config, and error handling. Partial progress 2026-05-22 by Codex: added client HTTP contract tests for list/show request paths and response parsing.
 - [ ] Add CLI integration smoke tests against a running local API.
-- [ ] Build the CLI binary into a Git-ignored `build/` folder with the binary name `project-status`.
+- [X] Build the CLI binary into a Git-ignored `build/` folder with the binary name `project-status`. Completed 2026-05-22 by Codex.
 - [ ] Ensure `.gitignore` continues to exclude the chosen build output path, including `build/project-status` and any `cli/build/` variant if selected.
 - [ ] Add a root `Makefile` to standardize build, lint, test, clean, migration, and Compose workflows.
 - [ ] Add a `make build-cli` target that runs the Go build with output `build/project-status`.
@@ -128,7 +128,7 @@ Use this section for a cloud-based AI agent or larger-context reviewer before re
 
 - [ ] Run API lint, format check, and pytest through `uv` after fixing the test harness.
 - [ ] Run web lint, typecheck, build, and tests when web tests exist.
-- [ ] Run CLI `go test ./...` and build to `build/project-status`.
+- [X] Run CLI `go test ./...` and build to `build/project-status`. Completed 2026-05-22 by Codex.
 - [ ] Review with `QUALITY_CHECKLIST.md`.
 - [ ] Add API unit tests for validation, serialization, and service behavior.
 - [ ] Add API integration tests against the Docker Compose PostgreSQL 18 container.
