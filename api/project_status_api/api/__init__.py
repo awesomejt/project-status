@@ -14,6 +14,7 @@ from ..utils import (
 )
 
 bp = Blueprint("api", __name__)
+bp_legacy = Blueprint("api_legacy", __name__)
 
 
 def _get_current_time_iso():
@@ -22,6 +23,7 @@ def _get_current_time_iso():
 
 
 @bp.route("/", methods=["POST"])
+@bp_legacy.route("/", methods=["POST"])
 def create_status_record():
     """Create a new status record."""
     is_valid, result, status_code = validate_json(
@@ -67,6 +69,7 @@ def create_status_record():
 
 
 @bp.route("/", methods=["GET"])
+@bp_legacy.route("/", methods=["GET"])
 def list_status_records():
     """List status records with pagination and filters."""
     page = request.args.get("page", 1, type=int)
@@ -114,12 +117,14 @@ def list_status_records():
 
 
 @bp.route("/<uuid:record_id>", methods=["GET"])
+@bp_legacy.route("/<uuid:record_id>", methods=["GET"])
 def get_status_record(record_id):
     """Get a specific status record."""
     record = db.get(StatusRecord, record_id)
 
     if not record:
-        return jsonify({"error": "Record not found"}), 404
+        response, code = make_error_response("Record not found", 404)
+        return jsonify(response), code
 
     response = {
         "id": str(record.id),
@@ -139,6 +144,7 @@ def get_status_record(record_id):
 
 
 @bp.route("/<uuid:record_id>", methods=["PATCH"])
+@bp_legacy.route("/<uuid:record_id>", methods=["PATCH"])
 def update_status_record(record_id):
     """Update a status record (partial update)."""
     record = db.get(StatusRecord, record_id)
@@ -178,12 +184,14 @@ def update_status_record(record_id):
 
 
 @bp.route("/<uuid:record_id>", methods=["DELETE"])
+@bp_legacy.route("/<uuid:record_id>", methods=["DELETE"])
 def delete_status_record(record_id):
     """Delete a status record."""
     record = db.get(StatusRecord, record_id)
 
     if not record:
-        return jsonify({"error": "Record not found"}), 404
+        response, code = make_error_response("Record not found", 404)
+        return jsonify(response), code
 
     db.delete(record)
     db.commit()
